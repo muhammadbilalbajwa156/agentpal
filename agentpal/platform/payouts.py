@@ -197,6 +197,8 @@ class PayoutDesk:
         if amount is not None and self.p.deps.resources:
             self.p.deps.resources.check_amount(owner_id, amount,
                                                server_provided=provider is self.p.deps.provider)
+            self.p.deps.resources.consume_execution(owner_id,
+                                                    server_provided=provider is self.p.deps.provider)
         return PayPalPayoutsProvider(provider.config, http_client=provider.http_client)
 
     def execute(self, ctx, request_id):

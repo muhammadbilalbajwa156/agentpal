@@ -53,7 +53,7 @@ Only the PayPal **sandbox** host is ever called; live PayPal URLs are refused at
 
 ## 4. Try it: Test Lab
 
-**Test Lab** in the sidebar creates a scoped test agent (with a $200/month, $50 per payment
+**Test Lab** in the sidebar creates a scoped test agent (with a $200/month, $25 per payment
 virtual allowance) and lets you:
 
 1. ask the AI agent to shop ("USB-C hub for the design team", budget 30), or create a payment

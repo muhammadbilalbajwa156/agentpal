@@ -39,7 +39,7 @@ class TestLab:
                  Capability.payment_execute_sandbox, Capability.research_search, Capability.research_fetch], {})
             limits = self.integrations.resources.amount_limits(owner.owner_id)
             monthly = min(Decimal("200.00"), Decimal(limits["max_monthly_budget"])) if limits else Decimal("200.00")
-            hard = min(Decimal("50.00"), Decimal(limits["max_amount"]), monthly) if limits else Decimal("50.00")
+            hard = min(Decimal("25.00"), Decimal(limits["max_amount"]), monthly) if limits else Decimal("25.00")
             wallet = self.p.wallets.create(owner.owner_id, owner.owner_id, view["agent_id"], "USD",
                                            monthly, hard, None, None)
             encrypted = vault.encrypt(owner.owner_id, "lab_agent", {"api_key": key.api_key})

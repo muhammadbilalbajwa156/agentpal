@@ -371,3 +371,35 @@ def test_selected_server_paypal_remains_amount_capped_after_key_change(tmp_path,
         r = c.post(path + "/execute", headers=bearer(a["api_key"]))
         assert r.status_code == 422, r.text
         assert r.json() == {"error": "hosted_amount_limit_exceeded"}
+
+
+class _GlobalCapIntegrations:
+    def __init__(self, path, own=False):
+        self.env = {"AGENTPAL_SERVER_PAYPAL_EXECUTIONS_DAILY": "2"}
+        self.limiter_path, self.own = path, own
+
+    def server_fields(self, provider):
+        return {"client_id": "synthetic"} if provider == "paypal_sandbox" else None
+
+    def fields(self, owner_id, provider):
+        return {"client_id": "own"} if self.own else None
+
+
+def test_global_server_paypal_execution_cap_is_shared_by_all_workspaces(tmp_path):
+    from agentpal.platform.errors import PlatformError
+    from agentpal.platform.shared_resources import SharedResources
+    res = SharedResources(_GlobalCapIntegrations(str(tmp_path / "limits.db")), hosted=True)
+    res.consume_execution("alice", server_provided=True)
+    res.consume_execution("bob", server_provided=True)
+    with pytest.raises(PlatformError) as exc:
+        res.consume_execution("carol", server_provided=True)
+    assert exc.value.status == 429 and exc.value.code == "server_paypal_global_daily_limit"
+
+
+def test_global_cap_ignores_own_keys_and_self_hosted(tmp_path):
+    from agentpal.platform.shared_resources import SharedResources
+    own = SharedResources(_GlobalCapIntegrations(str(tmp_path / "a.db"), own=True), hosted=True)
+    local = SharedResources(_GlobalCapIntegrations(str(tmp_path / "b.db")), hosted=False)
+    for _ in range(5):
+        own.consume_execution("alice", server_provided=False)
+        local.consume_execution("alice", server_provided=True)

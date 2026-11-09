@@ -27,6 +27,12 @@ class SharedResources:
                 raise ValueError("invalid shared provider daily cap")
             self.daily[name] = SQLiteSlidingWindowLimiter(
                 integrations.limiter_path, "server-" + name + "-daily", value, 86400.0)
+        # One ceiling for the whole operator sandbox account, across every workspace.
+        total = int(env.get("AGENTPAL_SERVER_PAYPAL_EXECUTIONS_DAILY", 100))
+        if not 1 <= total <= 1_000_000:
+            raise ValueError("invalid shared provider daily cap")
+        self.global_executions = SQLiteSlidingWindowLimiter(
+            integrations.limiter_path, "server-paypal-executions-global-daily", total, 86400.0)
         self.max_amount = self._amount(env.get("AGENTPAL_HOSTED_MAX_AMOUNT", "50.00"))
         self.max_monthly = self._amount(env.get("AGENTPAL_HOSTED_MAX_MONTHLY_BUDGET", "500.00"))
 
@@ -80,3 +86,16 @@ class SharedResources:
             ceiling = self.max_monthly if name in {"monthly_budget", "rolling_window_limit"} else self.max_amount
             if value > ceiling:
                 raise PlatformError(422, "hosted_amount_limit_exceeded")
+
+    def consume_execution(self, owner_id, *, server_provided):
+        """Hosted only: count each money movement on the operator's PayPal sandbox account
+        against one global daily ceiling shared by all workspaces."""
+        if not (self.hosted and self._server_use(owner_id, "paypal_sandbox", server_provided)):
+            return
+        try:
+            allowed, retry = self.global_executions.hit("all-workspaces")
+        except LimiterUnavailable:
+            raise PlatformError(503, "server_quota_unavailable") from None
+        if not allowed:
+            raise PlatformError(429, "server_paypal_global_daily_limit",
+                                headers={"Retry-After": str(retry)})

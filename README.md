@@ -36,9 +36,6 @@ https://github.com/user-attachments/assets/4cec97d1-2fa7-4e8b-9192-d449adda2c70
 
 
 
-mp4 into this section. -->
-
-
 ---
 
 ## 💡 Why AgentPal
