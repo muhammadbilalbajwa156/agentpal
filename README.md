@@ -32,9 +32,14 @@
 
 ## 🎬 Demo video
 
-<!-- Drop the demo video here: edit this file on GitHub and drag the .mp4 into this section. -->
+<!-- Drop the demo video here: edit this file on GitHub and drag the .
 
-_Video coming soon._
+https://github.com/user-attachments/assets/4cec97d1-2fa7-4e8b-9192-d449adda2c70
+
+
+
+mp4 into this section. -->
+
 
 ---
 
