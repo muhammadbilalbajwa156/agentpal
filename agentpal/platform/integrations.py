@@ -78,7 +78,7 @@ class IntegrationVerifier:
 
 
 class Integrations:
-    def __init__(self, store, vault, env, rate_path):
+    def __init__(self, store, vault, env, rate_path, hosted=False):
         self.store, self.vault, self.env = store, vault, dict(env)
         self.verifier = IntegrationVerifier()
         self.limiter_path = rate_path
@@ -86,6 +86,8 @@ class Integrations:
         with store.tx() as c:
             c.execute("CREATE TABLE IF NOT EXISTS platform_integrations (owner_id TEXT NOT NULL, provider TEXT NOT NULL, ciphertext BLOB, status TEXT NOT NULL, verified_at TEXT, error_code TEXT, PRIMARY KEY(owner_id,provider))")
             c.execute("CREATE TABLE IF NOT EXISTS platform_lab_agents (owner_id TEXT PRIMARY KEY, agent_id TEXT NOT NULL, wallet_id TEXT NOT NULL, ciphertext BLOB NOT NULL)")
+        from .shared_resources import SharedResources
+        self.resources = SharedResources(self, hosted)
 
     def provider(self, provider):
         if provider not in CATALOG:
@@ -124,7 +126,8 @@ class Integrations:
                 "fields": [{"name": n, "secret": s, "required": r} for n, s, r in fields],
                 "status": row["status"] if row else "not_configured", "source": source,
                 "hint": None, "verified_at": row["verified_at"] if row else None,
-                "error_code": row["error_code"] if row else None}
+                "error_code": row["error_code"] if row else None,
+                "hosted_limits": self.resources.amount_limits(owner_id) if provider == "paypal_sandbox" else None}
 
     def validate(self, provider, fields):
         self.provider(provider)
@@ -161,10 +164,12 @@ class Integrations:
         return self.item(owner_id, provider)
 
     def verify(self, owner_id, provider):
-        fields = self.resolve(owner_id, provider)
+        own_fields = self.fields(owner_id, provider)
+        fields = own_fields or self.server_fields(provider)
         if not fields:
             raise PlatformError(409, "integration_not_configured")
         self.admission(owner_id)
+        self.resources.consume(owner_id, provider, server_provided=own_fields is None)
         try:
             self.verifier.verify(provider, fields)
         except VerificationFailed as exc:

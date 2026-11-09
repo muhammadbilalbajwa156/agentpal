@@ -124,6 +124,10 @@ class PlatformDeps:
     integrations: Any = None
     provider_resolver: Any = None
 
+    @property
+    def resources(self):
+        return self.integrations.resources if self.integrations else None
+
     def paypal_for(self, owner_id: str):
         if self.provider_resolver and self.integrations.fields(owner_id, "paypal_sandbox"):
             return self.provider_resolver.paypal(owner_id)

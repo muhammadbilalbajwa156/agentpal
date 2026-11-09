@@ -8,7 +8,7 @@ tags:
 authors:
   - name: Muhammad Bilal Bajwa
     account: agentpal
-repository: "github:muhammadbilalbajwa156/laptop-deal-hub"
+repository: "github:muhammadbilalbajwa156/agentpal"
 capabilities:
   - Runs a business day for Northstar Digital (marketing & web agency) or Lumen Cloud (SaaS)
   - Seven role-based AI agents, each with its own AgentPal key and wallet

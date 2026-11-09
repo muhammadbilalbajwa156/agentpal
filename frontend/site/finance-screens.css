@@ -9,3 +9,11 @@
 /* Audit evidence extends the existing request cards and palette. */
 .f-timeline{list-style:none;padding:0;margin:15px 0}.f-timeline li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid #edf0f8}.f-timeline-actor{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border-radius:50%;background:#edf2ff;color:#2868ed}.f-timeline-actor svg{width:18px;height:18px}.f-timeline li>div{min-width:0;overflow-wrap:anywhere}.f-timeline small{color:#74809a}.f-timeline p{margin:5px 0}.f-verification,.f-market-summary{line-height:1.8}.f-reconciliation{padding:22px;margin-bottom:22px;overflow-wrap:anywhere}.f-reconciliation p{color:#687695;font-size:13px;line-height:1.8}.f-reconciliation button{margin:4px 10px 4px 0}.f-runtime{margin:22px 0}.f-principles{padding-left:22px;line-height:1.9}.f-principles li{padding:3px 0}.f-live .f-stats{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
 @media(max-width:600px){.f-live .f-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.f-reconciliation{padding:16px}.f-live .f-filters select{max-width:100%}.f-live .f-timeline{font-size:12px}.ap-grid .ag-cell{padding-left:10px;padding-right:10px}.ap-grid .ap-pill{padding:4px 5px;font-size:10px}}
+/* Keep exact-term decisions ahead of optional technical evidence. */
+.f-advisory{border:1px solid #e4eaf5;border-radius:10px;margin:18px 0;padding:12px}
+.f-advisory>summary{cursor:pointer;font-weight:600;font-size:12px;line-height:1.7}
+.f-advisory>summary .ap-pill{font-weight:400;margin-left:5px}
+.overview-lab-cta{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 24px;margin-bottom:20px}
+.overview-lab-cta h2{font-size:17px;margin:0 0 7px}.overview-lab-cta p{font-size:12px;color:#687695;margin:0;line-height:1.6}
+.lab-refund-controls{display:flex;flex-wrap:wrap;align-items:end;gap:10px}.lab-refund-controls label{max-width:240px}
+@media(max-width:600px){.overview-lab-cta{flex-direction:column;align-items:stretch}.f-advisory>summary .ap-pill{display:block;margin:6px 0 0}}

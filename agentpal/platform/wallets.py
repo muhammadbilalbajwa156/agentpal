@@ -36,10 +36,11 @@ def _snapshot(row: dict) -> str:
 
 class WalletBook:
     def __init__(self, store: WalletStore, limits: PlatformLimits,
-                 clock: Callable[[], datetime]):
+                 clock: Callable[[], datetime], resources=None):
         self.store = store
         self.limits = limits
         self.clock = clock
+        self.resources = resources
 
     # ----------------------------------------------------------- validation
     def _check(self, currency: str, values: dict[str, Decimal]) -> None:
@@ -65,6 +66,8 @@ class WalletBook:
         values = {"monthly_budget": monthly, "per_transaction_hard_limit": hard,
                   "per_transaction_review_limit": review if review is not None else hard,
                   "rolling_window_limit": rolling if rolling is not None else monthly}
+        if self.resources:
+            self.resources.check_wallet(owner_id, values)
         self._check(currency, values)
         now = _iso(self.clock())
         wallet_id = "wal_" + uuid.uuid4().hex
@@ -123,6 +126,8 @@ class WalletBook:
         row = self.get_owned(owner_id, wallet_id, actor)
         values = {k: Decimal(row[k]) for k in _LIMIT_FIELDS}
         values.update(changes)
+        if self.resources:
+            self.resources.check_wallet(owner_id, values)
         self._check(row["currency"], values)
         now = _iso(self.clock())
         with self.store.tx() as c:
@@ -170,10 +175,14 @@ class WalletBook:
             monthly = min(Decimal(r["monthly_budget"]), cap.max_monthly_budget)
             hard = min(Decimal(r["per_transaction_hard_limit"]), cap.max_per_transaction,
                        monthly)
+            rolling = min(Decimal(r["rolling_window_limit"]), cap.max_monthly_budget)
+            if self.resources and self.resources.amount_limits(r["owner_id"]):
+                monthly = min(monthly, self.resources.max_monthly)
+                hard = min(hard, self.resources.max_amount, monthly)
+                rolling = min(rolling, self.resources.max_monthly)
             out[r["currency"]] = CurrencyLimits(
                 monthly_budget=monthly,
-                rolling_window_limit=min(Decimal(r["rolling_window_limit"]),
-                                         cap.max_monthly_budget),
+                rolling_window_limit=rolling,
                 per_transaction_hard_limit=hard,
                 per_transaction_review_limit=min(Decimal(r["per_transaction_review_limit"]),
                                                  hard))

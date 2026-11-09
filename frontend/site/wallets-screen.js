@@ -23,17 +23,18 @@ if (window.AgentPalAPI?.live) {
     const result={};for(const name of names){const value=String(d.get(name)??'');if(!/^\d{1,7}(\.\d{1,2})?$/.test(value)){q('#ws-form-error').textContent='Enter amounts with 1–7 digits and at most two decimal places.';return null;}result[name]=value;}return result;
   }
   const inputs=(names,limits={})=>names.map(name=>`<label>${labels[name]}<input name="${name}" inputmode="decimal" pattern="[0-9]{1,7}(\\.[0-9]{1,2})?" required value="${safe(limits[name]??'')}"></label>`).join('');
+  function hostedNotice(){const limits=api.data.integrations?.find(i=>i.provider==='paypal_sandbox')?.hosted_limits;return limits?`<p class="f-live-warning">Server PayPal limit: ${safe(limits.max_amount)} per transaction; ${safe(limits.max_monthly_budget)} monthly wallet budget. Connecting your own PayPal sandbox credentials removes these server limits.</p>`:'';}
   function create(){
     if(api.data.errors?.some(p=>['agents','wallets'].includes(p))){window.App.modal('Create Wallet','<p>Agent or wallet records could not be loaded. Reload before creating an allowance.</p>');return;}
     const available=api.data.agents.filter(a=>!api.data.wallets.some(w=>w.agent_id===a.agent_id));
     if(!available.length){window.App.modal('Create Wallet','<p>No agents without a wallet. Create an agent first; each agent has one allowance wallet.</p>');return;}
-    form('Create Wallet',`<label>Agent<select name="agent_id">${available.map(a=>`<option value="${safe(a.agent_id)}">${safe(a.name)}</option>`).join('')}</select></label><p>Currency: USD</p>${inputs(fields.slice(0,2))}`, (d,b)=>{
+    form('Create Wallet',`<label>Agent<select name="agent_id">${available.map(a=>`<option value="${safe(a.agent_id)}">${safe(a.name)}</option>`).join('')}</select></label><p>Currency: USD</p>${hostedNotice()}${inputs(fields.slice(0,2))}`, (d,b)=>{
       const values=amounts(d,fields.slice(0,2));if(!values)return;
       if(!available.some(a=>a.agent_id===d.get('agent_id')))return;
       return write(b,()=>api.post('wallets',{agent_id:d.get('agent_id'),currency:'USD',...values}));
     });
   }
-  function limits(){const w=current();if(!w)return;form('Wallet Spending Limits',inputs(fields,w.limits),(d,b)=>{const values=amounts(d,fields);if(!values)return;const changed=Object.fromEntries(Object.entries(values).filter(([k,v])=>v!==w.limits[k]));if(!Object.keys(changed).length){q('#ws-form-error').textContent='No limits changed.';return;}return write(b,()=>api.patch(path(w.wallet_id),changed));});}
+  function limits(){const w=current();if(!w)return;form('Wallet Spending Limits',hostedNotice()+inputs(fields,w.limits),(d,b)=>{const values=amounts(d,fields);if(!values)return;const changed=Object.fromEntries(Object.entries(values).filter(([k,v])=>v!==w.limits[k]));if(!Object.keys(changed).length){q('#ws-form-error').textContent='No limits changed.';return;}return write(b,()=>api.patch(path(w.wallet_id),changed));});}
   function freeze(){const w=current();if(!w)return;const op=w.status==='frozen'?'unfreeze':'freeze';window.App.modal(op==='freeze'?'Freeze wallet':'Unfreeze wallet','<p>Confirm this change to the wallet’s spending access?</p><button class="ws-primary" id="ws-confirm">Confirm</button>');const b=q('#ws-confirm');b.onclick=()=>write(b,()=>api.post(path(w.wallet_id)+'/'+op,{}));}
   async function transactions(button){
     const w=current();if(!w)return;const id=w.wallet_id;if(button)button.disabled=true;transactionState={id,loading:true};syncLedger();

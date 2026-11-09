@@ -20,7 +20,7 @@ from ..config import Settings, get_settings, load_policy
 from ..identity import OwnerIdentityService
 from ..identity.store import IdentityStore
 from ..infra_contracts import (
-    AuthenticatedOwner, PaymentProvider, ProviderError, ProviderOrderRef, ProviderStatus,
+    AuthenticatedOwner, PaymentLifecycle, PaymentProvider, ProviderError, ProviderOrderRef, ProviderStatus,
 )
 from ..lifecycle import PaymentLifecycleService
 from ..lifecycle.recovery import ConsistencyError, ConsistencyReport, check_consistency
@@ -156,7 +156,25 @@ class WalletLifecycleGateway:
 
     def capture(self, request_id: str):
         agent_id = self._agent(request_id)
-        return self.lifecycle.capture(agent_id, request_id, self._provider_for(agent_id))
+        provider = self._provider_for(agent_id)
+        if self.resolver is not None:
+            row = self.wallets.query("SELECT owner_id,terms_json FROM wallet_payment_requests "
+                                     "WHERE agent_id=? AND request_id=?", (agent_id, request_id))[0]
+            terms = ApprovalTerms.model_validate_json(row["terms_json"])
+            self.resolver.integrations.resources.check_amount(row["owner_id"], terms.amount,
+                                                              server_provided=provider is self.provider)
+        result = self.lifecycle.capture(agent_id, request_id, provider)
+        if result == PaymentLifecycle.provider_confirmed and isinstance(provider, PayPalSandboxProvider):
+            try:
+                # A separate authenticated final GET, using reconcile's exact-term and
+                # accepted-state receipt gates. The capture POST itself is never proof.
+                # Provider HTTP already bounds response size, connect and read timeouts.
+                self.reconcile(request_id)
+            except Exception:
+                # Capture has already completed. A failed optional read cannot undo it
+                # or make callers retry the financial operation. No receipt is invented.
+                pass
+        return result
 
     def provider_references(self, request_id: str) -> list[ProviderOrderRef]:
         row = self.lifecycle.store.provider_order(request_id, agent_id=self._agent(request_id))
@@ -275,7 +293,7 @@ def build_platform(*, settings: Settings | None = None,
             raise ValueError("hosted proxy requires hosted workspace mode")
         rate_path = ":memory:" if risk_path == ":memory:" else risk_path + ".workspace-limits.db"
         vault = SecretVault.configured(env, data_dir, mode == "hosted")
-        integrations = Integrations(wallets, vault, env, rate_path)
+        integrations = Integrations(wallets, vault, env, rate_path, mode == "hosted")
         setup = SetupService(identity, env, data_dir, mode == "hosted", rate_path)
         resolver = ProviderResolver(integrations, provider, _market_checker, _kernel_tools)
         kernel_tools = _kernel_tools(env)

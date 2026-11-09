@@ -34,6 +34,11 @@ class IntegrationField(BaseModel):
     required: bool
 
 
+class HostedLimits(BaseModel):
+    max_amount: str
+    max_monthly_budget: str
+
+
 class IntegrationItem(BaseModel):
     provider: str
     label: str
@@ -45,6 +50,7 @@ class IntegrationItem(BaseModel):
     hint: str | None = None
     verified_at: str | None = None
     error_code: str | None = None
+    hosted_limits: HostedLimits | None = None
 
 
 class IntegrationList(BaseModel):

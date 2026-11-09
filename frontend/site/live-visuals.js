@@ -30,13 +30,13 @@
     if (!host.childNodes.length) host.append(text('No capabilities granted'));
     host.title = (p.value || []).join(', '); return host;
   };
-  const action = (label, fn) => p => {
+  const action = (label, fn) => Object.assign(p => {
     const b = document.createElement('button'); b.type = 'button'; b.className = 'ap-row-action'; b.textContent = label;
     b.setAttribute('aria-label', label + ' · ' + (p.data.name || p.data.description || p.data.id || 'request'));
     b.onclick = async e => { e.stopPropagation(); b.disabled = true; try { await fn(p.data); } finally { b.disabled = false; } };
     return b;
-  };
-  const gridMarkup = (id, empty = 'No records yet.') => `<div class="ap-grid-shell"><div id="${id}" class="ap-grid ag-theme-quartz" aria-label="${escape(id.replace(/-/g,' '))}" data-empty="${escape(empty)}"></div></div>`;
+  }, {open:fn});
+  const gridMarkup = (id, empty = 'No records yet.') => `<div class="ap-grid-shell"><p class="ap-grid-hint">Tap a row to open details. Press Enter on a focused cell.</p><div id="${id}" class="ap-grid ag-theme-quartz" aria-label="${escape(id.replace(/-/g,' '))}" data-empty="${escape(empty)}"></div></div>`;
   function destroyWithin(root) {
     for (const [el, entry] of grids) if (!el.isConnected || root?.contains(el)) { window.removeEventListener?.('resize',entry.onResize); entry.grid.destroy(); grids.delete(el); }
     for (const [el, entry] of charts) if (!el.isConnected || root?.contains(el)) { entry.chart?.destroy(); charts.delete(el); }
@@ -57,6 +57,8 @@
     const el = document.getElementById(id); if (!el) return;
     destroyWithin();
     if (grids.has(el)) return grids.get(el).grid;
+    const openRow=columnDefs.find(c=>c.cellRenderer?.open)?.cellRenderer.open;
+    if(openRow&&el.parentElement)el.parentElement.dataset.rowActions='true';
     const responsiveColumns = () => {
       const phone=window.matchMedia?.('(max-width: 600px)').matches;
       if(!phone || !['transaction-ledger','decision-history','connected-agents'].includes(id))return columnDefs;
@@ -72,6 +74,8 @@
       getRowId:p => String(p.data.id), pagination:true, paginationPageSize:10,
       paginationPageSizeSelector:[10,25,50], rowHeight:62, headerHeight:46,
       animateRows:false, ensureDomOrder:true, suppressCellFocus:false,
+      onRowClicked:e=>{if(openRow&&window.matchMedia?.('(max-width: 600px)').matches)openRow(e.data);},
+      onCellKeyDown:e=>{if(openRow&&e.event.key==='Enter'&&!e.event.target.closest('button'))openRow(e.data);},
       overlayNoRowsTemplate:'<span class="ap-empty">'+escape(el.dataset.empty)+'</span>',
       ...options,
       defaultCsvExportParams:{fileName:'agentpal-sandbox-'+id+'.csv',

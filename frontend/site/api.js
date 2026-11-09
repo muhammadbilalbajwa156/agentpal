@@ -18,7 +18,7 @@
 
   const data = {
     health: null, agents: [], wallets: [], payments: [], approvals: [],
-    payouts: [], disputes: [], transactions: {}, refunds: {}, loadedAt: null, errors: [],
+    payouts: [], disputes: [], integrations: [], transactions: {}, refunds: {}, loadedAt: null, errors: [],
   };
 
   class ApiError extends Error {
@@ -30,6 +30,13 @@
 
   // Plain-language messages for the API's error codes; never echo server text into HTML.
   const MESSAGES = {
+    hosted_amount_limit_exceeded: 'Server PayPal limits exceeded. Review the hosted per-transaction and monthly limits in Wallets.',
+    server_errands_daily_limit: 'Your daily allowance for server-provided shopping errands is used up. Try again tomorrow or connect your own provider keys.',
+    server_model_calls_daily_limit: 'Your daily allowance for server-provided AI calls is used up. Try again tomorrow or connect your own model key.',
+    server_market_checks_daily_limit: 'Your daily allowance for server-provided catalogue checks is used up. Try again tomorrow or connect your own Channel3 key.',
+    server_page_checks_daily_limit: 'Your daily allowance for server-provided page checks is used up. Try again tomorrow or connect your own Kernel key.',
+    server_paypal_checks_daily_limit: 'Your daily allowance for server-provided PayPal credential checks is used up. Try again tomorrow.',
+    server_quota_unavailable: 'Provider usage limits could not be checked. Try again later.',
     authentication_required: 'Please sign in again.',
     invalid_token: 'That access token was not accepted. Please sign in again.',
     rate_limited: 'Too many requests. Wait a few seconds and try again.',
@@ -126,19 +133,20 @@
       }
     };
     const slow = opts.full || !data.loadedAt || Date.now() - slowAt > 60000;
-    const [agents, wallets, payments, payouts, health, disputes] = await Promise.all([
+    const [agents, wallets, payments, payouts, health, disputes, integrations] = await Promise.all([
       grab('agents', x => x.agents || [], []),
       grab('wallets', x => x.wallets || [], []),
       grab('payment-requests', x => x.payment_requests || [], []),
       grab('payout-requests', x => x.payout_requests || [], []),
       slow ? grab('health', x => x, null) : data.health,
       slow ? grab('disputes', x => x.disputes || [], []) : data.disputes,
+      slow ? grab('integrations', x => x.integrations || [], []) : data.integrations,
     ]);
     if (slow) slowAt = Date.now();
     const approvals = errors.includes('payment-requests') ? [] : payments.filter(
       p => p.decision_requested === true && p.status === 'awaiting_approval');
     if (errors.includes('payment-requests')) errors.push('approvals');
-    Object.assign(data, { health, agents, wallets, payments, approvals, payouts, disputes,
+    Object.assign(data, { health, agents, wallets, payments, approvals, payouts, disputes, integrations,
       loadedAt: new Date(), errors });
     emit('refreshed');
     return data;
@@ -178,7 +186,7 @@
     token = null;
     try { sessionStorage.removeItem(KEY); } catch (_) { /* ignore */ }
     Object.assign(data, { agents: [], wallets: [], payments: [], approvals: [],
-      payouts: [], disputes: [], transactions: {}, refunds: {}, loadedAt: null });
+      payouts: [], disputes: [], integrations: [], transactions: {}, refunds: {}, loadedAt: null });
     if (had) emit('signed-out', reason);
   }
 

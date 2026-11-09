@@ -5,6 +5,7 @@ from __future__ import annotations
 import hmac
 import json
 import uuid
+from decimal import Decimal
 
 from ..contracts import Capability
 from ..infra_contracts import ProviderError
@@ -101,6 +102,8 @@ class PayoutDesk:
 
     def _create(self, ctx, body, idem_key):
         self.require(ctx, Capability.payout_request)
+        if self.p.deps.resources:
+            self.p.deps.resources.check_amount(ctx.owner_id, body.amount)
         payload = body.model_dump(mode="json")
         body_hash = digest(payload)
         with self.store.tx() as c:
@@ -187,15 +190,18 @@ class PayoutDesk:
             self.event(row, owner.owner_id, exc.code)
             raise
 
-    def provider(self, owner_id=None):
+    def provider(self, owner_id=None, *, amount=None):
         provider = self.p.deps.paypal_for(owner_id) if owner_id else self.p.deps.provider
         if not isinstance(provider, PayPalSandboxProvider) or provider.environment != "sandbox":
             raise not_configured()
+        if amount is not None and self.p.deps.resources:
+            self.p.deps.resources.check_amount(owner_id, amount,
+                                               server_provided=provider is self.p.deps.provider)
         return PayPalPayoutsProvider(provider.config, http_client=provider.http_client)
 
     def execute(self, ctx, request_id):
         row = self.agent_row(ctx, request_id)
-        provider = self.provider(row["owner_id"])
+        provider = self.provider(row["owner_id"], amount=Decimal(self.ledger.terms(row)["amount"]))
         try:
             with self.store.tx():
                 self.require(ctx, Capability.payment_execute_sandbox)

@@ -1067,6 +1067,24 @@
         "title": "HealthResponse",
         "type": "object"
       },
+      "HostedLimits": {
+        "properties": {
+          "max_amount": {
+            "title": "Max Amount",
+            "type": "string"
+          },
+          "max_monthly_budget": {
+            "title": "Max Monthly Budget",
+            "type": "string"
+          }
+        },
+        "required": [
+          "max_amount",
+          "max_monthly_budget"
+        ],
+        "title": "HostedLimits",
+        "type": "object"
+      },
       "IntegrationField": {
         "properties": {
           "name": {
@@ -1140,6 +1158,16 @@
               }
             ],
             "title": "Hint"
+          },
+          "hosted_limits": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HostedLimits"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "label": {
             "title": "Label",
@@ -1501,6 +1529,7 @@
           }
         },
         "required": [
+          "provider_mode",
           "request_id",
           "agent_id",
           "owner_id",
@@ -1511,8 +1540,7 @@
           "risk_score",
           "status",
           "decision_requested",
-          "created_at",
-          "provider_mode"
+          "created_at"
         ],
         "title": "LabPayment",
         "type": "object"
@@ -2954,6 +2982,22 @@
             ],
             "description": "Stable provider failure code, when recorded; never provider error text.",
             "title": "Provider Error Code"
+          },
+          "provider_mode": {
+            "anyOf": [
+              {
+                "enum": [
+                  "simulated",
+                  "paypal_sandbox"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Resolved sandbox provider; simulator is explicit. No production payments.",
+            "title": "Provider Mode"
           },
           "recommendation": {
             "title": "Recommendation",

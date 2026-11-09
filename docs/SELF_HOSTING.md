@@ -63,8 +63,9 @@ virtual allowance) and lets you:
    (buyer) account from developer.paypal.com → Sandbox accounts;
 4. capture, then refund. Each step appears in the request's timeline.
 
-The Test Lab agent goes through the same policy rules as any external agent. AI errands are
-limited to 25 a day per workspace.
+The Test Lab agent goes through the same policy rules as any external agent. Errands using
+server-provided keys are limited to 25 per owner in a sliding 24-hour window, including failed
+and policy-blocked errands. Workspace-owned provider keys are exempt from shared-resource caps.
 
 ## 5. Connect your own agents
 
@@ -96,6 +97,25 @@ the Python SDK ([SDK.md](SDK.md)), or the OpenAPI/Postman downloads in the Devel
 | `CHANNEL3_API_KEY`, `KERNEL_API_KEY`, `GROQ_API_KEY`, `OPENROUTER_API_KEY` | Server-wide provider keys (never shown to workspaces) |
 | `AGENTPAL_MODE` | `self_hosted` (default) or `hosted` |
 | `AGENTPAL_SIGNUP_INVITE_CODE` | Hosted mode only: lets invited users create workspaces |
+| `AGENTPAL_HOSTED_MAX_AMOUNT` | Hosted server-PayPal per-transaction ceiling, default `50.00`; applies to wallet limits, payment requests and payout requests, and is rechecked before execution/capture |
+| `AGENTPAL_HOSTED_MAX_MONTHLY_BUDGET` | Hosted server-PayPal monthly wallet budget and rolling-window ceiling, default `500.00` |
+| `AGENTPAL_SERVER_ERRANDS_DAILY` | Shared-key errands per owner per 24 hours, default `25` |
+| `AGENTPAL_SERVER_PAGE_CHECKS_DAILY` | Shared Kernel page checks, agent research browsing and Kernel re-verification per owner per 24 hours, default `30` |
+| `AGENTPAL_SERVER_MARKET_CHECKS_DAILY` | Shared Channel3 initial checks, refreshes, Shopper searches and re-verification per owner per 24 hours, default `60` |
+| `AGENTPAL_SERVER_MODEL_CALLS_DAILY` | Shared Groq/OpenRouter HTTP calls (including retries/fallbacks) and re-verification per owner per 24 hours, default `150` |
+| `AGENTPAL_SERVER_PAYPAL_CHECKS_DAILY` | Shared PayPal credential re-verification per owner per 24 hours, default `30` |
+
+Shared-resource admission is durable across restarts and owner-token changes, and atomic
+across workers. Accounting follows the credentials selected for the operation; replacing
+workspace keys cannot exempt an in-flight server-key call. An attempt consumes its allowance
+before the provider call, even if the provider fails or a later rule blocks the proposal.
+Exhaustion returns HTTP 429 with
+`Retry-After` and `server_<category>_daily_limit`; unavailable quota storage fails closed.
+Payment/payout capture, refund and reconciliation keep their existing financial controls.
+Hosted amount refusals return HTTP 422 `hosted_amount_limit_exceeded`. Hosted ceilings apply
+only while the owner uses server PayPal keys, even if a different sandbox payee is supplied.
+Ordinary operator caps still apply to owners with their own keys. The UI shows hosted
+ceilings in wallet creation and limit editing; configuration values are positive decimals.
 
 ## Limits
 
@@ -104,3 +124,16 @@ the Python SDK ([SDK.md](SDK.md)), or the OpenAPI/Postman downloads in the Devel
 * If you replace your PayPal keys while an order is in flight, capture of that order fails safely
   (the new app cannot see it); reconcile it or create a new request.
 * SQLite on one host; this is a hackathon sandbox build, not production-ready.
+
+## Judging notes
+
+Owner-token rotation or expiry does not revoke agent API keys previously created in that
+workspace. Issuing a replacement owner token also does not revoke earlier owner tokens.
+For end-of-event cleanup, the operator must explicitly revoke old owner credentials and
+revoke or suspend the workspace's agent credentials. Agents still cannot approve payments.
+
+Judges given the same owner token share mutable workspace data, agent/wallet settings,
+request decisions and owner-keyed provider quotas. They can affect each other's walkthroughs;
+the audit cannot distinguish people using the same token. Separate owner workspaces provide
+data isolation. Separate tokens for one owner retain the same data and shared-provider quota.
+These are documented limitations; this change adds no token cascade or judge-data isolation.

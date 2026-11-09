@@ -5,9 +5,10 @@ from datetime import datetime, timezone
 from decimal import Decimal
 import uuid
 
+import httpx
+
 from ..contracts import Capability
 from ..infra_contracts import AgentAuthError
-from ..ratelimit import LimiterUnavailable, SQLiteSlidingWindowLimiter
 from ..workforce.roles import Role
 from .errors import PlatformError, not_found
 
@@ -23,7 +24,6 @@ class TestLab:
         self.p = platform
         self.store = platform.deps.wallet_store
         self.integrations = platform.deps.integrations
-        self.daily = SQLiteSlidingWindowLimiter(self.integrations.limiter_path, "lab-errands-daily", 25, 86400.0)
 
     def agent(self, owner):
         vault = self.integrations.vault
@@ -37,8 +37,11 @@ class TestLab:
             view, key = self.p.agents.register(owner, "Test Lab agent", "Browser Test Lab", Role.external,
                 [Capability.wallet_read, Capability.payment_prepare, Capability.owner_request_decision,
                  Capability.payment_execute_sandbox, Capability.research_search, Capability.research_fetch], {})
+            limits = self.integrations.resources.amount_limits(owner.owner_id)
+            monthly = min(Decimal("200.00"), Decimal(limits["max_monthly_budget"])) if limits else Decimal("200.00")
+            hard = min(Decimal("50.00"), Decimal(limits["max_amount"]), monthly) if limits else Decimal("50.00")
             wallet = self.p.wallets.create(owner.owner_id, owner.owner_id, view["agent_id"], "USD",
-                                           Decimal("200.00"), Decimal("50.00"), None, None)
+                                           monthly, hard, None, None)
             encrypted = vault.encrypt(owner.owner_id, "lab_agent", {"api_key": key.api_key})
             c.execute("INSERT INTO platform_lab_agents VALUES (?,?,?,?)", (owner.owner_id, view["agent_id"], wallet["wallet_id"], encrypted))
             return {"agent_id": view["agent_id"], "wallet_id": wallet["wallet_id"]}
@@ -62,9 +65,8 @@ class TestLab:
     def view(self, owner, request_id):
         view = self.p.payments.get_for_owner(owner, request_id)
         refs = self.p.payments.reconciliation(owner, request_id)["provider_references"]
-        provider = self.p.deps.paypal_for(owner.owner_id)
         return {**view, "payer_action_url": refs[0].get("payer_action_url") if refs else None,
-                "provider_mode": "simulated" if provider.name == "local_simulation" else "paypal_sandbox"}
+                "provider_mode": view["provider_mode"]}
 
     def execute(self, owner, request_id):
         # Resolve ownership before creating any agent or touching a provider.
@@ -80,23 +82,26 @@ class TestLab:
         from ..agents.shopper.core import Shopper, ShopperError
         from .models import PaymentCreate
         keys = {}
+        shared = set()
         for provider, name in (("channel3", "CHANNEL3_API_KEY"), ("groq", "GROQ_API_KEY"),
                                ("openrouter", "OPENROUTER_API_KEY")):
-            fields = self.integrations.resolve(owner.owner_id, provider)
+            fields = self.integrations.fields(owner.owner_id, provider)
+            if fields is None:
+                fields = self.integrations.server_fields(provider)
+                if fields:
+                    shared.add(provider)
             keys[name] = fields["api_key"] if fields else ""
         if not keys["CHANNEL3_API_KEY"]:
             raise IntegrationRequired("channel3")
         if not (keys["GROQ_API_KEY"] or keys["OPENROUTER_API_KEY"]):
             raise IntegrationRequired("groq")
         self.integrations.admission("lab:" + owner.owner_id)
-        # Daily cap per workspace so shared server model quota cannot be exhausted by one user.
-        try:
-            allowed, retry = self.daily.hit(owner.owner_id)
-        except LimiterUnavailable:
-            raise PlatformError(503, "lab_unavailable") from None
-        if not allowed:
-            raise PlatformError(429, "lab_daily_limit", headers={"Retry-After": str(retry)})
         _, key = self.context(owner)
+        resources = self.integrations.resources
+        for provider in ("channel3", "groq", "openrouter"):
+            if provider in shared:
+                resources.consume(owner.owner_id, provider, "errands", server_provided=True)
+                break  # one errand, even with multiple shared providers
         keys["AGENTPAL_AGENT_KEY"] = key
         keys["AGENTPAL_BASE_URL"] = "http://127.0.0.1:8000"
         events = []
@@ -105,8 +110,16 @@ class TestLab:
             # Shopper's Redactor cleans known workspace keys and upstream data first.
             events.append({"at": datetime.now(timezone.utc).isoformat(), "message": event["message"]})
 
-        shopper = Shopper(env=keys, emit=emit)
+        def admission(request):
+            provider = {"api.trychannel3.com": "channel3", "api.groq.com": "groq",
+                        "openrouter.ai": "openrouter"}.get(request.url.host)
+            if provider:
+                resources.consume(owner.owner_id, provider, server_provided=provider in shared)
+
+        client = httpx.Client(timeout=20, follow_redirects=False, event_hooks={"request": [admission]})
+        shopper = None
         try:
+            shopper = Shopper(env=keys, emit=emit, client=client)
             # Only planning/search is delegated to the bundled core. Submit its proposal
             # through the same authenticated agent PaymentDesk as every external agent.
             body = PaymentCreate.model_validate(shopper.plan(task, str(budget)))
@@ -116,4 +129,6 @@ class TestLab:
             emit({"message": "Errand could not produce a payment proposal. No payment was executed."})
             return {"status": "failed", "request_id": None, "events": events}
         finally:
-            shopper.close()
+            if shopper:
+                shopper.close()
+            client.close()

@@ -606,6 +606,8 @@ class TimelineOut(_Out):
 
 
 class PaymentOut(_Out):
+    provider_mode: Literal["simulated", "paypal_sandbox"] | None = Field(default=None,
+        description="Resolved sandbox provider; simulator is explicit. No production payments.")
     owner_decision: OwnerDecisionOut | None = Field(default=None, description="Owner reads only; null for agents.")
     policy_block: PolicyBlockOut | None = Field(default=None, description="Deterministic refusal before a human decision; owner reads only.")
     verification: VerificationOut | None = None

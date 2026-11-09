@@ -233,6 +233,9 @@ class PaymentDesk:
                 self._store_market_check(agent_id, request_id,
                                          json.loads(prior[0]["payload_json"]), idem_key, digest)
                 return
+        if self.deps.resources:
+            self.deps.resources.consume(self.registry.get_agent(agent_id).owner_id, "channel3",
+                                        server_provided=checker is self.deps.market_checker)
         try:
             check = checker.check(amount=body.amount, currency=body.currency,
                                   merchant_domain=body.merchant_domain,
@@ -275,6 +278,9 @@ class PaymentDesk:
         previous = json.loads(rows[0]["payload_json"])
         row = self._prepared_row(request_id)
         terms = json.loads(row["terms_json"])
+        if self.deps.resources:
+            self.deps.resources.consume(owner.owner_id, "channel3",
+                                        server_provided=checker is self.deps.market_checker)
         check = checker.check(amount=Decimal(str(terms["amount"])), currency=terms["currency"],
                               merchant_domain=terms.get("merchant_domain"),
                               product_query=previous["input"].get("product_query"),
@@ -311,9 +317,13 @@ class PaymentDesk:
             signals=[{"code": "PAGE_DATA_UNAVAILABLE", "severity": "info",
                       "message": "Browser evidence is unavailable; owner approval is still required."}])
 
+        tools = self.deps.kernel_for(owner.owner_id)
+        checker: PageChecker | None = tools[1] if tools else None
+        if checker is not None and self.deps.resources:
+            self.deps.resources.consume(owner.owner_id, "kernel",
+                                        server_provided=checker is self.deps.page_checker)
+
         def check():
-            tools = self.deps.kernel_for(owner.owner_id)
-            checker: PageChecker | None = tools[1] if tools else None
             if checker is None:
                 return None
             _browser_target(url)
@@ -351,13 +361,15 @@ class PaymentDesk:
             raise PlatformError(503, "browser_admission_unavailable") from None
         if not allowed:
             raise PlatformError(429, "rate_limited", headers={"Retry-After": str(retry)})
+        tools = self.deps.kernel_for(ctx.owner_id)
+        browser: BrowserProvider | None = tools[0] if tools else None
+        if browser is not None and self.deps.resources:
+            self.deps.resources.consume(ctx.owner_id, "kernel",
+                                        server_provided=browser is self.deps.browser)
         fallback = BrowseOut(status="no_data", requested_url=url)
 
         def capture():
             _browser_target(url)
-            agent = self.registry.get_agent(ctx.agent_id)
-            tools = self.deps.kernel_for(agent.owner_id)
-            browser: BrowserProvider | None = tools[0] if tools else None
             if browser is None or not browser.configured():
                 return None
             shot = browser.capture(url, timeout_s=min(30.0, BROWSER_DEADLINE_S))
@@ -407,7 +419,13 @@ class PaymentDesk:
         facts = self.risk().store.lifecycle_facts(request_id, agent_id=row["agent_id"])
         reason = facts.get("last_reason") if facts else None
         stable_error = reason if reason and reason.upper() in KNOWN_ISSUES else None
+        order = self.risk().store.provider_order(request_id, agent_id=row["agent_id"])
+        provider = self.deps.paypal_for(meta["owner_id"])
+        provider_name = order["provider"] if order else getattr(provider, "name", None)
+        provider_mode = ("simulated" if provider_name == "local_simulation" else
+                         "paypal_sandbox" if provider_name == "paypal" else None)
         return {"verification": self.history(request_id).verification(),
+                "provider_mode": provider_mode,
                 "page_check": self.page_check(request_id),
                 "market_check": self.market_check(request_id),"request_id": request_id, "agent_id": meta["agent_id"],
                 "owner_id": meta["owner_id"], "wallet_id": meta["wallet_id"],
@@ -427,6 +445,8 @@ class PaymentDesk:
         if body.request_owner_decision:
             self._require(ctx, Capability.owner_request_decision, "v1.payment.create",
                           resource_agent_id=ctx.agent_id)
+        if self.deps.resources:
+            self.deps.resources.check_amount(ctx.owner_id, body.amount)
         digest = body_digest(body)
         # Replay survives wallet freezes and later lifecycle changes. Authentication
         # and current permissions still apply before any saved response is disclosed.
@@ -449,10 +469,11 @@ class PaymentDesk:
             return self._save_response(ctx.agent_id, request_id), True
         # Channel3 market check: advisory evidence for the owner. Runs once per claimed
         # request, OUTSIDE the wallet write transaction (network I/O never holds the
-        # lock) and never raises; replays return the stored snapshot (no extra credit).
-        self._run_market_check(ctx.agent_id, request_id, body, idem_key, digest)
+        # lock). Provider failures are advisory; server-quota refusal fails closed.
+        # Replays return the stored snapshot (no extra credit).
         token = _pending_request_id.set(request_id)
         try:
+            self._run_market_check(ctx.agent_id, request_id, body, idem_key, digest)
             # SQLite serializes preparation across threads AND processes. The
             # initial claim is already durable, so a process death between the risk
             # commit and this wallet commit remains recoverable with the same ID.
@@ -698,6 +719,9 @@ class PaymentDesk:
             raise PlatformError(409, "wallet_frozen")
         row = self._prepared_row(request_id)
         terms = ApprovalTerms.model_validate_json(row["terms_json"])
+        if self.deps.resources:
+            self.deps.resources.check_amount(meta["owner_id"], terms.amount,
+                                             server_provided=provider is self.deps.provider)
         try:
             ticket = lifecycle.begin_execution(ctx.agent_id, request_id, terms, provider)
         except PermissionError:
@@ -726,6 +750,9 @@ class PaymentDesk:
         wallet = self.wallets.get(meta["wallet_id"])
         if wallet is None or wallet["status"] != "active":
             raise PlatformError(409, "wallet_frozen")
+        if self.deps.resources:
+            terms = ApprovalTerms.model_validate_json(self._prepared_row(request_id)["terms_json"])
+            self.deps.resources.check_amount(owner.owner_id, terms.amount)
         try:
             return PaymentLifecycle(lifecycle.capture(request_id))
         except InvalidLedgerTransition as exc:

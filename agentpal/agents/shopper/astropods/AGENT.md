@@ -5,7 +5,7 @@ tags:
   - agentic-commerce
   - paypal
   - safety
-repository: "github:muhammadbilalbajwa156/laptop-deal-hub"
+repository: "github:muhammadbilalbajwa156/agentpal"
 authors:
   - name: Muhammad Bilal Bajwa
     account: agentpal

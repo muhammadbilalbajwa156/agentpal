@@ -2,9 +2,31 @@
 from datetime import datetime
 import json
 
+import httpx
 import pytest
 
-from test_paypal_refunds import world  # noqa: F401
+from test_paypal_refunds import RefundPayPal, world  # noqa: F401
+
+
+@pytest.fixture(autouse=True)
+def post_only_capture_evidence(monkeypatch):
+    """These regressions start with POST-only evidence, then test explicit reads.
+
+    Make the new optional final GET unavailable once at the HTTP boundary. Preserve
+    every assertion: POST evidence still cannot grant read/webhook provenance.
+    The automatic successful-read path is covered by test_platform_judge_capture.
+    """
+    original = RefundPayPal.handler
+
+    def handler(self, request):
+        if (request.method == 'GET' and '/checkout/orders/' in request.url.path
+                and self.status == 'COMPLETED' and not getattr(self, '_optional_read_failed', False)):
+            self._optional_read_failed = True
+            self.requests.append(request)
+            return httpx.Response(503, json={'name': 'SERVICE_UNAVAILABLE'})
+        return original(self, request)
+
+    monkeypatch.setattr(RefundPayPal, 'handler', handler)
 
 
 def test_capture_read_refund_history_and_no_provider_io(world):  # noqa: F811

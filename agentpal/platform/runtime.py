@@ -59,7 +59,7 @@ class Platform:
         self.verifier = ApiKeyVerifier(self.registry, self.clock)
         self.agents = AgentDirectory(self.registry, self.credentials, deps.limits,
                                      self.clock)
-        self.wallets = WalletBook(deps.wallet_store, deps.limits, self.clock)
+        self.wallets = WalletBook(deps.wallet_store, deps.limits, self.clock, deps.resources)
         self.payments = PaymentDesk(self.registry, self.checker, self.wallets, deps,
                                     risk_getter, self.clock)
         from .lab import TestLab
