@@ -1,0 +1,48 @@
+[project]
+name = "agentpal"
+version = "0.1.0"
+description = "AgentPal Phase 1: AI financial risk intelligence for autonomous-agent payment requests"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.110",
+  "pydantic>=2.6",
+  "uvicorn>=0.27",
+  "httpx>=0.27",
+  "publicsuffixlist>=1.0.2",
+  "cryptography>=42",
+  "certifi>=2024.2.2",
+  "kernel==0.139.0",
+]
+
+[project.optional-dependencies]
+train = ["scikit-learn>=1.4", "numpy>=1.26"]
+llm = ["llama-cpp-python>=0.3"]
+dev = ["pytest>=8", "scikit-learn>=1.4", "numpy>=1.26"]
+
+[tool.setuptools]
+packages = ["agentpal", "agentpal.analyzers", "agentpal.intelligence", "agentpal.providers",
+            "agentpal.tools", "agentpal.identity", "agentpal.lifecycle", "agentpal.platform",
+            "agentpal.wallet", "agentpal.workforce", "agentpal.demo"]
+
+[tool.setuptools.package-data]
+agentpal = ["resources/*"]
+"agentpal.providers" = ["certs/*.pem"]
+"agentpal.demo" = ["*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [".", "tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+extend-exclude = ["data", "artifacts", "build", "reports"]
+
+[tool.ruff.lint]
+# pyflakes, pycodestyle errors/warnings, bugbear. Line length is a style guide, not a gate.
+select = ["E", "F", "W", "B"]
+ignore = ["E501"]
+
+[tool.mypy]
+# informational in CI for now (see docs/AUDIT_LEDGER.md, LEAD-06)
+ignore_missing_imports = true

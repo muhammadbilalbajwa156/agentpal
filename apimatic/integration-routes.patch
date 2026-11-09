@@ -1,0 +1,97 @@
+--- a/agentpal/agentpal/platform/models.py
++++ b/agentpal/agentpal/platform/models.py
+@@ -44,7 +44,7 @@
+ 
+ 
+ def _decimal_string(v: object) -> object:
+-    if isinstance(v, bool) or isinstance(v, float):
++    if not isinstance(v, (str, Decimal)):
+         raise ValueError("amounts must be decimal strings such as \"49.99\", not floats")
+     if isinstance(v, str) and not re.fullmatch(AMOUNT_PATTERN, v):
+         raise ValueError("amount must be a plain decimal string such as \"49.99\"")
+@@ -94,7 +94,10 @@
+         default=None, max_length=32,
+         description="Initial grants; default: the role's defaults. Must be within the "
+                     "role's ceiling.")
+-    metadata: dict[str, str] = Field(default_factory=dict, max_length=20)
++    metadata: dict[Annotated[str, Field(pattern=_META_KEY.pattern)],
++                   Annotated[str, Field(max_length=200)]] = Field(
++                       default_factory=dict, max_length=20,
++                       json_schema_extra={"propertyNames": {"pattern": _META_KEY.pattern}})
+ 
+     model_config = ConfigDict(extra="forbid", json_schema_extra={"examples": [{
+         "name": "procurement-bot", "description": "Buys SaaS seats for the team",
+@@ -215,7 +218,10 @@
+     rolling_window_limit: Amount | None = None
+ 
+     model_config = ConfigDict(extra="forbid", json_schema_extra={"examples": [{
+-        "monthly_budget": "250.00"}]})
++        "monthly_budget": "250.00"}],
++        "anyOf": [{"required": [name], "properties": {name: {"type": "string"}}}
++                  for name in ("monthly_budget", "per_transaction_limit",
++                               "per_transaction_review_limit", "rolling_window_limit")]})
+ 
+     @model_validator(mode="after")
+     def _something(self) -> "WalletUpdate":
+--- a/agentpal/agentpal/platform/router.py
++++ b/agentpal/agentpal/platform/router.py
+@@ -9,9 +9,10 @@
+ from __future__ import annotations
+ 
+ import logging
++import re
+ from typing import Annotated
+ 
+-from fastapi import APIRouter, Depends, Header, Path, Request, Response
++from fastapi import APIRouter, Depends, Path, Request, Response
+ from fastapi.security import HTTPBearer
+ 
+ from .. import __version__
+@@ -307,17 +308,19 @@
+                                       "description": "idempotent replay (same key, same "
+                                                      "body); header Idempotent-Replayed"},
+                        400: {"model": ErrorOut,
+-                             "description": "Idempotency-Key header missing"}})
++                             "description": "Idempotency-Key header missing"}},
++            openapi_extra={"parameters": [{
++                "name": "Idempotency-Key", "in": "header", "required": True,
++                "description": "Same agent, key and body replay the stored response.",
++                "schema": {"type": "string", "pattern": IDEMPOTENCY_KEY_PATTERN}}]})
+     def create_payment(body: PaymentCreate, agent: Agent, request: Request,
+-                       response: Response,
+-                       idempotency_key: Annotated[str | None, Header(
+-                           alias="Idempotency-Key", pattern=IDEMPOTENCY_KEY_PATTERN,
+-                           description="Required. Same key + same body returns the same "
+-                                       "payment request; a different body is refused."
+-                       )] = None):
++                       response: Response):
++        # Document a required header while preserving the established missing-header 400.
++        idempotency_key = request.headers.get("Idempotency-Key")
+         if idempotency_key is None:
+             raise PlatformError(400, "idempotency_key_required")
+-        if contains_credential(idempotency_key):
++        if (not re.fullmatch(IDEMPOTENCY_KEY_PATTERN, idempotency_key)
++                or contains_credential(idempotency_key)):
+             raise PlatformError(422, "invalid_request")
+         view, replayed = _platform(request).payments.create(agent.ctx, body, idempotency_key)
+         if replayed:
+@@ -383,7 +386,18 @@
+     # ---------------------------------------------------------- webhooks
+     @r.post("/providers/paypal/webhooks", response_model=WebhookAck,
+             operation_id="receivePaypalWebhook", tags=["providers"],
+-            openapi_extra={"security": []},
++            openapi_extra={
++                "security": [],
++                "parameters": [{"name": name, "in": "header", "required": True,
++                                "schema": {"type": "string"}}
++                               for name in ("PAYPAL-TRANSMISSION-ID", "PAYPAL-TRANSMISSION-TIME",
++                                            "PAYPAL-TRANSMISSION-SIG", "PAYPAL-CERT-URL",
++                                            "PAYPAL-AUTH-ALGO")],
++                "requestBody": {
++                    "required": True,
++                    "description": "Raw PayPal event bytes. Preserve exactly for signature verification.",
++                    "content": {"application/json": {"schema": {
++                        "type": "object", "additionalProperties": True}}}}},
+             responses={400: {"model": ErrorOut, "description": "verification failed"},
+                        503: {"model": ErrorOut, "description": "provider not configured"}})
+     async def paypal_webhook(request: Request):

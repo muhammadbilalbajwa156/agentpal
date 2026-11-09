@@ -1,0 +1,4 @@
+# Caller-side client for training/modal_train.py (runs the GPU pipeline on Modal).
+# Verified API surface: 2026-10-30. Credentials come from MODAL_TOKEN_ID /
+# MODAL_TOKEN_SECRET in the environment, never from files in this repository.
+modal==1.6.3

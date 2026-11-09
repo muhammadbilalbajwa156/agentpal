@@ -1,0 +1,997 @@
+{
+  "base_commit": "db7d00870563cb55c6702787408e9bbcfbe65fec",
+  "date": "2026-11-03",
+  "baseline": {
+    "passed": 2914,
+    "skipped": 38,
+    "warnings": 3,
+    "seconds": 593.78
+  },
+  "matrix": {
+    "transport": "real HTTP on 127.0.0.1:8102",
+    "provider": "offline simulator",
+    "actors": [
+      null,
+      "wrong_prefix",
+      "revoked",
+      "a",
+      "b",
+      "owner_a",
+      "owner_b",
+      "owner_no_mfa"
+    ],
+    "case_count": 376,
+    "routes": [
+      {
+        "method": "GET",
+        "path": "/v1/agents",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/agents",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          201,
+          201,
+          201
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/agents/{agent_id}",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/agents/{agent_id}/credentials",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "DELETE",
+        "path": "/v1/agents/{agent_id}/credentials/{key_id}",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/agents/{agent_id}/permissions",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "PUT",
+        "path": "/v1/agents/{agent_id}/permissions",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/agents/{agent_id}/reactivate",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/agents/{agent_id}/suspend",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/approvals",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/disputes",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          503,
+          503,
+          503
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/health",
+        "statuses": [
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/me",
+        "statuses": [
+          401,
+          401,
+          401,
+          200,
+          200,
+          403,
+          403,
+          403
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/me/wallet",
+        "statuses": [
+          401,
+          401,
+          401,
+          200,
+          200,
+          403,
+          403,
+          403
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/me/wallet/transactions",
+        "statuses": [
+          401,
+          401,
+          401,
+          200,
+          200,
+          403,
+          403,
+          403
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/payment-requests",
+        "statuses": [
+          401,
+          401,
+          401,
+          200,
+          200,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests",
+        "statuses": [
+          401,
+          401,
+          401,
+          201,
+          201,
+          403,
+          403,
+          403
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/payment-requests/{request_id}",
+        "statuses": [
+          401,
+          401,
+          401,
+          404,
+          404,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/approve",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/capture",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/execute",
+        "statuses": [
+          401,
+          401,
+          401,
+          404,
+          404,
+          403,
+          403,
+          403
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/market-check",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/page-check",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/payment-requests/{request_id}/reconciliation",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/reconciliation",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/payment-requests/{request_id}/refunds",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/refunds",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/refunds/reconciliation",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/reject",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/{request_id}/request-decision",
+        "statuses": [
+          401,
+          401,
+          401,
+          404,
+          404,
+          403,
+          403,
+          403
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/payout-requests",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payout-requests",
+        "statuses": [
+          401,
+          401,
+          401,
+          201,
+          201,
+          403,
+          403,
+          403
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/payout-requests/{request_id}",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payout-requests/{request_id}/approve",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payout-requests/{request_id}/execute",
+        "statuses": [
+          401,
+          401,
+          401,
+          404,
+          404,
+          403,
+          403,
+          403
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payout-requests/{request_id}/reconciliation",
+        "statuses": [
+          401,
+          401,
+          401,
+          404,
+          404,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payout-requests/{request_id}/reject",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/paypal/reconciliation",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          503,
+          503,
+          503
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/providers/paypal/webhooks",
+        "statuses": [
+          400,
+          400,
+          400,
+          400,
+          400,
+          400,
+          400,
+          400
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/research/browse",
+        "statuses": [
+          401,
+          401,
+          401,
+          200,
+          200,
+          403,
+          403,
+          403
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/wallets",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          200,
+          200,
+          200
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/wallets",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/wallets/{wallet_id}",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "PATCH",
+        "path": "/v1/wallets/{wallet_id}",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/wallets/{wallet_id}/freeze",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "GET",
+        "path": "/v1/wallets/{wallet_id}/transactions",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      },
+      {
+        "method": "POST",
+        "path": "/v1/wallets/{wallet_id}/unfreeze",
+        "statuses": [
+          401,
+          401,
+          401,
+          403,
+          403,
+          404,
+          404,
+          404
+        ]
+      }
+    ]
+  },
+  "live_paypal_app_linked": {
+    "environment": "sandbox",
+    "amount": "1.00",
+    "orders": 1,
+    "checks": {
+      "agent_approve": 403,
+      "execute_without_owner": 409,
+      "execute_race": [
+        200,
+        409
+      ],
+      "agent_capture": 403,
+      "other_owner_capture": 404,
+      "capture_before_buyer": 409,
+      "buyer": {
+        "status": "approved",
+        "reason": "buyer_submit_clicked_not_payment_evidence"
+      },
+      "capture_races": [
+        [
+          200,
+          409
+        ]
+      ],
+      "verified_capture": "provider_confirmed",
+      "over_refund": 409,
+      "refund_race": [
+        201,
+        409
+      ],
+      "partial_refund": "COMPLETED",
+      "refund_replay_changed": [
+        200,
+        409
+      ],
+      "final_payment": "reversed"
+    },
+    "merchant": "app-linked",
+    "request_suffix": "5d20",
+    "order_suffix": "101Y",
+    "refund_suffixes": [
+      "260R",
+      "381U"
+    ]
+  },
+  "live_paypal_northwind": {
+    "environment": "sandbox",
+    "amount": "1.00",
+    "orders": 1,
+    "checks": {
+      "agent_approve": 403,
+      "execute_without_owner": 409,
+      "execute_race": [
+        200,
+        409
+      ],
+      "agent_capture": 403,
+      "other_owner_capture": 404,
+      "capture_before_buyer": 409,
+      "buyer": {
+        "status": "approved",
+        "reason": "buyer_submit_clicked_not_payment_evidence"
+      },
+      "capture_races": [
+        [
+          409,
+          200
+        ]
+      ],
+      "verified_capture": "provider_confirmed",
+      "over_refund": 409,
+      "refund_race": [
+        201,
+        409
+      ],
+      "partial_refund": "FAILED"
+    },
+    "request_suffix": "a9a0",
+    "order_suffix": "660G"
+  },
+  "northwind_refund_diagnostic": {
+    "http": 201,
+    "refund_status": "FAILED",
+    "provider_errors": [
+      {
+        "status": 403,
+        "name": "NOT_AUTHORIZED",
+        "issues": [
+          "PERMISSION_DENIED"
+        ]
+      }
+    ],
+    "request_suffix": "a9a0"
+  },
+  "northwind_payee_read": {
+    "http": 200,
+    "order_suffix": "660G",
+    "single_unit": true,
+    "exact_payee": true,
+    "exact_amount": true,
+    "amount_includes_breakdown": true
+  },
+  "live_channel3": {
+    "paid_search_budget": 1,
+    "status": "awaiting_approval",
+    "advisory_level": "high_risk",
+    "signal_codes": [
+      "PRICE_FAR_BELOW_MARKET",
+      "MERCHANT_NOT_IN_MARKET"
+    ],
+    "request_suffix": "5204",
+    "unapproved_execute": 409
+  },
+  "offline_sweep": {
+    "mode": "offline real app, simulator provider",
+    "inputs": [
+      {
+        "field": "product_query",
+        "case": "injection",
+        "http": 201,
+        "state": "awaiting_approval"
+      },
+      {
+        "field": "product_query",
+        "case": "html",
+        "http": 201,
+        "state": "awaiting_approval"
+      },
+      {
+        "field": "product_query",
+        "case": "controls",
+        "http": 201,
+        "state": "awaiting_approval"
+      },
+      {
+        "field": "product_query",
+        "case": "overlong",
+        "http": 422,
+        "state": null
+      },
+      {
+        "field": "merchant_name",
+        "case": "injection",
+        "http": 201,
+        "state": "awaiting_approval"
+      },
+      {
+        "field": "merchant_name",
+        "case": "html",
+        "http": 201,
+        "state": "awaiting_approval"
+      },
+      {
+        "field": "merchant_name",
+        "case": "controls",
+        "http": 201,
+        "state": "awaiting_approval"
+      },
+      {
+        "field": "merchant_name",
+        "case": "overlong",
+        "http": 422,
+        "state": null
+      },
+      {
+        "field": "merchant_domain",
+        "case": "html",
+        "http": 422,
+        "state": null
+      },
+      {
+        "field": "merchant_domain",
+        "case": "overlong",
+        "http": 422,
+        "state": null
+      },
+      {
+        "field": "purpose",
+        "case": "controls",
+        "http": 201,
+        "state": "awaiting_approval"
+      },
+      {
+        "field": "purpose",
+        "case": "overlong",
+        "http": 422,
+        "state": null
+      },
+      {
+        "field": "product_url",
+        "case": "html",
+        "http": 201,
+        "state": "awaiting_approval"
+      },
+      {
+        "field": "product_url",
+        "case": "credentials",
+        "http": 422,
+        "state": null
+      },
+      {
+        "field": "product_url",
+        "case": "port",
+        "http": 422,
+        "state": null
+      },
+      {
+        "field": "product_url",
+        "case": "file",
+        "http": 422,
+        "state": null
+      },
+      {
+        "field": "product_url",
+        "case": "overlong",
+        "http": 422,
+        "state": null
+      }
+    ],
+    "races": [
+      {
+        "http": [
+          200,
+          200
+        ],
+        "state": "provider_pending",
+        "orders": 1
+      },
+      {
+        "http": [
+          200,
+          200
+        ],
+        "state": "provider_pending",
+        "orders": 1
+      },
+      {
+        "http": [
+          200,
+          200
+        ],
+        "state": "provider_pending",
+        "orders": 1
+      },
+      {
+        "http": [
+          200,
+          200
+        ],
+        "state": "provider_pending",
+        "orders": 1
+      }
+    ]
+  },
+  "live_log_scans": [
+    {
+      "run": "paypal",
+      "configured_secret_free": true,
+      "no_plaintext_owner_agent_key": true,
+      "no_provider_body_or_traceback_markers": true
+    },
+    {
+      "run": "paypal",
+      "configured_secret_free": true,
+      "no_plaintext_owner_agent_key": true,
+      "no_provider_body_or_traceback_markers": true
+    },
+    {
+      "run": "channel3",
+      "configured_secret_free": true,
+      "no_plaintext_owner_agent_key": true,
+      "no_provider_body_or_traceback_markers": true
+    }
+  ],
+  "final_full_suite": {
+    "passed": 2978,
+    "skipped": 40,
+    "xfailed": 1,
+    "warnings": 3,
+    "seconds": 663.67,
+    "exit_code": 0,
+    "date": "2026-11-03"
+  },
+  "final_e2e_suite": {
+    "passed": 64,
+    "skipped": 2,
+    "xfailed": 1,
+    "exit_code": 0
+  },
+  "resume_verification": {
+    "date": "2026-11-05",
+    "server_restarted": true,
+    "e2e_suite": {
+      "passed": 64,
+      "skipped": 2,
+      "xfailed": 1,
+      "exit_code": 0
+    },
+    "ruff_agentpal_training_tests": "passed",
+    "ruff_agentpal_tests": "passed",
+    "additional_live_provider_calls": 0,
+    "python_sources_unchanged_from_review_commit": "55e1343",
+    "matrix_status_counts": {
+      "401": 135,
+      "403": 93,
+      "200": 33,
+      "201": 7,
+      "404": 94,
+      "503": 6,
+      "400": 8
+    }
+  }
+}

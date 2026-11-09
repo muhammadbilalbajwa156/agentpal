@@ -1,0 +1,24 @@
+{
+  "request_id": "req_sus_016",
+  "agent_id": "agent_demo_009",
+  "amount": 49.0,
+  "currency": "USD",
+  "merchant_name": "Example Hosting",
+  "merchant_domain": "example.com",
+  "purpose": "VPS instance for the staging environment",
+  "business_justification": "Hosting for a customer project",
+  "recurring": false,
+  "billing_interval": null,
+  "monthly_budget": 100.0,
+  "previous_payment_reference": null,
+  "evidence": [
+    {
+      "type": "invoice",
+      "description": "Invoice",
+      "reference": "INV-77812",
+      "amount": 19.0,
+      "currency": "USD",
+      "merchant_domain": "cheap-vps.example.net"
+    }
+  ]
+}

@@ -1,0 +1,640 @@
+{
+  "auth": {
+    "bearer": [
+      {
+        "key": "token",
+        "type": "string",
+        "value": "{{agent_a_key}}"
+      }
+    ],
+    "type": "bearer"
+  },
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+          "pm.test('error body never echoes credentials', function () {",
+          "  if (pm.response.code >= 400) {",
+          "    ['agent_a_key', 'agent_b_key', 'owner_key', 'invalid_key'].forEach(function (key) {",
+          "      const value = pm.collectionVariables.get(key);",
+          "      if (value) { pm.expect(pm.response.text()).not.to.include(value); }",
+          "    });",
+          "  }",
+          "});"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "info": {
+    "_postman_id": "36a149dd-9604-5a87-8ce0-945c95b719f1",
+    "description": "IMPLEMENTED — TESTED: legacy security scenarios. V1 scenarios are DESIGN ONLY until verified with WS1/WS2 wiring. OpenAPI examples are documentation; select the security folder to run assertions. No real money.",
+    "name": "AgentPal legacy",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "description": "Generated documentation examples. Security scenarios run separately.",
+      "id": "88841a71-92f8-535d-9246-43ee862ea69e",
+      "item": [
+        {
+          "id": "a6a3e5b4-e392-57b7-9c2e-065e876b2111",
+          "name": "POST /assess",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"agent_id\": \"example\",\n  \"amount\": 1,\n  \"currency\": \"example\",\n  \"merchant_name\": \"example\",\n  \"purpose\": \"example\",\n  \"request_id\": \"example\"\n}\n"
+            },
+            "description": "Assess Endpoint",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assess"
+              ],
+              "raw": "{{base_url}}/assess"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "22116d82-6f40-5134-b0e1-212c538139f5",
+          "name": "GET /assessments/{request_id}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Get Assessment",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assessments",
+                "{{request_id}}"
+              ],
+              "raw": "{{base_url}}/assessments/{{request_id}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "308b02a7-899a-5732-90f9-86950291f820",
+          "name": "GET /health",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Health",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ],
+              "raw": "{{base_url}}/health"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "312cfd8c-8b77-581c-b84e-2684e7a4e0aa",
+          "name": "GET /model-info",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Model Info",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "model-info"
+              ],
+              "raw": "{{base_url}}/model-info"
+            }
+          },
+          "response": []
+        }
+      ],
+      "name": "OpenAPI legacy"
+    },
+    {
+      "id": "46bc5408-2f01-5164-b421-efcb7d372458",
+      "item": [
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('assessment only, authentication required', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.status).to.equal('ok');",
+                  "  pm.expect(body.payment_execution_enabled).to.equal(false);",
+                  "  pm.expect(body.authentication).to.equal('required');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "3251923b-3402-5e2a-b873-d5999737ba83",
+          "name": "Health disables execution",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ],
+              "raw": "{{base_url}}/health"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "  pm.expect(pm.response.json()).to.deep.equal({error: 'authentication_required'});",
+                  "});",
+                  "pm.test('bearer challenge is present', function () {",
+                  "  pm.expect(pm.response.headers.get('WWW-Authenticate')).to.equal('Bearer realm=\"agentpal\"');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "0cedbcb5-3ca0-50ba-bd95-667b1d8e2a97",
+          "name": "Missing authentication",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "model-info"
+              ],
+              "raw": "{{base_url}}/model-info"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(401);",
+                  "  pm.expect(pm.response.json()).to.deep.equal({error: 'invalid_token'});",
+                  "});",
+                  "pm.test('bearer challenge is present', function () {",
+                  "  pm.expect(pm.response.headers.get('WWW-Authenticate')).to.equal('Bearer realm=\"agentpal\"');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "18cb6ff9-58c7-5589-8b05-3a563b07312c",
+          "name": "Invalid authentication",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{invalid_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "model-info"
+              ],
+              "raw": "{{base_url}}/model-info"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('assessment belongs to authenticated agent', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.request_id).to.equal('req_postman_001');",
+                  "  pm.expect(body.agent_id).to.equal(pm.collectionVariables.get('agent_a_id'));",
+                  "  pm.expect(body.recommendation).not.to.equal('block');",
+                  "  pm.expect(body.signals).to.be.an('array');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "318d9b26-3356-5305-837a-244e02017925",
+          "name": "Create owned assessment",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"agent_id\": \"{{agent_a_id}}\",\n  \"amount\": \"1.00\",\n  \"business_justification\": \"Throwaway API verification\",\n  \"currency\": \"USD\",\n  \"evidence\": [],\n  \"merchant_domain\": \"example.com\",\n  \"merchant_name\": \"Example Hosting\",\n  \"purpose\": \"Postman local security scenario\",\n  \"request_id\": \"req_postman_001\"\n}"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assess"
+              ],
+              "raw": "{{base_url}}/assess"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('owner reads the stored assessment', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(pm.response.json().request_id).to.equal('req_postman_001');",
+                  "  pm.expect(pm.response.json().agent_id).to.equal(pm.collectionVariables.get('agent_a_id'));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "a2c14cb5-b5be-5747-9cca-e3b9f064686c",
+          "name": "Read own assessment",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assessments",
+                "req_postman_001"
+              ],
+              "raw": "{{base_url}}/assessments/req_postman_001"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(404);",
+                  "  pm.expect(pm.response.json()).to.deep.equal({error: 'not_found'});",
+                  "});",
+                  "pm.collectionVariables.set('unknown_error', pm.response.text());"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "4a02b506-07d7-5be0-bbaa-dac6a0618801",
+          "name": "Unknown assessment",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_b_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assessments",
+                "req_postman_unknown"
+              ],
+              "raw": "{{base_url}}/assessments/req_postman_unknown"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(404);",
+                  "  pm.expect(pm.response.json()).to.deep.equal({error: 'not_found'});",
+                  "});",
+                  "pm.test('no assessment existence oracle', function () {",
+                  "  pm.expect(pm.response.text()).to.equal(pm.collectionVariables.get('unknown_error'));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "bcc0fb31-d822-538b-91a3-54ddd002afab",
+          "name": "Cross agent assessment indistinguishable",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_b_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assessments",
+                "req_postman_001"
+              ],
+              "raw": "{{base_url}}/assessments/req_postman_001"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(403);",
+                  "  pm.expect(pm.response.json()).to.deep.equal({error: 'agent_mismatch'});",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "040f3359-b883-5339-b8d1-f17998927c7c",
+          "name": "Agent id mismatch",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"agent_id\": \"{{agent_b_id}}\",\n  \"amount\": \"1.00\",\n  \"business_justification\": \"Throwaway API verification\",\n  \"currency\": \"USD\",\n  \"evidence\": [],\n  \"merchant_domain\": \"example.com\",\n  \"merchant_name\": \"Example Hosting\",\n  \"purpose\": \"Postman local security scenario\",\n  \"request_id\": \"req_postman_mismatch\"\n}"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assess"
+              ],
+              "raw": "{{base_url}}/assess"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('replay cannot reserve or pass again', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.request_id).to.equal('req_postman_001');",
+                  "  pm.expect(body.recommendation).to.equal('block');",
+                  "  pm.expect(body.signals.some(function (signal) {",
+                  "    return signal.code === 'DUPLICATE_REQUEST_ID' && signal.source === 'rule';",
+                  "  })).to.equal(true);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "cd4c5ec4-a362-56e1-90bb-33c2f33d4d63",
+          "name": "Request id replay blocks",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"agent_id\": \"{{agent_a_id}}\",\n  \"amount\": \"1.00\",\n  \"business_justification\": \"Throwaway API verification\",\n  \"currency\": \"USD\",\n  \"evidence\": [],\n  \"merchant_domain\": \"example.com\",\n  \"merchant_name\": \"Example Hosting\",\n  \"purpose\": \"Postman local security scenario\",\n  \"request_id\": \"req_postman_001\"\n}"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assess"
+              ],
+              "raw": "{{base_url}}/assess"
+            }
+          }
+        }
+      ],
+      "name": "LEGACY security"
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "type": "string",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "agent_a_id",
+      "type": "string",
+      "value": "agent_demo_001"
+    },
+    {
+      "key": "agent_b_id",
+      "type": "string",
+      "value": "agent_demo_002"
+    },
+    {
+      "key": "request_id",
+      "type": "string",
+      "value": "req_postman_001"
+    },
+    {
+      "key": "agent_a_key",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "key": "agent_b_key",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "key": "owner_key",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "key": "invalid_key",
+      "type": "string",
+      "value": ""
+    }
+  ]
+}

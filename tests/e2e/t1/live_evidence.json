@@ -1,0 +1,3990 @@
+{
+  "http": [
+    {
+      "method": "POST",
+      "path": "/v1/agents",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/wallets",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/agents/...716a/permissions",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/agents",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/wallets",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/agents/...9ba4/permissions",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/agents",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/wallets",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/agents/...a4ba/permissions",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/agents/...716a/credentials",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me",
+      "status": 401,
+      "error": "invalid_token"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "DELETE",
+      "path": "/v1/agents/...716a/credentials/...cfc3",
+      "status": 204,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me",
+      "status": 401,
+      "error": "invalid_token"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/agents/...716a/credentials",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/wallets/...3833/freeze",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 409,
+      "error": "wallet_frozen"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/wallets/...3833/unfreeze",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/agents/...716a/suspend",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me",
+      "status": 401,
+      "error": "invalid_token"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/agents/...716a/reactivate",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 403,
+      "error": "permission_denied"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...6dd5",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...6dd5/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...6dd5",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...6dd5/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...c7f0",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...c7f0/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...c7f0",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...c7f0/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...6df5",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...6df5/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...6df5",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...6df5/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...fb40",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...fb40/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...fb40",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...fb40/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...42e7",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...42e7/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...42e7",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...42e7/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...ef5d",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...ef5d/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...ef5d",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...ef5d/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...ceb2",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...ceb2/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...ceb2",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...ceb2/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...8d7b",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...8d7b/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...8d7b",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...8d7b/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...de27",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...de27/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...de27",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...de27/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...2280",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...2280/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...2280",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...2280/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...bd5f",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...bd5f/market-check",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...bd5f",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...bd5f/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...6487",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...6487/market-check",
+      "status": 409,
+      "error": "market_check_unavailable"
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...6487",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...6487/reject",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...13ee/execute",
+      "status": 409,
+      "error": "execution_refused"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...13ee/approve",
+      "status": 403,
+      "error": "owner_credential_required"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...13ee/approve",
+      "status": 409,
+      "error": "terms_mismatch"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...13ee/approve",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...13ee/execute",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...13ee/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...13ee/capture",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...13ee",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...13ee/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...13ee/refunds",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/agents",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/agents/...716a/credentials",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...13ee/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...b2a7/execute",
+      "status": 409,
+      "error": "execution_refused"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...b2a7/approve",
+      "status": 403,
+      "error": "owner_credential_required"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...b2a7/approve",
+      "status": 409,
+      "error": "terms_mismatch"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...b2a7/approve",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...b2a7/execute",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...b2a7/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...b2a7/capture",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...b2a7",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...b2a7/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...b2a7/refunds",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...b2a7/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...3056/execute",
+      "status": 409,
+      "error": "execution_refused"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...3056/approve",
+      "status": 403,
+      "error": "owner_credential_required"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...3056/approve",
+      "status": 409,
+      "error": "terms_mismatch"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...3056/approve",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...3056/execute",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...3056/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...3056/capture",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...3056",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...3056/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/execute",
+      "status": 409,
+      "error": "execution_refused"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/approve",
+      "status": 403,
+      "error": "owner_credential_required"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/approve",
+      "status": 409,
+      "error": "terms_mismatch"
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/approve",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/execute",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...e926/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/capture",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...e926",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/refunds",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/refunds",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/refunds/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/refunds",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/refunds",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payment-requests/...e926/refunds/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...e926/refunds",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/payment-requests/...e926",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_09d5ddc0c15948f4aaf331f98ead09e5/approve",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_09d5ddc0c15948f4aaf331f98ead09e5/execute",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_09d5ddc0c15948f4aaf331f98ead09e5/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_09d5ddc0c15948f4aaf331f98ead09e5/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_09d5ddc0c15948f4aaf331f98ead09e5/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_09d5ddc0c15948f4aaf331f98ead09e5/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_09d5ddc0c15948f4aaf331f98ead09e5/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_0297fb98f4b94044abb26d8dc7123731/approve",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_0297fb98f4b94044abb26d8dc7123731/execute",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_0297fb98f4b94044abb26d8dc7123731/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_0297fb98f4b94044abb26d8dc7123731/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_0297fb98f4b94044abb26d8dc7123731/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_0297fb98f4b94044abb26d8dc7123731/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/payout-requests/payout_0297fb98f4b94044abb26d8dc7123731/reconciliation",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/me/wallet",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/disputes",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "GET",
+      "path": "/v1/paypal/reconciliation?start=2026-11-03T15%3A26%3A54.629465%2B00%3A00&end=2026-11-03T16%3A26%3A54.629465%2B00%3A00",
+      "status": 200,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/agents",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/wallets",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/agents",
+      "status": 201,
+      "error": null
+    },
+    {
+      "method": "POST",
+      "path": "/v1/wallets",
+      "status": 201,
+      "error": null
+    }
+  ],
+  "passes": [
+    "Three roles/wallets; rotation, revocation, freeze/unfreeze, suspension and capability denial",
+    "12 real-product requests, owner refresh and historical replay preserve exact terms/approval; rejected holds released"
+  ],
+  "allowances": [
+    {
+      "step": "initial",
+      "period": "2026-11",
+      "available": "10000.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "0.00",
+      "committed": "0.00"
+    },
+    {
+      "step": "market holds rejected",
+      "period": "2026-11",
+      "available": "10000.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "0.00",
+      "committed": "0.00"
+    },
+    {
+      "step": "Northwind Office Supply reserved",
+      "period": "2026-11",
+      "available": "9999.00",
+      "reserved": "1.00",
+      "pending": "0.00",
+      "spent": "0.00",
+      "committed": "1.00"
+    },
+    {
+      "step": "Northwind Office Supply pending",
+      "period": "2026-11",
+      "available": "9999.00",
+      "reserved": "0.00",
+      "pending": "1.00",
+      "spent": "0.00",
+      "committed": "1.00"
+    },
+    {
+      "step": "Northwind Office Supply captured",
+      "period": "2026-11",
+      "available": "9999.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "1.00",
+      "committed": "1.00"
+    },
+    {
+      "step": "Bluepeak Electronics reserved",
+      "period": "2026-11",
+      "available": "9998.00",
+      "reserved": "1.00",
+      "pending": "0.00",
+      "spent": "1.00",
+      "committed": "2.00"
+    },
+    {
+      "step": "Bluepeak Electronics pending",
+      "period": "2026-11",
+      "available": "9998.00",
+      "reserved": "0.00",
+      "pending": "1.00",
+      "spent": "1.00",
+      "committed": "2.00"
+    },
+    {
+      "step": "Bluepeak Electronics captured",
+      "period": "2026-11",
+      "available": "9998.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "2.00",
+      "committed": "2.00"
+    },
+    {
+      "step": "Bluepeak full refund FAILED",
+      "period": "2026-11",
+      "available": "9998.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "2.00",
+      "committed": "2.00"
+    },
+    {
+      "step": "CloudDesk Software reserved",
+      "period": "2026-11",
+      "available": "9997.00",
+      "reserved": "1.00",
+      "pending": "0.00",
+      "spent": "2.00",
+      "committed": "3.00"
+    },
+    {
+      "step": "CloudDesk Software pending",
+      "period": "2026-11",
+      "available": "9997.00",
+      "reserved": "0.00",
+      "pending": "1.00",
+      "spent": "2.00",
+      "committed": "3.00"
+    },
+    {
+      "step": "CloudDesk Software captured",
+      "period": "2026-11",
+      "available": "9997.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "3.00",
+      "committed": "3.00"
+    },
+    {
+      "step": "App-linked Test Store reserved",
+      "period": "2026-11",
+      "available": "9996.00",
+      "reserved": "1.00",
+      "pending": "0.00",
+      "spent": "3.00",
+      "committed": "4.00"
+    },
+    {
+      "step": "App-linked Test Store pending",
+      "period": "2026-11",
+      "available": "9996.00",
+      "reserved": "0.00",
+      "pending": "1.00",
+      "spent": "3.00",
+      "committed": "4.00"
+    },
+    {
+      "step": "App-linked Test Store captured",
+      "period": "2026-11",
+      "available": "9996.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "4.00",
+      "committed": "4.00"
+    },
+    {
+      "step": "refund 0.40",
+      "period": "2026-11",
+      "available": "9996.40",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "3.60",
+      "committed": "3.60"
+    },
+    {
+      "step": "refund replay 0.40",
+      "period": "2026-11",
+      "available": "9996.40",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "3.60",
+      "committed": "3.60"
+    },
+    {
+      "step": "refund 0.60",
+      "period": "2026-11",
+      "available": "9997.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "3.00",
+      "committed": "3.00"
+    },
+    {
+      "step": "refund replay 0.60",
+      "period": "2026-11",
+      "available": "9997.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "3.00",
+      "committed": "3.00"
+    },
+    {
+      "step": "Priya Shah payout reserved",
+      "period": "2026-11",
+      "available": "9996.00",
+      "reserved": "1.00",
+      "pending": "0.00",
+      "spent": "3.00",
+      "committed": "4.00"
+    },
+    {
+      "step": "Priya Shah payout SUCCESS",
+      "period": "2026-11",
+      "available": "9996.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "4.00",
+      "committed": "4.00"
+    },
+    {
+      "step": "Tom Walsh payout reserved",
+      "period": "2026-11",
+      "available": "9995.00",
+      "reserved": "1.00",
+      "pending": "0.00",
+      "spent": "4.00",
+      "committed": "5.00"
+    },
+    {
+      "step": "Tom Walsh payout SUCCESS",
+      "period": "2026-11",
+      "available": "9995.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "5.00",
+      "committed": "5.00"
+    },
+    {
+      "step": "final including SDK",
+      "period": "2026-11",
+      "available": "9994.00",
+      "reserved": "0.00",
+      "pending": "0.00",
+      "spent": "6.00",
+      "committed": "6.00"
+    }
+  ],
+  "market": [
+    {
+      "query": "Apple MacBook Air M3 13 inch",
+      "claimed": "1099.00",
+      "merchant": "bestbuy.com",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:42.570197+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Apple MacBook Air M3 13 inch",
+          "product_url": null,
+          "claimed_amount": "1099.00",
+          "currency": "USD",
+          "merchant_domain": "bestbuy.com"
+        },
+        "product": {
+          "id": "...SDZU",
+          "title": "Apple 13\" MacBook Air (M3, Starlight)",
+          "brands": [
+            "Apple"
+          ],
+          "match_confidence": "high",
+          "offer_count": 1
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "1199.00",
+          "median": "1199.00",
+          "high": "1199.00",
+          "claimed_vs_median": "0.92"
+        },
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "bestbuy.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "bhphotovideo.com"
+              ]
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:42.568237+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:42.892252+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Apple MacBook Air M3 13 inch",
+          "product_url": null,
+          "claimed_amount": "1099.00",
+          "currency": "USD",
+          "merchant_domain": "bestbuy.com"
+        },
+        "product": {
+          "id": "...SDZU",
+          "title": "Apple 13\" MacBook Air (M3, Starlight)",
+          "brands": [
+            "Apple"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 1
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "1199.00",
+          "median": "1199.00",
+          "high": "1199.00",
+          "claimed_vs_median": "0.92"
+        },
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "bestbuy.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "bhphotovideo.com"
+              ]
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...SDZU",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:42.889649+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Lenovo ThinkPad X1 Carbon Gen 12",
+      "claimed": "2499.00",
+      "merchant": "lenovo.com",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:44.144824+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Lenovo ThinkPad X1 Carbon Gen 12",
+          "product_url": null,
+          "claimed_amount": "2499.00",
+          "currency": "USD",
+          "merchant_domain": "lenovo.com"
+        },
+        "product": {
+          "id": "...yEke",
+          "title": "Lenovo ThinkPad X1 Carbon Gen 12 Laptop",
+          "brands": [
+            "Lenovo"
+          ],
+          "match_confidence": "high",
+          "offer_count": 1
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "2099.99",
+          "median": "2099.99",
+          "high": "2099.99",
+          "claimed_vs_median": "1.19"
+        },
+        "merchant_offer": null,
+        "better_deals": [
+          {
+            "retailer": "newegg.com",
+            "price": "2099.99",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "399.01",
+            "you_save_pct": "16.0",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          }
+        ],
+        "signals": [
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "lenovo.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "newegg.com"
+              ]
+            }
+          },
+          {
+            "code": "BETTER_PRICE_AVAILABLE",
+            "severity": "info",
+            "message": "The same product is listed for 2099.99 USD at newegg.com (save 399.01 USD). Verify on the site before switching.",
+            "data": null
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:44.137888+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:44.394282+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Lenovo ThinkPad X1 Carbon Gen 12",
+          "product_url": null,
+          "claimed_amount": "2499.00",
+          "currency": "USD",
+          "merchant_domain": "lenovo.com"
+        },
+        "product": {
+          "id": "...yEke",
+          "title": "Lenovo ThinkPad X1 Carbon Gen 12 Laptop",
+          "brands": [
+            "Lenovo"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 1
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "2099.99",
+          "median": "2099.99",
+          "high": "2099.99",
+          "claimed_vs_median": "1.19"
+        },
+        "merchant_offer": null,
+        "better_deals": [
+          {
+            "retailer": "newegg.com",
+            "price": "2099.99",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "399.01",
+            "you_save_pct": "16.0",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          }
+        ],
+        "signals": [
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "lenovo.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "newegg.com"
+              ]
+            }
+          },
+          {
+            "code": "BETTER_PRICE_AVAILABLE",
+            "severity": "info",
+            "message": "The same product is listed for 2099.99 USD at newegg.com (save 399.01 USD). Verify on the site before switching.",
+            "data": null
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...yEke",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:44.391691+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Logitech MX Master 3S wireless mouse",
+      "claimed": "250.00",
+      "merchant": "shady-deals.example",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:45.646491+00:00",
+        "advisory_level": "high_risk",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Logitech MX Master 3S wireless mouse",
+          "product_url": null,
+          "claimed_amount": "250.00",
+          "currency": "USD",
+          "merchant_domain": "shady-deals.example"
+        },
+        "product": {
+          "id": "...KmNT",
+          "title": "Logitech MX Master 3S Performance Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "match_confidence": "high",
+          "offer_count": 5
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 4,
+          "low": "99.99",
+          "median": "112.44",
+          "high": "118.00",
+          "claimed_vs_median": "2.22"
+        },
+        "merchant_offer": null,
+        "better_deals": [
+          {
+            "retailer": "officedepot.com",
+            "price": "99.99",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "150.01",
+            "you_save_pct": "60.0",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          },
+          {
+            "retailer": "bestbuy.com",
+            "price": "110.88",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "139.12",
+            "you_save_pct": "55.6",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          },
+          {
+            "retailer": "6ave.com",
+            "price": "113.99",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "136.01",
+            "you_save_pct": "54.4",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          }
+        ],
+        "signals": [
+          {
+            "code": "PRICE_ABOVE_MARKET",
+            "severity": "high",
+            "message": "The claimed price is 2.22x the market median (112.44 USD).",
+            "data": {
+              "median": "112.44",
+              "ratio": "2.22"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "shady-deals.example is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "6ave.com",
+                "backmarket.com",
+                "beachcamera.com",
+                "bestbuy.com",
+                "officedepot.com"
+              ]
+            }
+          },
+          {
+            "code": "BETTER_PRICE_AVAILABLE",
+            "severity": "info",
+            "message": "The same product is listed for 99.99 USD at officedepot.com (save 150.01 USD). Verify on the site before switching.",
+            "data": null
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:45.640829+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:45.861831+00:00",
+        "advisory_level": "high_risk",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Logitech MX Master 3S wireless mouse",
+          "product_url": null,
+          "claimed_amount": "250.00",
+          "currency": "USD",
+          "merchant_domain": "shady-deals.example"
+        },
+        "product": {
+          "id": "...KmNT",
+          "title": "Logitech MX Master 3S Performance Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 5
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 4,
+          "low": "99.99",
+          "median": "112.44",
+          "high": "118.00",
+          "claimed_vs_median": "2.22"
+        },
+        "merchant_offer": null,
+        "better_deals": [
+          {
+            "retailer": "officedepot.com",
+            "price": "99.99",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "150.01",
+            "you_save_pct": "60.0",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          },
+          {
+            "retailer": "bestbuy.com",
+            "price": "110.88",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "139.12",
+            "you_save_pct": "55.6",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          },
+          {
+            "retailer": "6ave.com",
+            "price": "113.99",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "136.01",
+            "you_save_pct": "54.4",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          }
+        ],
+        "signals": [
+          {
+            "code": "PRICE_ABOVE_MARKET",
+            "severity": "high",
+            "message": "The claimed price is 2.22x the market median (112.44 USD).",
+            "data": {
+              "ratio": "2.22",
+              "median": "112.44"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "shady-deals.example is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "6ave.com",
+                "backmarket.com",
+                "beachcamera.com",
+                "bestbuy.com",
+                "officedepot.com"
+              ]
+            }
+          },
+          {
+            "code": "BETTER_PRICE_AVAILABLE",
+            "severity": "info",
+            "message": "The same product is listed for 99.99 USD at officedepot.com (save 150.01 USD). Verify on the site before switching.",
+            "data": null
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...KmNT",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:45.860266+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Logitech MX Anywhere 3S",
+      "claimed": "79.99",
+      "merchant": "bestbuy.com",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:47.233586+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Logitech MX Anywhere 3S",
+          "product_url": null,
+          "claimed_amount": "79.99",
+          "currency": "USD",
+          "merchant_domain": "bestbuy.com"
+        },
+        "product": {
+          "id": "...F5wM",
+          "title": "MX Anywhere 3S for Business Wireless Laser Right-handed Mouse with Quiet Click Technology",
+          "brands": [
+            "Logitech"
+          ],
+          "match_confidence": "high",
+          "offer_count": 2
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 2,
+          "low": "99.99",
+          "median": "102.31",
+          "high": "104.62",
+          "claimed_vs_median": "0.78"
+        },
+        "merchant_offer": {
+          "domain": "bestbuy.com",
+          "price": "104.62",
+          "currency": "USD",
+          "availability": "InStock",
+          "condition": "new",
+          "compare_at_price": null
+        },
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "MERCHANT_PRICE_MISMATCH",
+            "severity": "warning",
+            "message": "The agent's amount (79.99) differs from bestbuy.com's listed price (104.62 USD).",
+            "data": {
+              "claimed": "79.99",
+              "listed": "104.62"
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:47.224402+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:47.581333+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Logitech MX Anywhere 3S",
+          "product_url": null,
+          "claimed_amount": "79.99",
+          "currency": "USD",
+          "merchant_domain": "bestbuy.com"
+        },
+        "product": {
+          "id": "...F5wM",
+          "title": "MX Anywhere 3S for Business Wireless Laser Right-handed Mouse with Quiet Click Technology",
+          "brands": [
+            "Logitech"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 3
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 2,
+          "low": "99.99",
+          "median": "102.31",
+          "high": "104.62",
+          "claimed_vs_median": "0.78"
+        },
+        "merchant_offer": {
+          "domain": "bestbuy.com",
+          "price": "104.62",
+          "currency": "USD",
+          "availability": "InStock",
+          "condition": "new",
+          "compare_at_price": null
+        },
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "MERCHANT_PRICE_MISMATCH",
+            "severity": "warning",
+            "message": "The agent's amount (79.99) differs from bestbuy.com's listed price (104.62 USD).",
+            "data": {
+              "listed": "104.62",
+              "claimed": "79.99"
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...F5wM",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:47.579882+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Sony WH-1000XM5 headphones",
+      "claimed": "20.00",
+      "merchant": "sony.com",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:48.611739+00:00",
+        "advisory_level": "high_risk",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Sony WH-1000XM5 headphones",
+          "product_url": null,
+          "claimed_amount": "20.00",
+          "currency": "USD",
+          "merchant_domain": "sony.com"
+        },
+        "product": {
+          "id": "...4MAW",
+          "title": "WH-1000XM5 Over-Ear Noise Cancelling Bluetooth Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "match_confidence": "high",
+          "offer_count": 1
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "398.00",
+          "median": "398.00",
+          "high": "398.00",
+          "claimed_vs_median": "0.05"
+        },
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "PRICE_FAR_BELOW_MARKET",
+            "severity": "high",
+            "message": "The claimed price is only 0.05x the market median: too good to be true can mean counterfeit, used goods or a scam listing.",
+            "data": {
+              "median": "398.00",
+              "ratio": "0.05"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "sony.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "6ave.com"
+              ]
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:48.595577+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:48.957800+00:00",
+        "advisory_level": "high_risk",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Sony WH-1000XM5 headphones",
+          "product_url": null,
+          "claimed_amount": "20.00",
+          "currency": "USD",
+          "merchant_domain": "sony.com"
+        },
+        "product": {
+          "id": "...4MAW",
+          "title": "Sony WH-1000XM5 Noise-Canceling Wireless Over-Ear Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 1
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "398.00",
+          "median": "398.00",
+          "high": "398.00",
+          "claimed_vs_median": "0.05"
+        },
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "PRICE_FAR_BELOW_MARKET",
+            "severity": "high",
+            "message": "The claimed price is only 0.05x the market median: too good to be true can mean counterfeit, used goods or a scam listing.",
+            "data": {
+              "ratio": "0.05",
+              "median": "398.00"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "sony.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "6ave.com"
+              ]
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...4MAW",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:48.955803+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Bose QuietComfort Ultra Headphones",
+      "claimed": "429.00",
+      "merchant": "bose.com",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:51.030492+00:00",
+        "advisory_level": "no_match",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Bose QuietComfort Ultra Headphones",
+          "product_url": null,
+          "claimed_amount": "429.00",
+          "currency": "USD",
+          "merchant_domain": "bose.com"
+        },
+        "product": {
+          "id": "...4e8w",
+          "title": "QuietComfort Ultra Headphones",
+          "brands": [
+            "Bose"
+          ],
+          "match_confidence": "medium",
+          "offer_count": 1
+        },
+        "market": null,
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "LOW_CONFIDENCE_MATCH",
+            "severity": "info",
+            "message": "The closest Channel3 product may not be the same item (brand, model or variant uncertain), so no price comparison or deal is shown. Name the exact product or pass its page URL for a precise check.",
+            "data": null
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:51.027815+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:51.345968+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Bose QuietComfort Ultra Headphones",
+          "product_url": null,
+          "claimed_amount": "429.00",
+          "currency": "USD",
+          "merchant_domain": "bose.com"
+        },
+        "product": {
+          "id": "...4e8w",
+          "title": "QuietComfort Ultra Headphones",
+          "brands": [
+            "Bose"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 3
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "768.00",
+          "median": "768.00",
+          "high": "768.00",
+          "claimed_vs_median": "0.56"
+        },
+        "merchant_offer": {
+          "domain": "bose.com",
+          "price": "768.00",
+          "currency": "USD",
+          "availability": "InStock",
+          "condition": "new",
+          "compare_at_price": "858.00"
+        },
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "MERCHANT_PRICE_MISMATCH",
+            "severity": "warning",
+            "message": "The agent's amount (429.00) differs from bose.com's listed price (768.00 USD).",
+            "data": {
+              "listed": "768.00",
+              "claimed": "429.00"
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...4e8w",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:51.336133+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Dell UltraSharp U2723QE monitor",
+      "claimed": "999.00",
+      "merchant": "dell.com",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:52.673630+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Dell UltraSharp U2723QE monitor",
+          "product_url": null,
+          "claimed_amount": "999.00",
+          "currency": "USD",
+          "merchant_domain": "dell.com"
+        },
+        "product": {
+          "id": "...P96a",
+          "title": "UltraSharp U2723QE 27\" 4K UHD LCD Monitor",
+          "brands": [
+            "Dell"
+          ],
+          "match_confidence": "high",
+          "offer_count": 3
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 2,
+          "low": "659.00",
+          "median": "679.50",
+          "high": "699.99",
+          "claimed_vs_median": "1.47"
+        },
+        "merchant_offer": null,
+        "better_deals": [
+          {
+            "retailer": "walmart.com",
+            "price": "659.00",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "340.00",
+            "you_save_pct": "34.0",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          },
+          {
+            "retailer": "bestbuy.com",
+            "price": "699.99",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "299.01",
+            "you_save_pct": "29.9",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          }
+        ],
+        "signals": [
+          {
+            "code": "PRICE_ABOVE_MARKET",
+            "severity": "warning",
+            "message": "The claimed price is 1.47x the market median (679.50 USD).",
+            "data": {
+              "median": "679.50",
+              "ratio": "1.47"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "dell.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "backmarket.com",
+                "bestbuy.com",
+                "walmart.com"
+              ]
+            }
+          },
+          {
+            "code": "BETTER_PRICE_AVAILABLE",
+            "severity": "info",
+            "message": "The same product is listed for 659.00 USD at walmart.com (save 340.00 USD). Verify on the site before switching.",
+            "data": null
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:52.671792+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:53.014081+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Dell UltraSharp U2723QE monitor",
+          "product_url": null,
+          "claimed_amount": "999.00",
+          "currency": "USD",
+          "merchant_domain": "dell.com"
+        },
+        "product": {
+          "id": "...P96a",
+          "title": "UltraSharp U2723QE 27\" 4K UHD LCD Monitor",
+          "brands": [
+            "Dell"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 6
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 2,
+          "low": "659.00",
+          "median": "679.50",
+          "high": "699.99",
+          "claimed_vs_median": "1.47"
+        },
+        "merchant_offer": null,
+        "better_deals": [
+          {
+            "retailer": "walmart.com",
+            "price": "659.00",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "340.00",
+            "you_save_pct": "34.0",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          },
+          {
+            "retailer": "bestbuy.com",
+            "price": "699.99",
+            "currency": "USD",
+            "condition": "new",
+            "availability": "InStock",
+            "you_save": "299.01",
+            "you_save_pct": "29.9",
+            "buy_url": "https://buy.trychannel3.com/[redacted]",
+            "on_sale": false,
+            "was_price": null,
+            "sale_discount_pct": null
+          }
+        ],
+        "signals": [
+          {
+            "code": "PRICE_ABOVE_MARKET",
+            "severity": "warning",
+            "message": "The claimed price is 1.47x the market median (679.50 USD).",
+            "data": {
+              "ratio": "1.47",
+              "median": "679.50"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "dell.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "backmarket.com",
+                "beachcamera.com",
+                "bestbuy.com",
+                "focuscamera.com",
+                "odpbusiness.com",
+                "walmart.com"
+              ]
+            }
+          },
+          {
+            "code": "BETTER_PRICE_AVAILABLE",
+            "severity": "info",
+            "message": "The same product is listed for 659.00 USD at walmart.com (save 340.00 USD). Verify on the site before switching.",
+            "data": null
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...P96a",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:53.011413+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Samsung Odyssey G5 27 monitor",
+      "claimed": "249.99",
+      "merchant": "samsung.com",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:54.847025+00:00",
+        "advisory_level": "high_risk",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Samsung Odyssey G5 27 monitor",
+          "product_url": null,
+          "claimed_amount": "249.99",
+          "currency": "USD",
+          "merchant_domain": "samsung.com"
+        },
+        "product": {
+          "id": "...sRcf",
+          "title": "Odyssey OLED G5 G50SF 27\" 2K QHD (2560 x 1440) 180Hz Gaming Monitor",
+          "brands": [
+            "Samsung"
+          ],
+          "match_confidence": "high",
+          "offer_count": 3
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 3,
+          "low": "499.99",
+          "median": "499.99",
+          "high": "499.99",
+          "claimed_vs_median": "0.50"
+        },
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "PRICE_FAR_BELOW_MARKET",
+            "severity": "high",
+            "message": "The claimed price is only 0.50x the market median: too good to be true can mean counterfeit, used goods or a scam listing.",
+            "data": {
+              "median": "499.99",
+              "ratio": "0.50"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "samsung.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "bestbuy.com",
+                "bhphotovideo.com",
+                "newegg.com"
+              ]
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:54.843612+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:55.238664+00:00",
+        "advisory_level": "high_risk",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Samsung Odyssey G5 27 monitor",
+          "product_url": null,
+          "claimed_amount": "249.99",
+          "currency": "USD",
+          "merchant_domain": "samsung.com"
+        },
+        "product": {
+          "id": "...sRcf",
+          "title": "Odyssey OLED G5 G50SF 27\" 2K QHD (2560 x 1440) 180Hz Gaming Monitor",
+          "brands": [
+            "Samsung"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 4
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 3,
+          "low": "499.99",
+          "median": "499.99",
+          "high": "499.99",
+          "claimed_vs_median": "0.50"
+        },
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "PRICE_FAR_BELOW_MARKET",
+            "severity": "high",
+            "message": "The claimed price is only 0.50x the market median: too good to be true can mean counterfeit, used goods or a scam listing.",
+            "data": {
+              "ratio": "0.50",
+              "median": "499.99"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "samsung.com is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "bestbuy.com",
+                "bhphotovideo.com",
+                "microcenter.com",
+                "newegg.com"
+              ]
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...sRcf",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:55.236634+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Apple iPhone 16 128GB",
+      "claimed": "799.00",
+      "merchant": "apple.com",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:57.501244+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Apple iPhone 16 128GB",
+          "product_url": null,
+          "claimed_amount": "799.00",
+          "currency": "USD",
+          "merchant_domain": "apple.com"
+        },
+        "product": {
+          "id": "...o6Oi",
+          "title": "Apple iPhone 16 128GB - Teal",
+          "brands": [
+            "Apple"
+          ],
+          "match_confidence": "high",
+          "offer_count": 2
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "829.00",
+          "median": "829.00",
+          "high": "829.00",
+          "claimed_vs_median": "0.96"
+        },
+        "merchant_offer": {
+          "domain": "apple.com",
+          "price": "829.00",
+          "currency": "USD",
+          "availability": "InStock",
+          "condition": "new",
+          "compare_at_price": null
+        },
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "MERCHANT_PRICE_MISMATCH",
+            "severity": "warning",
+            "message": "The agent's amount (799.00) differs from apple.com's listed price (829.00 USD).",
+            "data": {
+              "claimed": "799.00",
+              "listed": "829.00"
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:57.498035+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:57.757195+00:00",
+        "advisory_level": "review_recommended",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Apple iPhone 16 128GB",
+          "product_url": null,
+          "claimed_amount": "799.00",
+          "currency": "USD",
+          "merchant_domain": "apple.com"
+        },
+        "product": {
+          "id": "...o6Oi",
+          "title": "iPhone 16 5G 512GB Apple Intelligence (Unlocked)",
+          "brands": [
+            "Apple"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 3
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "829.00",
+          "median": "829.00",
+          "high": "829.00",
+          "claimed_vs_median": "0.96"
+        },
+        "merchant_offer": {
+          "domain": "apple.com",
+          "price": "829.00",
+          "currency": "USD",
+          "availability": "InStock",
+          "condition": "new",
+          "compare_at_price": null
+        },
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "MERCHANT_PRICE_MISMATCH",
+            "severity": "warning",
+            "message": "The agent's amount (799.00) differs from apple.com's listed price (829.00 USD).",
+            "data": {
+              "listed": "829.00",
+              "claimed": "799.00"
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...o6Oi",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:57.754823+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Google Pixel 9 128GB",
+      "claimed": "40.00",
+      "merchant": "wrong-merchant.example",
+      "url_lookup": false,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:58.707172+00:00",
+        "advisory_level": "high_risk",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Google Pixel 9 128GB",
+          "product_url": null,
+          "claimed_amount": "40.00",
+          "currency": "USD",
+          "merchant_domain": "wrong-merchant.example"
+        },
+        "product": {
+          "id": "...34T5",
+          "title": "Pixel 9 128GB",
+          "brands": [
+            "Google"
+          ],
+          "match_confidence": "high",
+          "offer_count": 1
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "474.97",
+          "median": "474.97",
+          "high": "474.97",
+          "claimed_vs_median": "0.08"
+        },
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "PRICE_FAR_BELOW_MARKET",
+            "severity": "high",
+            "message": "The claimed price is only 0.08x the market median: too good to be true can mean counterfeit, used goods or a scam listing.",
+            "data": {
+              "median": "474.97",
+              "ratio": "0.08"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "wrong-merchant.example is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "bestbuy.com"
+              ]
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/search",
+          "endpoint": "search",
+          "retrieved_at": "2026-11-03T16:21:58.703235+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:58.970854+00:00",
+        "advisory_level": "high_risk",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Google Pixel 9 128GB",
+          "product_url": null,
+          "claimed_amount": "40.00",
+          "currency": "USD",
+          "merchant_domain": "wrong-merchant.example"
+        },
+        "product": {
+          "id": "...34T5",
+          "title": "Pixel 9 128GB",
+          "brands": [
+            "Google"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 1
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "474.97",
+          "median": "474.97",
+          "high": "474.97",
+          "claimed_vs_median": "0.08"
+        },
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "PRICE_FAR_BELOW_MARKET",
+            "severity": "high",
+            "message": "The claimed price is only 0.08x the market median: too good to be true can mean counterfeit, used goods or a scam listing.",
+            "data": {
+              "ratio": "0.08",
+              "median": "474.97"
+            }
+          },
+          {
+            "code": "MERCHANT_NOT_IN_MARKET",
+            "severity": "warning",
+            "message": "wrong-merchant.example is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+            "data": {
+              "listed_retailers": [
+                "bestbuy.com"
+              ]
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...34T5",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:58.968246+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Apple iPhone 16 128GB",
+      "claimed": "799.00",
+      "merchant": "apple.com",
+      "url_lookup": true,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:59.326508+00:00",
+        "advisory_level": "no_concern",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Apple iPhone 16 128GB",
+          "product_url": "https://www.apple.com/shop/buy-iphone/iphone-16",
+          "claimed_amount": "799.00",
+          "currency": "USD",
+          "merchant_domain": "apple.com"
+        },
+        "product": {
+          "id": "...GFku",
+          "title": "iPhone 16",
+          "brands": [
+            "Apple"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 2
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "799.00",
+          "median": "799.00",
+          "high": "799.00",
+          "claimed_vs_median": "1.00"
+        },
+        "merchant_offer": {
+          "domain": "apple.com",
+          "price": "799.00",
+          "currency": "USD",
+          "availability": "InStock",
+          "condition": "new",
+          "compare_at_price": null
+        },
+        "better_deals": [],
+        "signals": [],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/lookup",
+          "endpoint": "lookup",
+          "retrieved_at": "2026-11-03T16:21:59.321742+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "refresh": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:59.586029+00:00",
+        "advisory_level": "no_concern",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Apple iPhone 16 128GB",
+          "product_url": "https://www.apple.com/shop/buy-iphone/iphone-16",
+          "claimed_amount": "799.00",
+          "currency": "USD",
+          "merchant_domain": "apple.com"
+        },
+        "product": {
+          "id": "...GFku",
+          "title": "iPhone 16",
+          "brands": [
+            "Apple"
+          ],
+          "match_confidence": "exact",
+          "offer_count": 2
+        },
+        "market": {
+          "currency": "USD",
+          "offers_compared": 1,
+          "low": "799.00",
+          "median": "799.00",
+          "high": "799.00",
+          "claimed_vs_median": "1.00"
+        },
+        "merchant_offer": {
+          "domain": "apple.com",
+          "price": "799.00",
+          "currency": "USD",
+          "availability": "InStock",
+          "condition": "new",
+          "compare_at_price": null
+        },
+        "better_deals": [],
+        "signals": [],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": {
+          "source_url": "https://api.trychannel3.com/v1/products/...GFku",
+          "endpoint": "product",
+          "retrieved_at": "2026-11-03T16:21:59.583533+00:00",
+          "content_sha256": "[omitted]",
+          "method": "search_result"
+        }
+      },
+      "status_unchanged": "awaiting_approval"
+    },
+    {
+      "query": "Google Pixel 9 128GB",
+      "claimed": "40.00",
+      "merchant": "wrong-merchant.example",
+      "url_lookup": true,
+      "initial": {
+        "provider": "channel3",
+        "checked_at": "2026-11-03T16:21:59.812505+00:00",
+        "advisory_level": "no_data",
+        "advisory_only": true,
+        "authoritative": false,
+        "input": {
+          "product_query": "Google Pixel 9 128GB",
+          "product_url": "https://store.google.com/product/pixel_9",
+          "claimed_amount": "40.00",
+          "currency": "USD",
+          "merchant_domain": "wrong-merchant.example"
+        },
+        "product": null,
+        "market": null,
+        "merchant_offer": null,
+        "better_deals": [],
+        "signals": [
+          {
+            "code": "MARKET_DATA_UNAVAILABLE",
+            "severity": "info",
+            "message": "Market data could not be retrieved; no comparison was made. This does not affect the payment request.",
+            "data": {
+              "reason": "invalid_request"
+            }
+          }
+        ],
+        "disclosure": "We may earn a commission when you buy through links on this page.",
+        "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+        "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+        "discount_codes_available": false,
+        "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+        "evidence": null
+      },
+      "refresh": {
+        "error": "market_check_unavailable"
+      },
+      "status_unchanged": "awaiting_approval"
+    }
+  ],
+  "buyer": [
+    {
+      "merchant": "Northwind Office Supply",
+      "result": "approved",
+      "reason": "buyer_submit_clicked_not_payment_evidence"
+    },
+    {
+      "merchant": "Bluepeak Electronics",
+      "result": "approved",
+      "reason": "buyer_submit_clicked_not_payment_evidence"
+    },
+    {
+      "merchant": "CloudDesk Software",
+      "result": "approved",
+      "reason": "buyer_submit_clicked_not_payment_evidence"
+    },
+    {
+      "merchant": "App-linked Test Store",
+      "result": "approved",
+      "reason": "buyer_submit_clicked_not_payment_evidence"
+    }
+  ],
+  "purchases": [
+    {
+      "merchant": "Northwind Office Supply",
+      "request_id": "...13ee",
+      "status": "provider_confirmed",
+      "reconciliation": {
+        "request_id": "...13ee",
+        "status": "provider_confirmed",
+        "reconciliation_required": false,
+        "provider_references": [
+          {
+            "provider": "paypal",
+            "environment": "sandbox",
+            "provider_order_id": "...2802",
+            "status": "completed",
+            "payer_action_url": "[omitted]"
+          }
+        ]
+      }
+    },
+    {
+      "merchant": "Bluepeak Electronics",
+      "request_id": "...b2a7",
+      "status": "provider_confirmed",
+      "reconciliation": {
+        "request_id": "...b2a7",
+        "status": "provider_confirmed",
+        "reconciliation_required": false,
+        "provider_references": [
+          {
+            "provider": "paypal",
+            "environment": "sandbox",
+            "provider_order_id": "...7214",
+            "status": "completed",
+            "payer_action_url": "[omitted]"
+          }
+        ]
+      }
+    },
+    {
+      "merchant": "CloudDesk Software",
+      "request_id": "...3056",
+      "status": "provider_confirmed",
+      "reconciliation": {
+        "request_id": "...3056",
+        "status": "provider_confirmed",
+        "reconciliation_required": false,
+        "provider_references": [
+          {
+            "provider": "paypal",
+            "environment": "sandbox",
+            "provider_order_id": "...082H",
+            "status": "completed",
+            "payer_action_url": "[omitted]"
+          }
+        ]
+      }
+    },
+    {
+      "merchant": "App-linked Test Store",
+      "request_id": "...e926",
+      "status": "provider_confirmed",
+      "reconciliation": {
+        "request_id": "...e926",
+        "status": "provider_confirmed",
+        "reconciliation_required": false,
+        "provider_references": [
+          {
+            "provider": "paypal",
+            "environment": "sandbox",
+            "provider_order_id": "...121P",
+            "status": "completed",
+            "payer_action_url": "[omitted]"
+          }
+        ]
+      }
+    }
+  ],
+  "refunds": [
+    {
+      "refund_id": "...0836",
+      "request_id": "...13ee",
+      "amount": "0.40",
+      "currency": "USD",
+      "status": "FAILED",
+      "provider_refund_id": null,
+      "created_at": "2026-11-03T16:22:54.700494+00:00",
+      "is_real_money": false
+    },
+    {
+      "refund_id": "...214b",
+      "request_id": "...b2a7",
+      "amount": "1.00",
+      "currency": "USD",
+      "status": "FAILED",
+      "provider_refund_id": null,
+      "created_at": "2026-11-03T16:25:15.132759+00:00",
+      "is_real_money": false
+    },
+    {
+      "refund_id": "...e752",
+      "request_id": "...e926",
+      "amount": "0.40",
+      "currency": "USD",
+      "status": "COMPLETED",
+      "provider_refund_id": "...5637",
+      "created_at": "2026-11-03T16:25:50.271299+00:00",
+      "is_real_money": false
+    },
+    {
+      "refund_id": "...2183",
+      "request_id": "...e926",
+      "amount": "0.60",
+      "currency": "USD",
+      "status": "COMPLETED",
+      "provider_refund_id": "...4353",
+      "created_at": "2026-11-03T16:25:53.017055+00:00",
+      "is_real_money": false
+    }
+  ],
+  "payouts": [
+    {
+      "recipient": "Priya Shah",
+      "result": {
+        "request_id": "...09e5",
+        "agent_id": "...716a",
+        "owner_id": "...r_t1",
+        "wallet_id": "...3833",
+        "receiver_email": "agentpal.priya.cbb860@personal.example.com",
+        "amount": "1.00",
+        "currency": "USD",
+        "note": "T1 acceptance",
+        "purpose": "T1 sandbox freelancer payment",
+        "terms_sha256": "[omitted]",
+        "status": "provider_confirmed",
+        "provider_batch_id": "...882L",
+        "provider_item_status": "SUCCESS",
+        "unclaimed": false,
+        "warning": null,
+        "created_at": "2026-11-03T16:25:56.332003+00:00",
+        "payment_environment": "sandbox",
+        "is_real_money": false
+      }
+    },
+    {
+      "recipient": "Tom Walsh",
+      "result": {
+        "request_id": "...3731",
+        "agent_id": "...716a",
+        "owner_id": "...r_t1",
+        "wallet_id": "...3833",
+        "receiver_email": "agentpal.tom.53025e@personal.example.com",
+        "amount": "1.00",
+        "currency": "USD",
+        "note": "T1 acceptance",
+        "purpose": "T1 sandbox freelancer payment",
+        "terms_sha256": "[omitted]",
+        "status": "provider_confirmed",
+        "provider_batch_id": "...VHC6",
+        "provider_item_status": "SUCCESS",
+        "unclaimed": false,
+        "warning": null,
+        "created_at": "2026-11-03T16:26:15.279350+00:00",
+        "payment_environment": "sandbox",
+        "is_real_money": false
+      }
+    }
+  ],
+  "sdk": [
+    {
+      "purchase": "BLOCKED",
+      "reason": "OwnerClient lacks capture_payment_request",
+      "request_id": "...f6a6"
+    },
+    {
+      "payout": {
+        "request_id": "...df04",
+        "agent_id": "...716a",
+        "owner_id": "...r_t1",
+        "wallet_id": "...3833",
+        "receiver_email": "agentpal.priya.cbb860@personal.example.com",
+        "amount": "1.00",
+        "currency": "USD",
+        "note": "T1 SDK",
+        "purpose": "T1 SDK freelancer payment",
+        "terms_sha256": "[omitted]",
+        "status": "provider_confirmed",
+        "provider_batch_id": "...56XL",
+        "provider_item_status": "SUCCESS",
+        "unclaimed": false,
+        "warning": null,
+        "created_at": "2026-11-03T16:26:35.097052+00:00",
+        "payment_environment": "sandbox",
+        "is_real_money": false
+      }
+    }
+  ],
+  "live": true,
+  "started_at": "2026-11-03T16:21:38.901922+00:00",
+  "refund_diagnostic": {
+    "order_id": "...2802",
+    "capture_id": "...944D",
+    "capture_read_http": 200,
+    "error": null
+  },
+  "refund_blocks": [
+    "Northwind $0.40 refund FAILED, spent remains 1.00; no credit invented"
+  ],
+  "bluepeak_refund_diagnostic": {
+    "order_id": "...7214",
+    "capture_id": "...3837",
+    "capture_read_http": 200,
+    "error": null
+  },
+  "disputes": {
+    "disputes": [],
+    "page_complete": false,
+    "is_real_money": false
+  },
+  "global_reconciliation": {
+    "rows": [
+      {
+        "request_id": "...6dd5",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...c7f0",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...6df5",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...fb40",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...42e7",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...ef5d",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...ceb2",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...8d7b",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...de27",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...2280",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...bd5f",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...6487",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      },
+      {
+        "request_id": "...13ee",
+        "lifecycle": "provider_confirmed",
+        "result": "pending",
+        "reason": "paypal_search_pending",
+        "provider_order_id": "...2802",
+        "paypal_status": "COMPLETED"
+      },
+      {
+        "request_id": "...b2a7",
+        "lifecycle": "provider_confirmed",
+        "result": "pending",
+        "reason": "paypal_search_pending",
+        "provider_order_id": "...7214",
+        "paypal_status": "COMPLETED"
+      },
+      {
+        "request_id": "...3056",
+        "lifecycle": "provider_confirmed",
+        "result": "pending",
+        "reason": "paypal_search_pending",
+        "provider_order_id": "...082H",
+        "paypal_status": "COMPLETED"
+      },
+      {
+        "request_id": "...e926",
+        "lifecycle": "reversed",
+        "result": "pending",
+        "reason": "refund_extension_required",
+        "provider_order_id": "...121P",
+        "paypal_status": "COMPLETED"
+      },
+      {
+        "request_id": "...f6a6",
+        "lifecycle": "rejected",
+        "result": "matched",
+        "reason": "not_submitted",
+        "provider_order_id": null,
+        "paypal_status": null
+      }
+    ],
+    "start": "2026-11-03T15:26:54.629465Z",
+    "end": "2026-11-03T16:26:54.629465Z",
+    "payment_environment": "sandbox",
+    "is_real_money": false,
+    "read_only": true
+  },
+  "postman": {
+    "fatal": false,
+    "requests": {
+      "total": 17,
+      "pending": 0,
+      "failed": 0
+    },
+    "assertions": {
+      "total": 34,
+      "pending": 0,
+      "failed": 0
+    },
+    "failures": [],
+    "executions": [
+      {
+        "name": "V1 owner cannot act as agent",
+        "status": 403
+      },
+      {
+        "name": "V1 agent cannot act as owner",
+        "status": 403
+      },
+      {
+        "name": "V1 virtual allowance is not money",
+        "status": 200
+      },
+      {
+        "name": "V1 create idempotent request",
+        "status": 201
+      },
+      {
+        "name": "V1 idempotency exact replay",
+        "status": 200
+      },
+      {
+        "name": "V1 idempotency body mismatch",
+        "status": 409
+      },
+      {
+        "name": "V1 execute before approval refused",
+        "status": 409
+      },
+      {
+        "name": "V1 agent cannot approve itself",
+        "status": 403
+      },
+      {
+        "name": "V1 tampered approval terms refused",
+        "status": 409
+      },
+      {
+        "name": "V1 refusal preserves approval gate",
+        "status": 200
+      },
+      {
+        "name": "V1 exact terms owner approval",
+        "status": 200
+      },
+      {
+        "name": "V1 double approval refused",
+        "status": 409
+      },
+      {
+        "name": "V1 sandbox execute remains pending",
+        "status": 200
+      },
+      {
+        "name": "V1 execution approval is single use",
+        "status": 409
+      },
+      {
+        "name": "V1 other agent cannot read request",
+        "status": 404
+      },
+      {
+        "name": "V1 unsigned webhook refused",
+        "status": 400
+      },
+      {
+        "name": "V1 status stays pending",
+        "status": 200
+      }
+    ]
+  },
+  "finished": true,
+  "market_queue_audit": {
+    "http": [
+      {
+        "method": "GET",
+        "path": "/v1/agents",
+        "status": 200,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "/v1/agents/...716a/credentials",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "GET",
+        "path": "/v1/payment-requests",
+        "status": 200,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/...2190/reject",
+        "status": 200,
+        "error": null
+      },
+      {
+        "method": "GET",
+        "path": "/v1/me/wallet",
+        "status": 200,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests",
+        "status": 201,
+        "error": null
+      },
+      {
+        "method": "GET",
+        "path": "/v1/approvals",
+        "status": 200,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/...d3ca/market-check",
+        "status": 403,
+        "error": "owner_credential_required"
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/...d3ca/market-check",
+        "status": 200,
+        "error": null
+      },
+      {
+        "method": "GET",
+        "path": "/v1/payment-requests/...d3ca",
+        "status": 200,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests",
+        "status": 200,
+        "error": null
+      },
+      {
+        "method": "POST",
+        "path": "/v1/payment-requests/...d3ca/reject",
+        "status": 200,
+        "error": null
+      },
+      {
+        "method": "GET",
+        "path": "/v1/me/wallet",
+        "status": 200,
+        "error": null
+      }
+    ],
+    "allowances": [
+      {
+        "step": "before queue audit",
+        "period": "2026-11",
+        "available": "9994.00",
+        "reserved": "0.00",
+        "pending": "0.00",
+        "spent": "6.00",
+        "committed": "6.00"
+      },
+      {
+        "step": "after queue audit",
+        "period": "2026-11",
+        "available": "9994.00",
+        "reserved": "0.00",
+        "pending": "0.00",
+        "spent": "6.00",
+        "committed": "6.00"
+      }
+    ],
+    "request_id": "...d3ca",
+    "market": {
+      "provider": "channel3",
+      "checked_at": "2026-11-03T16:33:19.734285+00:00",
+      "advisory_level": "high_risk",
+      "advisory_only": true,
+      "authoritative": false,
+      "input": {
+        "product_query": "Logitech MX Master 3S wireless mouse",
+        "product_url": null,
+        "claimed_amount": "250.00",
+        "currency": "USD",
+        "merchant_domain": "shady-deals.example"
+      },
+      "product": {
+        "id": "...KmNT",
+        "title": "Logitech MX Master 3S Performance Wireless Mouse",
+        "brands": [
+          "Logitech"
+        ],
+        "match_confidence": "high",
+        "offer_count": 5
+      },
+      "market": {
+        "currency": "USD",
+        "offers_compared": 4,
+        "low": "99.99",
+        "median": "112.44",
+        "high": "118.00",
+        "claimed_vs_median": "2.22"
+      },
+      "merchant_offer": null,
+      "better_deals": [
+        {
+          "retailer": "officedepot.com",
+          "price": "99.99",
+          "currency": "USD",
+          "condition": "new",
+          "availability": "InStock",
+          "you_save": "150.01",
+          "you_save_pct": "60.0",
+          "buy_url": "https://buy.trychannel3.com/[redacted]",
+          "on_sale": false,
+          "was_price": null,
+          "sale_discount_pct": null
+        },
+        {
+          "retailer": "bestbuy.com",
+          "price": "110.88",
+          "currency": "USD",
+          "condition": "new",
+          "availability": "InStock",
+          "you_save": "139.12",
+          "you_save_pct": "55.6",
+          "buy_url": "https://buy.trychannel3.com/[redacted]",
+          "on_sale": false,
+          "was_price": null,
+          "sale_discount_pct": null
+        },
+        {
+          "retailer": "6ave.com",
+          "price": "113.99",
+          "currency": "USD",
+          "condition": "new",
+          "availability": "InStock",
+          "you_save": "136.01",
+          "you_save_pct": "54.4",
+          "buy_url": "https://buy.trychannel3.com/[redacted]",
+          "on_sale": false,
+          "was_price": null,
+          "sale_discount_pct": null
+        }
+      ],
+      "signals": [
+        {
+          "code": "PRICE_ABOVE_MARKET",
+          "severity": "high",
+          "message": "The claimed price is 2.22x the market median (112.44 USD).",
+          "data": {
+            "median": "112.44",
+            "ratio": "2.22"
+          }
+        },
+        {
+          "code": "MERCHANT_NOT_IN_MARKET",
+          "severity": "warning",
+          "message": "shady-deals.example is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+          "data": {
+            "listed_retailers": [
+              "6ave.com",
+              "backmarket.com",
+              "beachcamera.com",
+              "bestbuy.com",
+              "officedepot.com"
+            ]
+          }
+        },
+        {
+          "code": "BETTER_PRICE_AVAILABLE",
+          "severity": "info",
+          "message": "The same product is listed for 99.99 USD at officedepot.com (save 150.01 USD). Verify on the site before switching.",
+          "data": null
+        }
+      ],
+      "disclosure": "We may earn a commission when you buy through links on this page.",
+      "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+      "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+      "discount_codes_available": false,
+      "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+      "evidence": {
+        "source_url": "https://api.trychannel3.com/v1/search",
+        "endpoint": "search",
+        "retrieved_at": "2026-11-03T16:33:19.731935+00:00",
+        "content_sha256": "[omitted]",
+        "method": "search_result"
+      }
+    },
+    "refresh": {
+      "provider": "channel3",
+      "checked_at": "2026-11-03T16:33:20.082941+00:00",
+      "advisory_level": "high_risk",
+      "advisory_only": true,
+      "authoritative": false,
+      "input": {
+        "product_query": "Logitech MX Master 3S wireless mouse",
+        "product_url": null,
+        "claimed_amount": "250.00",
+        "currency": "USD",
+        "merchant_domain": "shady-deals.example"
+      },
+      "product": {
+        "id": "...KmNT",
+        "title": "Logitech MX Master 3S Performance Wireless Mouse",
+        "brands": [
+          "Logitech"
+        ],
+        "match_confidence": "exact",
+        "offer_count": 5
+      },
+      "market": {
+        "currency": "USD",
+        "offers_compared": 4,
+        "low": "99.99",
+        "median": "112.44",
+        "high": "118.00",
+        "claimed_vs_median": "2.22"
+      },
+      "merchant_offer": null,
+      "better_deals": [
+        {
+          "retailer": "officedepot.com",
+          "price": "99.99",
+          "currency": "USD",
+          "condition": "new",
+          "availability": "InStock",
+          "you_save": "150.01",
+          "you_save_pct": "60.0",
+          "buy_url": "https://buy.trychannel3.com/[redacted]",
+          "on_sale": false,
+          "was_price": null,
+          "sale_discount_pct": null
+        },
+        {
+          "retailer": "bestbuy.com",
+          "price": "110.88",
+          "currency": "USD",
+          "condition": "new",
+          "availability": "InStock",
+          "you_save": "139.12",
+          "you_save_pct": "55.6",
+          "buy_url": "https://buy.trychannel3.com/[redacted]",
+          "on_sale": false,
+          "was_price": null,
+          "sale_discount_pct": null
+        },
+        {
+          "retailer": "6ave.com",
+          "price": "113.99",
+          "currency": "USD",
+          "condition": "new",
+          "availability": "InStock",
+          "you_save": "136.01",
+          "you_save_pct": "54.4",
+          "buy_url": "https://buy.trychannel3.com/[redacted]",
+          "on_sale": false,
+          "was_price": null,
+          "sale_discount_pct": null
+        }
+      ],
+      "signals": [
+        {
+          "code": "PRICE_ABOVE_MARKET",
+          "severity": "high",
+          "message": "The claimed price is 2.22x the market median (112.44 USD).",
+          "data": {
+            "ratio": "2.22",
+            "median": "112.44"
+          }
+        },
+        {
+          "code": "MERCHANT_NOT_IN_MARKET",
+          "severity": "warning",
+          "message": "shady-deals.example is not among the retailers Channel3 lists for this product; verify the merchant before paying.",
+          "data": {
+            "listed_retailers": [
+              "6ave.com",
+              "backmarket.com",
+              "beachcamera.com",
+              "bestbuy.com",
+              "officedepot.com"
+            ]
+          }
+        },
+        {
+          "code": "BETTER_PRICE_AVAILABLE",
+          "severity": "info",
+          "message": "The same product is listed for 99.99 USD at officedepot.com (save 150.01 USD). Verify on the site before switching.",
+          "data": null
+        }
+      ],
+      "disclosure": "We may earn a commission when you buy through links on this page.",
+      "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes.",
+      "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+      "discount_codes_available": false,
+      "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+      "evidence": {
+        "source_url": "https://api.trychannel3.com/v1/products/...KmNT",
+        "endpoint": "product",
+        "retrieved_at": "2026-11-03T16:33:20.080314+00:00",
+        "content_sha256": "[omitted]",
+        "method": "search_result"
+      }
+    },
+    "queue_snapshot_equal": true,
+    "risk_and_terms_unchanged": true,
+    "historical_replay_equal": true,
+    "allowance_restored": true
+  },
+  "refund_provider_diagnostic": {
+    "api_http": 201,
+    "refund_status": "FAILED",
+    "provider": [
+      {
+        "method": "GET",
+        "path": "/v2/payments/captures/...944D",
+        "http": 200
+      },
+      {
+        "method": "POST",
+        "path": "/v2/payments/captures/...944D/refund",
+        "http": 403
+      }
+    ]
+  },
+  "notes": [
+    "Live sandbox, never production money. All monetary orders and payouts are 1.00 USD.",
+    "The two failed persona refunds do not release allowance.",
+    "SDK purchase stops before provider submission because the public capture method is absent.",
+    "Reconciliation Search is delayed; pending is not a matched Search result.",
+    "Newman exercises the generated V1 security folder against this real sandbox server; it creates one additional unapproved order on its own wallet."
+  ],
+  "verified_payees": [
+    {
+      "merchant": "Northwind Office Supply",
+      "request_id": "...13ee",
+      "order_id": "...2802",
+      "capture_id": "...944D",
+      "approved_email_matches_paypal_payee": true,
+      "provider_http": 200,
+      "capture_status": "COMPLETED",
+      "amount": {
+        "currency_code": "USD",
+        "value": "1.00"
+      }
+    },
+    {
+      "merchant": "Bluepeak Electronics",
+      "request_id": "...b2a7",
+      "order_id": "...7214",
+      "capture_id": "...3837",
+      "approved_email_matches_paypal_payee": true,
+      "provider_http": 200,
+      "capture_status": "COMPLETED",
+      "amount": {
+        "currency_code": "USD",
+        "value": "1.00"
+      }
+    },
+    {
+      "merchant": "CloudDesk Software",
+      "request_id": "...3056",
+      "order_id": "...082H",
+      "capture_id": "...882W",
+      "approved_email_matches_paypal_payee": true,
+      "provider_http": 200,
+      "capture_status": "COMPLETED",
+      "amount": {
+        "currency_code": "USD",
+        "value": "1.00"
+      }
+    }
+  ]
+}

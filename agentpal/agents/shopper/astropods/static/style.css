@@ -1,0 +1,13 @@
+:root { color-scheme: dark; font: 16px/1.6 system-ui, sans-serif; color: #e7e9ef; background: #10141e; }
+body { margin: 0; }
+main { max-width: 760px; margin: 3rem auto; padding: 1.5rem; }
+h1 { font-size: clamp(2.4rem, 7vw, 4rem); line-height: 1.12; letter-spacing: -.045em; }
+.eyebrow { color: #91edcb; font-size: .8rem; letter-spacing: .13em; }
+form { display: grid; gap: .7rem; padding: 1.5rem; border: 1px solid #354052; border-radius: 16px; }
+input, textarea, button { font: inherit; padding: .75rem; border: 1px solid #46536c; border-radius: 8px; }
+input, textarea { color: #edf1fa; background: #182131; }
+textarea { min-height: 80px; resize: vertical; }
+button { background: #91edcb; color: #10141e; font-weight: 700; cursor: pointer; }
+button:disabled { opacity: .5; cursor: wait; }
+#chat p { background: #1b2535; padding: .8rem 1rem; border-radius: 12px; overflow-wrap: anywhere; white-space: pre-wrap; }
+#status, .notice { font-size: .85rem; color: #b4bfd3; overflow-wrap: anywhere; }

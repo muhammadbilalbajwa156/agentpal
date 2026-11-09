@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AgentPal Shopper</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+<main>
+  <p class="eyebrow">AGENTPAL · SANDBOX DEMO</p>
+  <h1>Your shopping agent.<br>Your approval.</h1>
+  <p>Give Shopper an errand. It searches Channel3 and asks you to approve the exact payment terms in your AgentPal dashboard.</p>
+  <section id="chat" role="log" aria-live="polite" aria-label="Shopping conversation"></section>
+  <p id="status" role="status">Ready for an errand.</p>
+  <form id="errand">
+    <label for="task">Shopping errand</label>
+    <textarea id="task" maxlength="500" required placeholder="Buy a wireless mouse for the office"></textarea>
+    <label for="budget">Maximum budget (USD)</label>
+    <input id="budget" type="text" inputmode="decimal" pattern="[0-9]+(\.[0-9]{1,2})?" value="40" required>
+    <label for="payee">Sandbox merchant email (optional; also name it in the errand)</label>
+    <input id="payee" type="email" maxlength="127">
+    <button id="send" type="submit">Start errand</button>
+  </form>
+  <p class="notice">Virtual allowance is not money. Only verified PayPal sandbox outcomes count as completed. The owner approves and captures in AgentPal; Shopper cannot approve, capture or refund.</p>
+  <p class="notice">We may earn a commission when you buy through links on this page. Verify the price, shipping and tax before approving.</p>
+</main>
+</body>
+</html>

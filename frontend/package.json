@@ -1,0 +1,15 @@
+{
+  "name": "agentpal-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Responsive AgentPal frontend demo",
+  "scripts": {
+    "dev": "node preview.cjs",
+    "start": "node preview.cjs",
+    "test": "node check-finance.cjs && node check-shell.cjs && node check-live-finance.cjs && node check-live-admin.cjs && node check-live-visuals.cjs && node check-live-design.cjs && node check-workspace.cjs",
+    "test:browser": "node check-dashboard-evidence-browser.cjs && node check-workspace-browser.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

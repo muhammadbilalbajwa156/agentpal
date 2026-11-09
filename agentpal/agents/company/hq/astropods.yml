@@ -1,0 +1,34 @@
+spec: blueprint/v1
+name: agentpal-company-hq
+agent:
+  build:
+    context: ../../../..
+    dockerfile: agentpal/agents/company/hq/Dockerfile
+  interfaces:
+    frontend: true
+    messaging: false
+  healthcheck:
+    path: /health
+  inputs:
+    - name: GROQ_API_KEY
+      datatype: string
+      secret: true
+    - name: OPENROUTER_API_KEY
+      datatype: string
+      secret: true
+    - name: CHANNEL3_API_KEY
+      datatype: string
+      secret: true
+    - name: COMPANY_AGENT_KEYS
+      datatype: string
+      secret: true
+    - name: AGENTPAL_BASE_URL
+      datatype: string
+      default: https://agentpal-api.onrender.com
+    - name: COMPANY_PLANNER
+      datatype: string
+      default: llm
+dev:
+  interfaces:
+    frontend:
+      port: 80

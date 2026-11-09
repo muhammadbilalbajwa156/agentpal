@@ -1,0 +1,613 @@
+{
+  "meta": {
+    "evaluated_at": "2026-10-30T22:43:35+00:00",
+    "backend": "gguf (serving path)",
+    "model": "build/modal_out/export/agentpal-qwen3-1.7b-q4_k_m.gguf",
+    "training_run": {
+      "run_kind": "training",
+      "notice": "LoRA adapter for Qwen3-1.7B. Advisory model only; evaluate before use.",
+      "base_model": "Qwen/Qwen3-1.7B",
+      "base_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+      "llama_cpp_commit": "78febbad9d4fcb6d85d65207265c875f5aa1c1af"
+    },
+    "gguf_sha256": "92522e111321ea348b7981976e6e98a9fbfe27167711ce2d405a2e1da29c9817",
+    "banner": "Synthetic/author labels: development evidence only, not real-world accuracy"
+  },
+  "sft_dev": {
+    "units": 405,
+    "risky": 239,
+    "legitimate": 166,
+    "validity": {
+      "calls": 405,
+      "invalid": 0,
+      "invalid_rate": 0.0,
+      "invalid_rate_ci95": [
+        0.0,
+        0.0094
+      ],
+      "examples": []
+    },
+    "model_only_on_valid_outputs": {
+      "n": 402,
+      "precision": 0.94,
+      "recall": 0.5949,
+      "f1": 0.7287,
+      "false_positive_rate": 0.0545,
+      "false_negative_rate": 0.4051,
+      "confusion_matrix": {
+        "tp": 141,
+        "fp": 9,
+        "tn": 156,
+        "fn": 96
+      },
+      "ci95": {
+        "precision": [
+          0.8899,
+          0.9681
+        ],
+        "recall": [
+          0.5314,
+          0.6554
+        ],
+        "false_positive_rate": [
+          0.029,
+          0.1004
+        ]
+      }
+    },
+    "model_only_invalid_counted_as_not_flagged": {
+      "n": 405,
+      "precision": 0.94,
+      "recall": 0.59,
+      "f1": 0.725,
+      "false_positive_rate": 0.0542,
+      "false_negative_rate": 0.41,
+      "confusion_matrix": {
+        "tp": 141,
+        "fp": 9,
+        "tn": 157,
+        "fn": 98
+      },
+      "ci95": {
+        "precision": [
+          0.8899,
+          0.9681
+        ],
+        "recall": [
+          0.5267,
+          0.6504
+        ],
+        "false_positive_rate": [
+          0.0288,
+          0.0998
+        ]
+      }
+    },
+    "rules_only": {
+      "missed_risky_FN": {
+        "count": 80,
+        "n": 239,
+        "rate": 0.3347,
+        "ci95": [
+          0.2779,
+          0.3968
+        ]
+      },
+      "legitimate_flagged_FP": {
+        "count": 56,
+        "n": 166,
+        "rate": 0.3373,
+        "ci95": [
+          0.2698,
+          0.4122
+        ]
+      },
+      "legitimate_blocked": {
+        "count": 0,
+        "n": 166,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.0226
+        ]
+      },
+      "review_rate": {
+        "count": 195,
+        "n": 405,
+        "rate": 0.4815,
+        "ci95": [
+          0.4332,
+          0.5301
+        ]
+      },
+      "block_rate": {
+        "count": 20,
+        "n": 405,
+        "rate": 0.0494,
+        "ci95": [
+          0.0322,
+          0.075
+        ]
+      },
+      "binary": {
+        "n": 405,
+        "precision": 0.7395,
+        "recall": 0.6653,
+        "f1": 0.7004,
+        "false_positive_rate": 0.3373,
+        "false_negative_rate": 0.3347,
+        "confusion_matrix": {
+          "tp": 159,
+          "fp": 56,
+          "tn": 110,
+          "fn": 80
+        },
+        "ci95": {
+          "precision": [
+            0.677,
+            0.7936
+          ],
+          "recall": [
+            0.6032,
+            0.7221
+          ],
+          "false_positive_rate": [
+            0.2698,
+            0.4122
+          ]
+        }
+      }
+    },
+    "rules_plus_model": {
+      "missed_risky_FN": {
+        "count": 28,
+        "n": 239,
+        "rate": 0.1172,
+        "ci95": [
+          0.0823,
+          0.1641
+        ]
+      },
+      "legitimate_flagged_FP": {
+        "count": 65,
+        "n": 166,
+        "rate": 0.3916,
+        "ci95": [
+          0.3206,
+          0.4675
+        ]
+      },
+      "legitimate_blocked": {
+        "count": 0,
+        "n": 166,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.0226
+        ]
+      },
+      "review_rate": {
+        "count": 256,
+        "n": 405,
+        "rate": 0.6321,
+        "ci95": [
+          0.5841,
+          0.6776
+        ]
+      },
+      "block_rate": {
+        "count": 20,
+        "n": 405,
+        "rate": 0.0494,
+        "ci95": [
+          0.0322,
+          0.075
+        ]
+      },
+      "binary": {
+        "n": 405,
+        "precision": 0.7645,
+        "recall": 0.8828,
+        "f1": 0.8194,
+        "false_positive_rate": 0.3916,
+        "false_negative_rate": 0.1172,
+        "confusion_matrix": {
+          "tp": 211,
+          "fp": 65,
+          "tn": 101,
+          "fn": 28
+        },
+        "ci95": {
+          "precision": [
+            0.711,
+            0.8107
+          ],
+          "recall": [
+            0.8359,
+            0.9177
+          ],
+          "false_positive_rate": [
+            0.3206,
+            0.4675
+          ]
+        }
+      }
+    },
+    "rules_plus_model_degraded_rate": 0.0074,
+    "never_less_strict_than_rules": true,
+    "latency": {
+      "n": 405,
+      "p50_ms": 7672.6,
+      "p95_ms": 16500.3,
+      "mean_ms": 9902.8,
+      "over_serving_timeout": 3
+    },
+    "per_category": {
+      "aug_duplicate_visible": {
+        "n": 7,
+        "risky": 7,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 5,
+        "rules_plus_model_flagged": 5
+      },
+      "aug_evidence_routine_legit": {
+        "n": 15,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 1
+      },
+      "aug_fabricated_evidence_with_signal": {
+        "n": 12,
+        "risky": 12,
+        "invalid": 0,
+        "model_flagged": 8,
+        "rules_only_flagged": 9,
+        "rules_plus_model_flagged": 12
+      },
+      "aug_hard_negative_large_in_budget": {
+        "n": 9,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 7,
+        "rules_plus_model_flagged": 7
+      },
+      "aug_hard_negative_new_merchant": {
+        "n": 3,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 3,
+        "rules_plus_model_flagged": 3
+      },
+      "aug_hard_negative_plain": {
+        "n": 7,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      },
+      "aug_hard_negative_topic": {
+        "n": 12,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 8,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 9
+      },
+      "aug_hard_negative_urgent": {
+        "n": 8,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 8,
+        "rules_plus_model_flagged": 8
+      },
+      "aug_injection_multilingual": {
+        "n": 15,
+        "risky": 15,
+        "invalid": 0,
+        "model_flagged": 15,
+        "rules_only_flagged": 2,
+        "rules_plus_model_flagged": 15
+      },
+      "aug_injection_obfuscated": {
+        "n": 17,
+        "risky": 17,
+        "invalid": 0,
+        "model_flagged": 17,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 17
+      },
+      "aug_injection_paraphrased": {
+        "n": 17,
+        "risky": 17,
+        "invalid": 0,
+        "model_flagged": 9,
+        "rules_only_flagged": 3,
+        "rules_plus_model_flagged": 10
+      },
+      "aug_legit_multilingual": {
+        "n": 22,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      },
+      "aug_missing_or_inconsistent": {
+        "n": 12,
+        "risky": 12,
+        "invalid": 0,
+        "model_flagged": 3,
+        "rules_only_flagged": 8,
+        "rules_plus_model_flagged": 9
+      },
+      "aug_near_name": {
+        "n": 12,
+        "risky": 12,
+        "invalid": 0,
+        "model_flagged": 9,
+        "rules_only_flagged": 12,
+        "rules_plus_model_flagged": 12
+      },
+      "aug_near_name_legit": {
+        "n": 10,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 1
+      },
+      "aug_purpose_mismatch": {
+        "n": 10,
+        "risky": 10,
+        "invalid": 0,
+        "model_flagged": 4,
+        "rules_only_flagged": 8,
+        "rules_plus_model_flagged": 10
+      },
+      "aug_purpose_mismatch_multilingual": {
+        "n": 10,
+        "risky": 10,
+        "invalid": 0,
+        "model_flagged": 9,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 9
+      },
+      "aug_renewal_legit": {
+        "n": 10,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 10,
+        "rules_plus_model_flagged": 10
+      },
+      "aug_self_made_evidence": {
+        "n": 12,
+        "risky": 12,
+        "invalid": 0,
+        "model_flagged": 1,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 2
+      },
+      "excessive_amount": {
+        "n": 20,
+        "risky": 20,
+        "invalid": 0,
+        "model_flagged": 10,
+        "rules_only_flagged": 20,
+        "rules_plus_model_flagged": 20
+      },
+      "legit_low_risk": {
+        "n": 35,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      },
+      "legit_unusual": {
+        "n": 35,
+        "risky": 0,
+        "invalid": 1,
+        "model_flagged": 1,
+        "rules_only_flagged": 25,
+        "rules_plus_model_flagged": 26
+      },
+      "prompt_injection": {
+        "n": 5,
+        "risky": 5,
+        "invalid": 0,
+        "model_flagged": 5,
+        "rules_only_flagged": 5,
+        "rules_plus_model_flagged": 5
+      },
+      "purpose_mismatch": {
+        "n": 10,
+        "risky": 10,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 5,
+        "rules_plus_model_flagged": 5
+      },
+      "suspicious_combination": {
+        "n": 15,
+        "risky": 15,
+        "invalid": 0,
+        "model_flagged": 7,
+        "rules_only_flagged": 15,
+        "rules_plus_model_flagged": 15
+      },
+      "suspicious_domain": {
+        "n": 35,
+        "risky": 35,
+        "invalid": 2,
+        "model_flagged": 29,
+        "rules_only_flagged": 35,
+        "rules_plus_model_flagged": 35
+      },
+      "unexpected_recurring": {
+        "n": 30,
+        "risky": 30,
+        "invalid": 0,
+        "model_flagged": 15,
+        "rules_only_flagged": 30,
+        "rules_plus_model_flagged": 30
+      }
+    },
+    "per_language": {
+      "en": {
+        "n": 349,
+        "risky": 205,
+        "invalid": 3,
+        "model_flagged": 125,
+        "rules_only_flagged": 212,
+        "rules_plus_model_flagged": 250
+      },
+      "es": {
+        "n": 8,
+        "risky": 3,
+        "invalid": 0,
+        "model_flagged": 3,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 3
+      },
+      "fr": {
+        "n": 2,
+        "risky": 2,
+        "invalid": 0,
+        "model_flagged": 1,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 2
+      },
+      "hi": {
+        "n": 7,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      },
+      "id": {
+        "n": 4,
+        "risky": 4,
+        "invalid": 0,
+        "model_flagged": 4,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 4
+      },
+      "it": {
+        "n": 8,
+        "risky": 4,
+        "invalid": 0,
+        "model_flagged": 4,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 4
+      },
+      "nl": {
+        "n": 9,
+        "risky": 6,
+        "invalid": 0,
+        "model_flagged": 5,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 5
+      },
+      "pl": {
+        "n": 2,
+        "risky": 2,
+        "invalid": 0,
+        "model_flagged": 2,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 2
+      },
+      "pt": {
+        "n": 2,
+        "risky": 2,
+        "invalid": 0,
+        "model_flagged": 2,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 2
+      },
+      "ru": {
+        "n": 2,
+        "risky": 2,
+        "invalid": 0,
+        "model_flagged": 2,
+        "rules_only_flagged": 2,
+        "rules_plus_model_flagged": 2
+      },
+      "uk": {
+        "n": 2,
+        "risky": 2,
+        "invalid": 0,
+        "model_flagged": 2,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 2
+      },
+      "zh": {
+        "n": 10,
+        "risky": 7,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      }
+    },
+    "per_wording": {
+      "non_english": {
+        "n": 56,
+        "risky": 34,
+        "invalid": 0,
+        "model_flagged": 25,
+        "rules_only_flagged": 3,
+        "rules_plus_model_flagged": 26
+      },
+      "obfuscated": {
+        "n": 17,
+        "risky": 17,
+        "invalid": 0,
+        "model_flagged": 17,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 17
+      },
+      "paraphrased": {
+        "n": 17,
+        "risky": 17,
+        "invalid": 0,
+        "model_flagged": 9,
+        "rules_only_flagged": 3,
+        "rules_plus_model_flagged": 10
+      },
+      "plain": {
+        "n": 130,
+        "risky": 56,
+        "invalid": 0,
+        "model_flagged": 32,
+        "rules_only_flagged": 73,
+        "rules_plus_model_flagged": 87
+      },
+      "templated": {
+        "n": 185,
+        "risky": 115,
+        "invalid": 3,
+        "model_flagged": 67,
+        "rules_only_flagged": 135,
+        "rules_plus_model_flagged": 136
+      }
+    }
+  },
+  "memory": {
+    "process_max_rss_bytes": 2688876544
+  },
+  "reference_baselines": {
+    "zero_shot_qwen2.5_1.5b_q4km_risk_model_plan": {
+      "note": "docs/RISK_MODEL_PLAN.md section 1 (40 rows of the OLD SFT dev split, without rule findings): 35/40 valid JSON, 19/19 legitimate flagged, 0/16 risky missed, p50 12.3 s / p95 16.5 s on 4 CPU cores"
+    },
+    "rules_hybrid_classifier": "see bench_v2_dev.overall (scored on identical units)"
+  }
+}

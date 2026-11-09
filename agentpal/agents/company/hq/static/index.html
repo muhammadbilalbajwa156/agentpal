@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AgentPal Company HQ</title>
+  <link rel="stylesheet" href="/static/hq.css">
+  <script src="/static/hq.js" defer></script>
+</head>
+<body>
+<main>
+  <p class="eyebrow">AGENTPAL · AUTONOMOUS COMPANIES · SANDBOX DEMO</p>
+  <h1>Autonomous companies.<br>Human-approved spending.</h1>
+  <p>Each AI agent has its own AgentPal key and wallet. Agents only <em>request</em> payments and payouts; the owner approves the exact terms in the AgentPal dashboard.</p>
+  <form id="day">
+    <label for="company">Company</label>
+    <select id="company" required></select>
+    <button id="start" type="submit">Start the business day</button>
+  </form>
+  <section id="cast" aria-label="Agents"></section>
+  <p id="status" role="status">Pick a company.</p>
+  <section id="log" role="log" aria-live="polite" aria-label="Agent steps"></section>
+  <section id="results" aria-label="Requests"></section>
+  <p class="notice">Virtual allowance is not money. Only verified PayPal sandbox outcomes count as completed. Agents cannot approve, capture or refund.</p>
+</main>
+</body>
+</html>

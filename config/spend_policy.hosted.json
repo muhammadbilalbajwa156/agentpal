@@ -1,0 +1,10 @@
+{
+  "policy_version": "2026.11.5-hosted",
+  "configuration": "operator",
+  "note": "Hosted (Render) operator policy. Lists NO legacy /assess agents: platform (/v1) agents get their limits only from owner-configured wallets (WalletBackedSpendPolicy); any other agent is refused (NO_SPENDING_POLICY).",
+  "budget_period": "calendar_month_utc",
+  "rolling_window_hours": 24,
+  "approval_validity_minutes": 15,
+  "agents": {},
+  "owners": {}
+}

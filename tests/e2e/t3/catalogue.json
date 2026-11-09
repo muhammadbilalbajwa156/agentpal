@@ -1,0 +1,2609 @@
+{
+  "calls": {
+    "search": 5,
+    "lookup": 0,
+    "product": 0
+  },
+  "results": [
+    {
+      "query": "Logitech MX Master 3S",
+      "products": [
+        {
+          "id": "redacted-KmNT",
+          "title": "Logitech MX Master 3S Performance Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "officedepot.com",
+              "price": "99.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.035"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "110.88",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.005"
+            },
+            {
+              "domain": "6ave.com",
+              "price": "113.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.018"
+            },
+            {
+              "domain": "beachcamera.com",
+              "price": "118.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "128.99",
+              "url": null,
+              "max_commission_rate": "0.028"
+            },
+            {
+              "domain": "backmarket.com",
+              "price": "123.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "191.92",
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        },
+        {
+          "id": "redacted-kuGp",
+          "title": "Logitech Mx Master 3s Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "logitech.com",
+              "price": "79.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.042"
+            },
+            {
+              "domain": "staples.com",
+              "price": "79.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "99.99",
+              "url": null,
+              "max_commission_rate": "0.03"
+            },
+            {
+              "domain": "cdw.com",
+              "price": "88.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "99.99",
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-wRZF",
+          "title": "Logitech MX Master Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "logitech.com",
+              "price": "79.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.042"
+            },
+            {
+              "domain": "lenovo.com",
+              "price": "99.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            },
+            {
+              "domain": "newegg.com",
+              "price": "102.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            }
+          ]
+        },
+        {
+          "id": "redacted-TCOc",
+          "title": "MX Master 3S Performance Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "lenovo.com",
+              "price": "119.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.014"
+            }
+          ]
+        },
+        {
+          "id": "redacted-QdLL",
+          "title": "MX Master 3S Performance Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "backmarket.com",
+              "price": "98.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "161.01",
+              "url": null,
+              "max_commission_rate": "0.035"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "305.32",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.005"
+            }
+          ]
+        },
+        {
+          "id": "redacted-g5Tz",
+          "title": "Mx Master Business Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "logitech.com",
+              "price": "109.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.042"
+            }
+          ]
+        },
+        {
+          "id": "redacted-8fCA",
+          "title": "Logitech MX Master 3S For Business Mouse Wireless",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "beachcamera.com",
+              "price": "124.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "149.99",
+              "url": null,
+              "max_commission_rate": "0.028"
+            },
+            {
+              "domain": "backmarket.com",
+              "price": "162.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "301.2",
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        },
+        {
+          "id": "redacted-SzG2",
+          "title": "Logitech MX Keys S Wireless Keyboard, Pale Gray with MX Master 3S Black Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "adorama.com",
+              "price": "219.98",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "239.98",
+              "url": null,
+              "max_commission_rate": "0.025"
+            }
+          ]
+        },
+        {
+          "id": "redacted-e6dR",
+          "title": "MX Mechanical Mini for Mac Combo",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "logitech.com",
+              "price": "219.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.042"
+            }
+          ]
+        },
+        {
+          "id": "redacted-SQKh",
+          "title": "Logitech MX Keys Mini Wireless Keyboard with MX Master 3S Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "adorama.com",
+              "price": "199.98",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            }
+          ]
+        },
+        {
+          "id": "redacted-cVlc",
+          "title": "Logitech MX Master 3 Mouse Wireless",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "backmarket.com",
+              "price": "132.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "298.74",
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        },
+        {
+          "id": "redacted-qBNy",
+          "title": "Logitech MX Anywhere 3S Compact Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "69.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            },
+            {
+              "domain": "beachcamera.com",
+              "price": "108.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "129.99",
+              "url": null,
+              "max_commission_rate": "0.028"
+            }
+          ]
+        },
+        {
+          "id": "redacted-c2Es",
+          "title": "MX Anywhere 3S Compact Bluetooth Performance Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "69.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            },
+            {
+              "domain": "focuscamera.com",
+              "price": "89.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-SL83",
+          "title": "Logitech MX Anywhere 3S Mouse Wireless",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "adorama.com",
+              "price": "89.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            },
+            {
+              "domain": "cdw.com",
+              "price": "89.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            },
+            {
+              "domain": "backmarket.com",
+              "price": "111.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "298.2",
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        },
+        {
+          "id": "redacted-ycfR",
+          "title": "Mx Anywhere 3s Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "lenovo.com",
+              "price": "69.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "89.99",
+              "url": null,
+              "max_commission_rate": "0.014"
+            },
+            {
+              "domain": "adorama.com",
+              "price": "77.49",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            },
+            {
+              "domain": "logitech.com",
+              "price": "89.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.042"
+            },
+            {
+              "domain": "bhphotovideo.com",
+              "price": "89.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "97.49",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.005"
+            },
+            {
+              "domain": "staples.com",
+              "price": "101.6",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.03"
+            }
+          ]
+        },
+        {
+          "id": "redacted-kK1Y",
+          "title": "Logitech MX Anywhere 3S for Business Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "102.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            }
+          ]
+        },
+        {
+          "id": "redacted-dJd6",
+          "title": "Logitech MX Anywhere 3S Wireless Optical Mouse, Rose",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "bhphotovideo.com",
+              "price": "89.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            },
+            {
+              "domain": "staples.com",
+              "price": "90.04",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.03"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "96.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            },
+            {
+              "domain": "macys.com",
+              "price": "133.54",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            }
+          ]
+        },
+        {
+          "id": "redacted-cT5M",
+          "title": "Logitech MX Anywhere 3S Wireless Compact Optical Mouse \u2013 Rose",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "69.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            },
+            {
+              "domain": "beachcamera.com",
+              "price": "70.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "used",
+              "compare_at_price": "84.99",
+              "url": null,
+              "max_commission_rate": "0.028"
+            }
+          ]
+        },
+        {
+          "id": "redacted-yY6S",
+          "title": "Logitech Core MX Anywhere 3S Compact Wireless Mouse",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "macys.com",
+              "price": "89.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            },
+            {
+              "domain": "beachcamera.com",
+              "price": "97.86",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "117.99",
+              "url": null,
+              "max_commission_rate": "0.028"
+            }
+          ]
+        },
+        {
+          "id": "redacted-dxuo",
+          "title": "Logitech MX Master 4 Mouse & MX Keys S Wireless Keyboard for Mac Combo Kit",
+          "brands": [
+            "Logitech"
+          ],
+          "offers": [
+            {
+              "domain": "bhphotovideo.com",
+              "price": "249.98",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        }
+      ],
+      "retrieved_at": "2026-11-03T16:18:16.720035+00:00",
+      "sha256": "5b91b2647a580a07196efa743acab2853ca80de0d9274e8f9eb41e554e0e65eb"
+    },
+    {
+      "query": "Sony WH-1000XM5",
+      "products": [
+        {
+          "id": "redacted-4MAW",
+          "title": "WH-1000XM5 Over-Ear Noise Cancelling Bluetooth Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "6ave.com",
+              "price": "398.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.018"
+            }
+          ]
+        },
+        {
+          "id": "redacted-iFzV",
+          "title": "WH-1000XM5 Wireless Over-Ear Noise Canceling Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "macys.com",
+              "price": "300.41",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.056"
+            }
+          ]
+        },
+        {
+          "id": "redacted-a6hH",
+          "title": "WH-1000XM5 Wireless Noise-Canceling Over-Ear Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "bestbuy.com",
+              "price": "299.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            }
+          ]
+        },
+        {
+          "id": "redacted-MLLD",
+          "title": "Sony WH-1000XM5 Wireless Noise Canceling Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "focuscamera.com",
+              "price": "298.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-VB5D",
+          "title": "WH-1000XM5 Wireless Noise Cancelling Over-the-Ear Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "macys.com",
+              "price": "229.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "259.99",
+              "url": null,
+              "max_commission_rate": "0.056"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "259.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            }
+          ]
+        },
+        {
+          "id": "redacted-irdV",
+          "title": "Sony WH-1000XM5 Wireless Noise Cancelling Headphones Black+ Stand, Charger, Plug",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "adorama.com",
+              "price": "298.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.025"
+            }
+          ]
+        },
+        {
+          "id": "redacted-VjuP",
+          "title": "Sony WH-1000XM5 Wireless Noise Canceling Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "hsn.com",
+              "price": "399.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            }
+          ]
+        },
+        {
+          "id": "redacted-qNMU",
+          "title": "Sony WH-1000XM5 Wireless Noise Canceling Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "backmarket.com",
+              "price": "221.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.035"
+            },
+            {
+              "domain": "bhphotovideo.com",
+              "price": "298.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.021"
+            },
+            {
+              "domain": "focuscamera.com",
+              "price": "298.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.021"
+            },
+            {
+              "domain": "crutchfield.ca",
+              "price": "298.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-tLqU",
+          "title": "Sony WH-1000XM5 Wireless Noise Canceling Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "beachcamera.com",
+              "price": "319.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "492.92",
+              "url": null,
+              "max_commission_rate": "0.028"
+            }
+          ]
+        },
+        {
+          "id": "redacted-gse3",
+          "title": "Sony WH-1000XM5 Wireless Noise Cancelling Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "bestbuy.com",
+              "price": "301.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.005"
+            },
+            {
+              "domain": "backmarket.com",
+              "price": "339.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "399.0",
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        },
+        {
+          "id": "redacted-qmB0",
+          "title": "Sony WH-1000XM5 Noise-Canceling Wireless Over-Ear Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "bestbuy.com",
+              "price": "299.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.005"
+            }
+          ]
+        },
+        {
+          "id": "redacted-5FW3",
+          "title": "Sony WH-1000XM5 Noise-Canceling Wireless Over-Ear Headphones (Blue)",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "6ave.com",
+              "price": "398.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.018"
+            }
+          ]
+        },
+        {
+          "id": "redacted-IEKy",
+          "title": "WH-1000XM5 Wireless Closed-Back Over-Ear Noise Cancelling Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "beachcamera.com",
+              "price": "179.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "399.99",
+              "url": null,
+              "max_commission_rate": "0.028"
+            },
+            {
+              "domain": "adorama.com",
+              "price": "298.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.025"
+            }
+          ]
+        },
+        {
+          "id": "redacted-0PpV",
+          "title": "Sony WH-1000XM5 Wireless Noise Canceling Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "beachcamera.com",
+              "price": "329.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "492.92",
+              "url": null,
+              "max_commission_rate": "0.028"
+            }
+          ]
+        },
+        {
+          "id": "redacted-MYyb",
+          "title": "WH-1000XM5 Wireless Noise Canceling Headphones Bundle",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "abt.com",
+              "price": "298.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-Lsos",
+          "title": "Sony WH-1000XM5 Wireless Noise Canceling Over-Ear Headphones Bundle",
+          "brands": [
+            "Sony",
+            "Olight"
+          ],
+          "offers": [
+            {
+              "domain": "focuscamera.com",
+              "price": "298.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-4kIZ",
+          "title": "Sony WH-1000XM5 Wireless Noise Canceling Over-Ear Headphones (Silver) Bundle",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "focuscamera.com",
+              "price": "299.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "399.99",
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-QizT",
+          "title": "WH-1000XM5 Noise Cancelling Wireless Over-Ear Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "macys.com",
+              "price": "327.92",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "398.0",
+              "url": null,
+              "max_commission_rate": "0.056"
+            }
+          ]
+        },
+        {
+          "id": "redacted-5Ekj",
+          "title": "Sony WH-1000XM5 Wireless Noise Canceling Over-Ear Headphones Bundle",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "focuscamera.com",
+              "price": "299.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "399.99",
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-CIWy",
+          "title": "Sony WH-1000XM5 Bluetooth Wireless Noise Canceling Over-the-Ear Headphones",
+          "brands": [
+            "Sony"
+          ],
+          "offers": [
+            {
+              "domain": "backmarket.com",
+              "price": "204.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "399.99",
+              "url": null,
+              "max_commission_rate": "0.035"
+            },
+            {
+              "domain": "6ave.com",
+              "price": "398.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.018"
+            }
+          ]
+        }
+      ],
+      "retrieved_at": "2026-11-03T16:18:17.865392+00:00",
+      "sha256": "46c3005e23455036fa755b4da349635b0e6357e1b92bcce303c8c26bd930689a"
+    },
+    {
+      "query": "Apple AirPods Pro 2",
+      "products": [
+        {
+          "id": "redacted-s5vc",
+          "title": "Apple AirPods Pro 2 with Active Noise Cancellation & Hearing Health",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "hsn.com",
+              "price": "309.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            }
+          ]
+        },
+        {
+          "id": "redacted-Tn6A",
+          "title": "AirPods Pro 2 Magsafe Active Noise Cancelling True Wireless Bluetooth Earbuds",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "bestbuy.com",
+              "price": "264.67",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            }
+          ]
+        },
+        {
+          "id": "redacted-ZFJ5",
+          "title": "Airpods Pro 2nd Generation w/ Magsafe Charging Case",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "walmart.com",
+              "price": "130.45",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "199.0",
+              "url": null,
+              "max_commission_rate": "0.07"
+            }
+          ]
+        },
+        {
+          "id": "redacted-t40B",
+          "title": "Airpods Pro 2 Ear Tips",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "apple.com",
+              "price": "9.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.2"
+            }
+          ]
+        },
+        {
+          "id": "redacted-Tjrq",
+          "title": "Airpods Pro 2 Ear Tips",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "apple.com",
+              "price": "9.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.2"
+            }
+          ]
+        },
+        {
+          "id": "redacted-WQbg",
+          "title": "AirPods Pro",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "6ave.com",
+              "price": "284.95",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.018"
+            }
+          ]
+        },
+        {
+          "id": "redacted-ETbI",
+          "title": "Apple AirPods Pro with Wireless Charging (1st Gen)",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "6ave.com",
+              "price": "274.95",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.018"
+            }
+          ]
+        },
+        {
+          "id": "redacted-C6vT",
+          "title": "Apple Airpods Pro",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "walmart.com",
+              "price": "145.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "199.0",
+              "url": null,
+              "max_commission_rate": "0.07"
+            },
+            {
+              "domain": "6ave.com",
+              "price": "258.49",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.018"
+            }
+          ]
+        },
+        {
+          "id": "redacted-c7qR",
+          "title": "Apple AirPods Pro with Wireless Charging (1st Gen)",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "6ave.com",
+              "price": "289.95",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.018"
+            }
+          ]
+        },
+        {
+          "id": "redacted-Foi2",
+          "title": "AirPods Pro 3",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "costco.com",
+              "price": "199.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-xYp3",
+          "title": "AirPods Pro 3 Active Noise Cancellation",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "bestbuy.com",
+              "price": "249.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            }
+          ]
+        },
+        {
+          "id": "redacted-GDdN",
+          "title": "AirPods Pro 3rd Wireless Active Noise Cancelling Earbuds",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "quickshipelectronics.com",
+              "price": "157.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "used",
+              "compare_at_price": "249.0",
+              "url": null,
+              "max_commission_rate": "0.018"
+            },
+            {
+              "domain": "adorama.com",
+              "price": "249.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            }
+          ]
+        },
+        {
+          "id": "redacted-9zqt",
+          "title": "Apple AirPods Max 2 Wireless Over-Ear Closed-Back Headphones",
+          "brands": [
+            "Apple",
+            "Kanto Living"
+          ],
+          "offers": [
+            {
+              "domain": "bhphotovideo.com",
+              "price": "548.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "593.99",
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-4BYG",
+          "title": "AirPods Pro 3 Wireless Earbuds",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "staples.com",
+              "price": "249.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.03"
+            },
+            {
+              "domain": "crutchfield.com",
+              "price": "249.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            },
+            {
+              "domain": "harrods.com",
+              "price": "275.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-WB6N",
+          "title": "AirPods Max 2 (USB-C) Over-Ear Noise Cancelling Bluetooth Headphones",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "backmarket.com",
+              "price": "475.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "599.0",
+              "url": null,
+              "max_commission_rate": "0.035"
+            },
+            {
+              "domain": "cdw.com",
+              "price": "651.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            },
+            {
+              "domain": "bhphotovideo.com",
+              "price": "52900.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-moMc",
+          "title": "AirPods Max 2",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "bestbuy.com",
+              "price": "549.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            }
+          ]
+        },
+        {
+          "id": "redacted-OzE5",
+          "title": "Apple AirPods Pro 1st Generation Wireless Active Noise Canceling Earbuds, Bluetooth, White",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "walmart.com",
+              "price": "90.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "105.0",
+              "url": null,
+              "max_commission_rate": "0.07"
+            },
+            {
+              "domain": "newegg.com",
+              "price": "176.49",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            }
+          ]
+        },
+        {
+          "id": "redacted-2ykL",
+          "title": "AirPods",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "6ave.com",
+              "price": "449.95",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.018"
+            }
+          ]
+        },
+        {
+          "id": "redacted-Ow1s",
+          "title": "Airpods Max 2",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "costco.com",
+              "price": "529.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            },
+            {
+              "domain": "samsclub.com",
+              "price": "549.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.118"
+            },
+            {
+              "domain": "backmarket.com",
+              "price": "572.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        },
+        {
+          "id": "redacted-bCnm",
+          "title": "AirPods Pro 3",
+          "brands": [
+            "Apple"
+          ],
+          "offers": [
+            {
+              "domain": "bestbuy.com",
+              "price": "249.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            }
+          ]
+        }
+      ],
+      "retrieved_at": "2026-11-03T16:18:19.037568+00:00",
+      "sha256": "7b3814cc4c93edf9de1b0d470b8ed59abb80d73dac11d2888a618b7c0961143f"
+    },
+    {
+      "query": "Samsung 990 PRO 2TB",
+      "products": [
+        {
+          "id": "redacted-QFpX",
+          "title": "Samsung 990 Pro 2TB with Heatsink M.2 NVMe PCIe 4.0 SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "275.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            },
+            {
+              "domain": "adorama.com",
+              "price": "299.27",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "379.99",
+              "url": null,
+              "max_commission_rate": "0.025"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "339.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.005"
+            },
+            {
+              "domain": "canadacomputers.com",
+              "price": "418.49",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-7Sie",
+          "title": "990 Pro SSD NVMe M.2",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "macys.com",
+              "price": "429.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            },
+            {
+              "domain": "cdw.com",
+              "price": "467.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "639.99",
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-XogN",
+          "title": "Samsung 990 PRO 2TB PCIe Gen4 NVMe M.2 Internal SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "adorama.com",
+              "price": "642.98",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            }
+          ]
+        },
+        {
+          "id": "redacted-Vu5r",
+          "title": "Samsung 990 Pro PCIe Gen4 NVMe M.2 Internal SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "adorama.com",
+              "price": "639.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "651.12",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            },
+            {
+              "domain": "canadacomputers.com",
+              "price": "787.49",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-UWBf",
+          "title": "990 Pro PCIe 4.0 2TB Internal SSD Drive",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "macys.com",
+              "price": "419.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            }
+          ]
+        },
+        {
+          "id": "redacted-rkq1",
+          "title": "990 PRO 2TB NVMe M.2 Internal SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "387.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            },
+            {
+              "domain": "bhphotovideo.com",
+              "price": "409.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "639.99",
+              "url": null,
+              "max_commission_rate": "0.021"
+            },
+            {
+              "domain": "microcenter.com",
+              "price": "409.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "639.99",
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-24Sl",
+          "title": "SAMSUNG 990 PRO with Heatsink Gaming Package 2TB NVMe M.2 2280 Internal Solid State Drive (SSD)",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "499.95",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "627.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "649.99",
+              "url": null,
+              "max_commission_rate": "0.005"
+            }
+          ]
+        },
+        {
+          "id": "redacted-1NEt",
+          "title": "SAMSUNG 990 PRO with Heatsink 2TB NVMe M.2 SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "627.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            }
+          ]
+        },
+        {
+          "id": "redacted-r02q",
+          "title": "Samsung 2TB 990 PRO PCIe 4.0 x4 M.2 Internal SSD with Heatsink",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "bhphotovideo.com",
+              "price": "303.97",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            },
+            {
+              "domain": "cdw.com",
+              "price": "759.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-thfN",
+          "title": "2TB 990 NVMe PCIe 4.0 M.2 Internal SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "bhphotovideo.com",
+              "price": "269.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-aUAu",
+          "title": "990 2TB Samsung V NAND PCIe Gen 4 x4 NVMe M.2 Internal SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "abt.com",
+              "price": "229.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "369.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "529.99",
+              "url": null,
+              "max_commission_rate": "0.004"
+            }
+          ]
+        },
+        {
+          "id": "redacted-4yfa",
+          "title": "Samsung LS32BG652ENXGO 32\" 1440p Curved Monitor & 2TB 990 PRO M.2 SSD with Heatsink Kit",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "bhphotovideo.com",
+              "price": "1469.98",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-7ujN",
+          "title": "Samsung Odyssey Neo G9 57\" Dual 4K Ultrawide Curved Monitor & 2TB 990 PRO M.2 SSD with Heatsink Kit",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "bhphotovideo.com",
+              "price": "2119.98",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "2769.98",
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-d6QN",
+          "title": "990 EVO Plus SSD Gen4 NVMe M.2",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "adorama.com",
+              "price": "579.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            }
+          ]
+        },
+        {
+          "id": "redacted-EJLe",
+          "title": "990 Evo NVMe Internal SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "adorama.com",
+              "price": "139.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            }
+          ]
+        },
+        {
+          "id": "redacted-cBgG",
+          "title": "4TB 990 PRO PCIe 4.0 x4 M.2 Internal SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "bhphotovideo.com",
+              "price": "949.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            }
+          ]
+        },
+        {
+          "id": "redacted-zsVp",
+          "title": "SAMSUNG 990 PRO with Heatsink Gaming Package 1TB NVMe M.2 2280 Internal Solid State Drive (SSD)",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "314.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            }
+          ]
+        },
+        {
+          "id": "redacted-6swU",
+          "title": "Samsung 990 PRO 1TB PCIe Gen4 NVMe M.2 Internal SSD",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "adorama.com",
+              "price": "322.98",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            }
+          ]
+        },
+        {
+          "id": "redacted-sRPq",
+          "title": "4TB 990 Pro Internal SSD Drive",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "macys.com",
+              "price": "1099.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            },
+            {
+              "domain": "newegg.com",
+              "price": "1125.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            }
+          ]
+        },
+        {
+          "id": "redacted-EElD",
+          "title": "Samsung 4TB 990 PRO PCIe Gen4 NVMe M.2 Internal SSD with Heatsink",
+          "brands": [
+            "Samsung"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "779.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            },
+            {
+              "domain": "macys.com",
+              "price": "1139.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            },
+            {
+              "domain": "bhphotovideo.com",
+              "price": "1139.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.021"
+            },
+            {
+              "domain": "microcenter.com",
+              "price": "1139.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "1559.99",
+              "url": null,
+              "max_commission_rate": "0.0"
+            },
+            {
+              "domain": "adorama.com",
+              "price": "1599.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.025"
+            },
+            {
+              "domain": "bestbuy.com",
+              "price": "1599.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.005"
+            }
+          ]
+        }
+      ],
+      "retrieved_at": "2026-11-03T16:18:20.319012+00:00",
+      "sha256": "47924187414571ad10caf1fb62227b63482205f7cef97ef2fb3934fbc954d24f"
+    },
+    {
+      "query": "Nintendo Switch OLED",
+      "products": [
+        {
+          "id": "redacted-ijhG",
+          "title": "Nintendo Switch OLED Model",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "walmart.com",
+              "price": "444.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "547.34",
+              "url": null,
+              "max_commission_rate": "0.07"
+            }
+          ]
+        },
+        {
+          "id": "redacted-HBoe",
+          "title": "Nintendo Switch \u2013 OLED Model",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "newegg.com",
+              "price": "434.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            }
+          ]
+        },
+        {
+          "id": "redacted-Ieqe",
+          "title": "Switch \u2013 OLED Model",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "bestbuy.com",
+              "price": "449.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            }
+          ]
+        },
+        {
+          "id": "redacted-5HNc",
+          "title": "Switch \u2013 OLED Model",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "bestbuy.com",
+              "price": "489.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.004"
+            }
+          ]
+        },
+        {
+          "id": "redacted-MJUP",
+          "title": "Nintendo Switch OLED",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "backmarket.com",
+              "price": "278.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": "399.0",
+              "url": null,
+              "max_commission_rate": "0.035"
+            },
+            {
+              "domain": "jcpenney.com",
+              "price": "379.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.042"
+            },
+            {
+              "domain": "cdw.com",
+              "price": "512.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "644.0",
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-VO5O",
+          "title": "Nintendo Switch OLED 65GB Console with Mario +Rabbids Bundle",
+          "brands": [
+            "Nintendo",
+            "Ubisoft"
+          ],
+          "offers": [
+            {
+              "domain": "qvc.com",
+              "price": "599.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.014"
+            }
+          ]
+        },
+        {
+          "id": "redacted-BcuC",
+          "title": "Switch OLED 64GB Console",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "macys.com",
+              "price": "512.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "539.99",
+              "url": null,
+              "max_commission_rate": "0.056"
+            }
+          ]
+        },
+        {
+          "id": "redacted-BwH8",
+          "title": "Nintendo Switch OLED Model",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "nintendo.com",
+              "price": "319.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            },
+            {
+              "domain": "walmart.com",
+              "price": "399.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.07"
+            },
+            {
+              "domain": "newegg.com",
+              "price": "434.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.007"
+            }
+          ]
+        },
+        {
+          "id": "redacted-9ZT1",
+          "title": "Nintendo Switch OLED Model with White Controllers",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "backmarket.com",
+              "price": "258.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": null,
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.035"
+            },
+            {
+              "domain": "samsclub.com",
+              "price": "399.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.118"
+            },
+            {
+              "domain": "bloomingdales.com",
+              "price": "399.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.032"
+            },
+            {
+              "domain": "microcenter.com",
+              "price": "399.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            },
+            {
+              "domain": "lowes.com",
+              "price": "460.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        },
+        {
+          "id": "redacted-AgDD",
+          "title": "Nintendo Switch OLED 64GB Console with Super Smash Bros. Ultimate & Carrying Case & Screen Protector Bundle",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "macys.com",
+              "price": "455.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "479.99",
+              "url": null,
+              "max_commission_rate": "0.056"
+            },
+            {
+              "domain": "lowes.com",
+              "price": "518.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        },
+        {
+          "id": "redacted-rHaj",
+          "title": "Nintendo Switch OLED Bundle",
+          "brands": [
+            "Nintendo",
+            "SanDisk",
+            "PowerA"
+          ],
+          "offers": [
+            {
+              "domain": "costco.com",
+              "price": "399.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.0"
+            }
+          ]
+        },
+        {
+          "id": "redacted-QD2i",
+          "title": "Nintendo Switch OLED 64GB Console with Pokemon",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "qvc.com",
+              "price": "619.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.014"
+            }
+          ]
+        },
+        {
+          "id": "redacted-Ry9X",
+          "title": "Nintendo Switch OLED Console",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "gamestop.com",
+              "price": "208.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "399.99",
+              "url": null,
+              "max_commission_rate": "0.049"
+            }
+          ]
+        },
+        {
+          "id": "redacted-jsed",
+          "title": "Nintendo Switch OLED Model White Bundle",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "lowes.com",
+              "price": "518.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        },
+        {
+          "id": "redacted-PbC4",
+          "title": "Nintendo Switch OLED Model",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "walmart.com",
+              "price": "343.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "368.0",
+              "url": null,
+              "max_commission_rate": "0.07"
+            }
+          ]
+        },
+        {
+          "id": "redacted-ZKjP",
+          "title": "Nintendo Switch OLED Model",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "walmart.com",
+              "price": "367.91",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.07"
+            }
+          ]
+        },
+        {
+          "id": "redacted-vN8Q",
+          "title": "Nintendo Switch OLED Model Console",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "walmart.com",
+              "price": "409.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": "419.99",
+              "url": null,
+              "max_commission_rate": "0.07"
+            }
+          ]
+        },
+        {
+          "id": "redacted-cQNR",
+          "title": "Nintendo Switch OLED",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "hsn.com",
+              "price": "584.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.056"
+            }
+          ]
+        },
+        {
+          "id": "redacted-Y2T5",
+          "title": "Nintendo Switch OLED with MarioKart, Acceessories & Voucher",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "qvc.com",
+              "price": "549.0",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.014"
+            }
+          ]
+        },
+        {
+          "id": "redacted-aFIA",
+          "title": "Nintendo Switch OLED White Bundle",
+          "brands": [
+            "Nintendo"
+          ],
+          "offers": [
+            {
+              "domain": "lowes.com",
+              "price": "562.99",
+              "currency": "USD",
+              "availability": "InStock",
+              "condition": "new",
+              "compare_at_price": null,
+              "url": null,
+              "max_commission_rate": "0.035"
+            }
+          ]
+        }
+      ],
+      "retrieved_at": "2026-11-03T16:18:21.286680+00:00",
+      "sha256": "38d2f6e70415b2260c22e9a50ec4ecdc16aa45d822ae13e47bd49f714f1b8de5"
+    }
+  ]
+}

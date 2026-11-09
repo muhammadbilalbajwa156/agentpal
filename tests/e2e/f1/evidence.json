@@ -1,0 +1,295 @@
+{
+  "market": [
+    {
+      "query": "Logitech MX Master 3S",
+      "currency": "USD",
+      "level": "high_risk",
+      "refresh_level": "high_risk",
+      "refresh_error": null,
+      "confidence": "high",
+      "refreshed_confidence": "high",
+      "signals": [
+        "PRICE_ABOVE_MARKET",
+        "MERCHANT_PRICE_MISMATCH",
+        "BETTER_PRICE_AVAILABLE"
+      ],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    },
+    {
+      "query": "Apple AirPods Pro 2",
+      "currency": "USD",
+      "level": "review_recommended",
+      "refresh_level": "review_recommended",
+      "refresh_error": null,
+      "confidence": "high",
+      "refreshed_confidence": "high",
+      "signals": [
+        "MERCHANT_NOT_IN_MARKET"
+      ],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    },
+    {
+      "query": "Apple AirPods Pro 2 Ear Tips",
+      "currency": "USD",
+      "level": "no_concern",
+      "refresh_level": "no_concern",
+      "refresh_error": null,
+      "confidence": "high",
+      "refreshed_confidence": "high",
+      "signals": [],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    },
+    {
+      "query": "Apple iPhone 16 Pro 128GB",
+      "currency": "USD",
+      "level": "no_match",
+      "refresh_level": null,
+      "refresh_error": "market_check_unavailable",
+      "confidence": null,
+      "refreshed_confidence": null,
+      "signals": [
+        "PRODUCT_NOT_FOUND"
+      ],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    },
+    {
+      "query": "Apple iPhone 16 Pro Max 256GB",
+      "currency": "USD",
+      "level": "review_recommended",
+      "refresh_level": "review_recommended",
+      "refresh_error": null,
+      "confidence": "high",
+      "refreshed_confidence": "high",
+      "signals": [
+        "PRICE_ABOVE_MARKET",
+        "MERCHANT_NOT_IN_MARKET",
+        "BETTER_PRICE_AVAILABLE"
+      ],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    },
+    {
+      "query": "Bose QuietComfort Ultra Headphones",
+      "currency": "USD",
+      "level": "no_match",
+      "refresh_level": "no_match",
+      "refresh_error": null,
+      "confidence": "medium",
+      "refreshed_confidence": "medium",
+      "signals": [
+        "LOW_CONFIDENCE_MATCH"
+      ],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    },
+    {
+      "query": "Sony WH-1000XM5",
+      "currency": "USD",
+      "level": "review_recommended",
+      "refresh_level": "review_recommended",
+      "refresh_error": null,
+      "confidence": "high",
+      "refreshed_confidence": "high",
+      "signals": [
+        "MERCHANT_NOT_IN_MARKET"
+      ],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    },
+    {
+      "query": "Samsung T7 Shield 2TB",
+      "currency": "USD",
+      "level": "high_risk",
+      "refresh_level": "high_risk",
+      "refresh_error": null,
+      "confidence": "high",
+      "refreshed_confidence": "high",
+      "signals": [
+        "PRICE_FAR_BELOW_MARKET",
+        "MERCHANT_NOT_IN_MARKET"
+      ],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    },
+    {
+      "query": "Logitech MX Anywhere 3S",
+      "currency": "EUR",
+      "level": "no_data",
+      "refresh_level": "no_data",
+      "refresh_error": null,
+      "confidence": "high",
+      "refreshed_confidence": "high",
+      "signals": [
+        "NO_COMPARABLE_OFFERS"
+      ],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    },
+    {
+      "query": "Raspberry Pi Pico 2",
+      "currency": "GBP",
+      "level": "no_match",
+      "refresh_level": "no_match",
+      "refresh_error": null,
+      "confidence": "medium",
+      "refreshed_confidence": "medium",
+      "signals": [
+        "LOW_CONFIDENCE_MATCH"
+      ],
+      "provider_evidence": true,
+      "terms_and_state_unchanged": true
+    }
+  ],
+  "sdk": {
+    "purchases": [
+      {
+        "merchant": "Northwind Office Supply",
+        "order_suffix": "380N",
+        "verified_status": "provider_confirmed",
+        "exact_payee_bound": true,
+        "duplicate_execute_and_capture_refused": true
+      },
+      {
+        "merchant": "Bluepeak Electronics",
+        "order_suffix": "215A",
+        "verified_status": "provider_confirmed",
+        "exact_payee_bound": true,
+        "duplicate_execute_and_capture_refused": true
+      },
+      {
+        "merchant": "CloudDesk Software",
+        "order_suffix": "5052",
+        "verified_status": "provider_confirmed",
+        "exact_payee_bound": true,
+        "duplicate_execute_and_capture_refused": true
+      },
+      {
+        "merchant": "F1 app-linked sandbox shop",
+        "order_suffix": "894U",
+        "verified_status": "provider_confirmed",
+        "exact_payee_bound": false,
+        "duplicate_execute_and_capture_refused": true
+      }
+    ],
+    "refunds": [
+      {
+        "kind": "routed merchant",
+        "status": "FAILED",
+        "reason": "merchant_permission_required"
+      },
+      {
+        "kind": "app-linked",
+        "partial": "0.40",
+        "remainder": "0.60",
+        "partial_suffix": "420F",
+        "full_suffix": "292X",
+        "partial_restart_and_reconciliation": true,
+        "state": "reversed",
+        "overrefund_refused": true
+      }
+    ],
+    "payout": {
+      "status": "provider_confirmed",
+      "item_status": "SUCCESS",
+      "batch_suffix": "2ERQ",
+      "replay_same_batch": true
+    },
+    "sdk_only": true,
+    "final_spent": "4.00",
+    "final_restart": true
+  },
+  "newman": {
+    "fatal": false,
+    "requests": {
+      "total": 17,
+      "pending": 0,
+      "failed": 0
+    },
+    "assertions": {
+      "total": 34,
+      "pending": 0,
+      "failed": 0
+    },
+    "failures": []
+  },
+  "base_commit": "ab24447fd1af6013e5403264a1993c3bcac5c9e9",
+  "date": "2026-11-05",
+  "live_order_attempt_bound": 15,
+  "channel3_paid_call_bound": 16,
+  "receipts": {
+    "orders": [
+      {
+        "merchant": "Bluepeak Electronics",
+        "order_suffix": "215A",
+        "verified": true,
+        "exact_amount_currency_and_references": true,
+        "pinned_payee_matches": true
+      },
+      {
+        "merchant": "Northwind Office Supply",
+        "order_suffix": "380N",
+        "verified": true,
+        "exact_amount_currency_and_references": true,
+        "pinned_payee_matches": true
+      },
+      {
+        "merchant": "CloudDesk Software",
+        "order_suffix": "5052",
+        "verified": true,
+        "exact_amount_currency_and_references": true,
+        "pinned_payee_matches": true
+      },
+      {
+        "merchant": "F1 app-linked sandbox shop",
+        "order_suffix": "894U",
+        "verified": true,
+        "exact_amount_currency_and_references": true,
+        "pinned_payee_matches": true
+      }
+    ],
+    "refunds": [
+      {
+        "refund_suffix": "420F",
+        "amount": "0.40",
+        "verified_status": "COMPLETED"
+      },
+      {
+        "refund_suffix": "292X",
+        "amount": "0.60",
+        "verified_status": "COMPLETED"
+      }
+    ],
+    "read_only": true
+  },
+  "verification": {
+    "baseline": {
+      "passed": 2986,
+      "skipped": 42,
+      "failed": 8,
+      "errors": 45,
+      "cause": "inherited shared fixed ports"
+    },
+    "full_offline": {
+      "passed": 3037,
+      "skipped": 61,
+      "failed": 0,
+      "errors": 0,
+      "xfail": 0,
+      "seconds": 500.554
+    },
+    "new_f1_offline": {
+      "passed": 14,
+      "skipped": 3
+    },
+    "new_f1_live": {
+      "passed": 3,
+      "seconds": 109.12
+    },
+    "ruff_required": "passed",
+    "ruff_with_training": "passed"
+  }
+}

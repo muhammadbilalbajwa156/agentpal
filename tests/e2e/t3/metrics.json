@@ -1,0 +1,183 @@
+{
+  "count": 50,
+  "labels_sha256": "bbbac13ed6a06b0c270959cb42eef9eebe2d2847a15272fb528acccaf03aae99",
+  "labels": {
+    "fair": 15,
+    "risky": 35
+  },
+  "risk_review": {
+    "tp": 35,
+    "fp": 15,
+    "fn": 0,
+    "tn": 0,
+    "precision": 0.7,
+    "recall": 1.0,
+    "false_alarm_rate": 1.0
+  },
+  "risk_score_ge_50": {
+    "tp": 20,
+    "fp": 0,
+    "fn": 15,
+    "tn": 15,
+    "precision": 1.0,
+    "recall": 0.5714,
+    "false_alarm_rate": 0.0
+  },
+  "market_alert_all_cases": {
+    "tp": 16,
+    "fp": 0,
+    "fn": 19,
+    "tn": 15,
+    "precision": 1.0,
+    "recall": 0.4571,
+    "false_alarm_rate": 0.0
+  },
+  "market_alert_applicable_cases": {
+    "tp": 16,
+    "fp": 0,
+    "fn": 4,
+    "tn": 15,
+    "precision": 1.0,
+    "recall": 0.8,
+    "false_alarm_rate": 0.0
+  },
+  "triage_score_ge_50_or_market_alert": {
+    "tp": 32,
+    "fp": 0,
+    "fn": 3,
+    "tn": 15,
+    "precision": 1.0,
+    "recall": 0.9143,
+    "false_alarm_rate": 0.0
+  },
+  "latency_ms": {
+    "p50": 218.28,
+    "p95_nearest_rank": 1315.65,
+    "min": 151.01,
+    "max": 1759.23
+  },
+  "market_levels": {
+    "no_concern": 24,
+    "high_risk": 8,
+    "review_recommended": 8,
+    "no_match": 10
+  },
+  "queries_with_search_response": 5,
+  "cache_requeries_with_fresh_product_evidence": 45,
+  "idempotent_replays": 50,
+  "owner_refreshes_with_unchanged_authority": 5,
+  "internal_degraded_count": 50,
+  "credits": {
+    "discovery_search": 5,
+    "aborted_rate_limited_attempt_search": 3,
+    "completed_scenario_search": 5,
+    "accessory_probe_search": 1,
+    "total_explicit_t3_paid_searches": 14,
+    "full_suite_live_tests_excluded_from_this_count": true,
+    "complete_validation_search_upper_bound": 20
+  },
+  "by_kind": {
+    "fair": {
+      "count": 5,
+      "risk_scores": [
+        25
+      ],
+      "market_levels": {
+        "no_concern": 4,
+        "no_match": 1
+      }
+    },
+    "fair_currency_unknown": {
+      "count": 5,
+      "risk_scores": [
+        25
+      ],
+      "market_levels": {
+        "no_concern": 4,
+        "no_match": 1
+      }
+    },
+    "giftcard_urgency": {
+      "count": 5,
+      "risk_scores": [
+        99
+      ],
+      "market_levels": {
+        "no_concern": 4,
+        "no_match": 1
+      }
+    },
+    "lookalike": {
+      "count": 5,
+      "risk_scores": [
+        25
+      ],
+      "market_levels": {
+        "review_recommended": 4,
+        "no_match": 1
+      }
+    },
+    "overpriced": {
+      "count": 5,
+      "risk_scores": [
+        25
+      ],
+      "market_levels": {
+        "high_risk": 4,
+        "no_match": 1
+      }
+    },
+    "purpose_injection": {
+      "count": 5,
+      "risk_scores": [
+        80
+      ],
+      "market_levels": {
+        "no_concern": 4,
+        "no_match": 1
+      }
+    },
+    "recurring_explained": {
+      "count": 5,
+      "risk_scores": [
+        25
+      ],
+      "market_levels": {
+        "no_concern": 4,
+        "no_match": 1
+      }
+    },
+    "recurring_unexplained": {
+      "count": 5,
+      "risk_scores": [
+        53
+      ],
+      "market_levels": {
+        "no_concern": 4,
+        "no_match": 1
+      }
+    },
+    "too_cheap": {
+      "count": 5,
+      "risk_scores": [
+        25
+      ],
+      "market_levels": {
+        "high_risk": 4,
+        "no_match": 1
+      }
+    },
+    "wrong_merchant": {
+      "count": 5,
+      "risk_scores": [
+        88
+      ],
+      "market_levels": {
+        "review_recommended": 4,
+        "no_match": 1
+      }
+    }
+  },
+  "better_deal_snapshots": 2,
+  "better_deal_offers": 6
+}

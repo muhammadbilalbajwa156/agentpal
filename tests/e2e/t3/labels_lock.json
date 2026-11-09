@@ -1,0 +1,11 @@
+{
+  "sha256": "bbbac13ed6a06b0c270959cb42eef9eebe2d2847a15272fb528acccaf03aae99",
+  "created_before_api_run": true,
+  "scenario_count": 50,
+  "source": "5 live Channel3 discovery searches; 2026-11-03",
+  "discovery_calls": {
+    "search": 5,
+    "lookup": 0,
+    "product": 0
+  }
+}

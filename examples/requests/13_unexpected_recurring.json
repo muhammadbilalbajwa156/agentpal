@@ -1,0 +1,15 @@
+{
+  "request_id": "req_sus_013",
+  "agent_id": "agent_demo_006",
+  "amount": 35.0,
+  "currency": "USD",
+  "merchant_name": "Codeforge IDE",
+  "merchant_domain": "codeforge.dev",
+  "purpose": "IDE license seats for two developers (one-time purchase)",
+  "business_justification": "Hosting for a customer project",
+  "recurring": true,
+  "billing_interval": "weekly",
+  "monthly_budget": 300.0,
+  "previous_payment_reference": null,
+  "evidence": []
+}

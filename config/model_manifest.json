@@ -1,0 +1,17 @@
+{
+  "manifest_version": 1,
+  "models": {
+    "llamacpp": {
+      "sha256": "23bd2fdeffc5c7bf586abe25bca5c87a1a76dd413e70138179193ff151cde1e6",
+      "source": "training.export 23bd2fdeffc5 from Qwen/Qwen3-1.7B@70d244cc86cc; Modal run2 2026-10-30 (aug-2 data, run_kind=training); see docs/training_runs/2026-10-30-modal-run2",
+      "pinned_at": "2026-10-30T23:49:28+00:00",
+      "note": ""
+    },
+    "ml": {
+      "sha256": "fe47e2c08fd87ce67d64fd632bde048ad3d21652a23c3a3c063ed3528ff4d0ee",
+      "source": "local artifact lr-20261029-C1.0 retrained 2026-10-29 by the lead agent to fix ML-03 (constant missing_evidence feature since owner decision F2); procedure unchanged (fit on train, C/threshold on validation; retired test split unused)",
+      "pinned_at": "2026-10-29T21:37:15+00:00",
+      "note": ""
+    }
+  }
+}

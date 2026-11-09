@@ -1,0 +1,13 @@
+# Runtime (API + rules + ML inference; the ML artifact is plain JSON, no sklearn needed to serve)
+fastapi>=0.110
+pydantic>=2.6
+uvicorn>=0.27
+httpx>=0.27
+# Public Suffix List (bundled, offline) for registrable-domain comparisons (P0.6)
+publicsuffixlist>=1.0.2
+# PayPal webhook self-verification (SHA256withRSA over the CRC32-signed message)
+cryptography>=42
+# Trust anchors for PayPal webhook certificate-path validation (imported directly)
+certifi>=2024.2.2
+# Kernel cloud browser (read-only page evidence; pre-1.0 SDK, pinned exactly)
+kernel==0.139.0

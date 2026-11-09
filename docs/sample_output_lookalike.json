@@ -1,0 +1,142 @@
+{
+  "request_id": "req_sus_010",
+  "agent_id": "agent_demo_003",
+  "assessed_at": "2026-10-28T16:53:01.653238Z",
+  "risk_score": 100,
+  "risk_category": "critical",
+  "recommendation": "block",
+  "explanation": "Risk score 100/100 (critical); recommendation: block. Risk indicators: LOOKALIKE_DOMAIN — Domain closely imitates an approved merchant domain.; MERCHANT_DOMAIN_CHANGED — Merchant name was previously associated with a different domain.; MERCHANT_NAME_DOMAIN_MISMATCH — Merchant name does not appear to correspond to the merchant domain.; UNAPPROVED_MERCHANT — Merchant is not on the approved list and has no prior assessed requests. This alone does not indicate fraud. Information gaps (not evidence of fraud): MISSING_EVIDENCE. Model (logistic-regression-baseline) estimated 100/100; model output is a prediction, not verified fact.",
+  "signals": [
+    {
+      "code": "LOOKALIKE_DOMAIN",
+      "kind": "risk_indicator",
+      "source": "rule",
+      "points": 45,
+      "message": "Domain closely imitates an approved merchant domain.",
+      "evidence": {
+        "domain": "examp1e-billing.com",
+        "imitates": "example.com"
+      }
+    },
+    {
+      "code": "MERCHANT_DOMAIN_CHANGED",
+      "kind": "risk_indicator",
+      "source": "rule",
+      "points": 40,
+      "message": "Merchant name was previously associated with a different domain.",
+      "evidence": {
+        "previous_domain": "example.com",
+        "requested_domain": "examp1e-billing.com"
+      }
+    },
+    {
+      "code": "MERCHANT_NAME_DOMAIN_MISMATCH",
+      "kind": "risk_indicator",
+      "source": "rule",
+      "points": 18,
+      "message": "Merchant name does not appear to correspond to the merchant domain.",
+      "evidence": {
+        "domain": "examp1e-billing.com"
+      }
+    },
+    {
+      "code": "UNAPPROVED_MERCHANT",
+      "kind": "risk_indicator",
+      "source": "rule",
+      "points": 12,
+      "message": "Merchant is not on the approved list and has no prior assessed requests. This alone does not indicate fraud.",
+      "evidence": {
+        "domain": "examp1e-billing.com"
+      }
+    },
+    {
+      "code": "MISSING_EVIDENCE",
+      "kind": "uncertainty",
+      "source": "rule",
+      "points": 13,
+      "message": "No supporting evidence (invoice, quote, contract) was provided.",
+      "evidence": {}
+    },
+    {
+      "code": "MODEL_ML_DOMAIN_CHANGED",
+      "kind": "risk_indicator",
+      "source": "model",
+      "points": 0,
+      "message": "Feature 'domain_changed' increased predicted risk.",
+      "evidence": {
+        "model_evidence": "contribution=2.92",
+        "note": "model prediction; not a verified fact"
+      }
+    },
+    {
+      "code": "MODEL_ML_LOOKALIKE",
+      "kind": "risk_indicator",
+      "source": "model",
+      "points": 0,
+      "message": "Feature 'lookalike' increased predicted risk.",
+      "evidence": {
+        "model_evidence": "contribution=2.61",
+        "note": "model prediction; not a verified fact"
+      }
+    },
+    {
+      "code": "MODEL_ML_NAME_DOMAIN_MISMATCH",
+      "kind": "risk_indicator",
+      "source": "model",
+      "points": 0,
+      "message": "Feature 'name_domain_mismatch' increased predicted risk.",
+      "evidence": {
+        "model_evidence": "contribution=2.47",
+        "note": "model prediction; not a verified fact"
+      }
+    },
+    {
+      "code": "MODEL_ML_MISSING_EVIDENCE",
+      "kind": "risk_indicator",
+      "source": "model",
+      "points": 0,
+      "message": "Feature 'missing_evidence' increased predicted risk.",
+      "evidence": {
+        "model_evidence": "contribution=1.72",
+        "note": "model prediction; not a verified fact"
+      }
+    },
+    {
+      "code": "MODEL_ML_APPROVED_MERCHANT",
+      "kind": "risk_indicator",
+      "source": "model",
+      "points": 0,
+      "message": "Feature 'approved_merchant' increased predicted risk.",
+      "evidence": {
+        "model_evidence": "contribution=1.24",
+        "note": "model prediction; not a verified fact"
+      }
+    }
+  ],
+  "hard_violations": [],
+  "missing_information": [
+    "No supporting evidence (invoice, quote, contract) was provided."
+  ],
+  "inconsistencies": [
+    "Merchant name was previously associated with a different domain.",
+    "Merchant name does not appear to correspond to the merchant domain."
+  ],
+  "rule_score": 100,
+  "model_score": 100,
+  "model_uncertainty": 0.0,
+  "model_summary": "Logistic-regression baseline trained on synthetic data: P(needs review)=1.00. Prediction only; nothing was verified.",
+  "model": {
+    "backend": "ml",
+    "model_name": "logistic-regression-baseline",
+    "model_version": "lr-20261028-C0.3",
+    "is_fallback": false,
+    "attempted_backends": [
+      "ml"
+    ],
+    "errors": [],
+    "latency_ms": 2.52
+  },
+  "rules_version": "2026.10.1",
+  "disclaimer": "Automated risk assessment only. It is not proof of fraud or legitimacy, has not verified the merchant or any evidence, and does not authorize or execute any payment.",
+  "payment_executed": false
+}

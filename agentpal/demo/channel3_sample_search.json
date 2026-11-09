@@ -1,0 +1,216 @@
+{
+ "next_page_token": null,
+ "products": [
+  {
+   "brands": [
+    {
+     "name": "Logitech"
+    }
+   ],
+   "id": "nLZKmNT",
+   "offers": [
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "officedepot.com",
+     "max_commission_rate": 0.035,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 99.99
+     },
+     "url": "https://buy.trychannel3.com/nLZKmNT-6Uzl-7u2QxB"
+    },
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "bestbuy.com",
+     "max_commission_rate": 0.005,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 108.62
+     },
+     "url": "https://buy.trychannel3.com/nLZKmNT-p1PB-7u2QxB"
+    },
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "6ave.com",
+     "max_commission_rate": 0.018,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 113.99
+     },
+     "url": "https://buy.trychannel3.com/nLZKmNT-hFQq-7u2QxB"
+    },
+    {
+     "availability": "InStock",
+     "condition": null,
+     "domain": "backmarket.com",
+     "max_commission_rate": 0.035,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 123.0
+     },
+     "url": "https://buy.trychannel3.com/nLZKmNT-n0yg-7u2QxB"
+    }
+   ],
+   "title": "Logitech MX Master 3S Performance Wireless Mouse"
+  },
+  {
+   "brands": [
+    {
+     "name": "Logitech"
+    }
+   ],
+   "id": "aWNwRZF",
+   "offers": [
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "logitech.com",
+     "max_commission_rate": 0.042,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 79.99
+     },
+     "url": "https://buy.trychannel3.com/aWNwRZF-JOeA-7u2QxB"
+    },
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "lenovo.com",
+     "max_commission_rate": 0.056,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 99.99
+     },
+     "url": "https://buy.trychannel3.com/aWNwRZF-hl1t-7u2QxB"
+    },
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "newegg.com",
+     "max_commission_rate": 0.007,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 102.99
+     },
+     "url": "https://buy.trychannel3.com/aWNwRZF-LPzf-7u2QxB"
+    }
+   ],
+   "title": "Logitech MX Master Wireless Mouse"
+  },
+  {
+   "brands": [
+    {
+     "name": "Logitech"
+    }
+   ],
+   "id": "TnlIhnD",
+   "offers": [
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "lenovo.com",
+     "max_commission_rate": 0.014,
+     "price": {
+      "compare_at_price": 109.99,
+      "currency": "USD",
+      "price": 88.44
+     },
+     "url": "https://buy.trychannel3.com/TnlIhnD-hl1t-7u2QxB"
+    },
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "adorama.com",
+     "max_commission_rate": 0.025,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 109.99
+     },
+     "url": "https://buy.trychannel3.com/TnlIhnD-T9Fg-7u2QxB"
+    },
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "bestbuy.com",
+     "max_commission_rate": 0.004,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 119.99
+     },
+     "url": "https://buy.trychannel3.com/TnlIhnD-p1PB-7u2QxB"
+    }
+   ],
+   "title": "MX MASTER 3S Bluetooth Edition for Business Performance Wireless Mouse"
+  },
+  {
+   "brands": [
+    {
+     "name": "Logitech"
+    }
+   ],
+   "id": "sr4TCOc",
+   "offers": [
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "lenovo.com",
+     "max_commission_rate": 0.014,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 119.99
+     },
+     "url": "https://buy.trychannel3.com/sr4TCOc-hl1t-7u2QxB"
+    }
+   ],
+   "title": "MX Master 3S Performance Wireless Mouse"
+  },
+  {
+   "brands": [
+    {
+     "name": "Logitech"
+    }
+   ],
+   "id": "Q4YQdLL",
+   "offers": [
+    {
+     "availability": "InStock",
+     "condition": null,
+     "domain": "backmarket.com",
+     "max_commission_rate": 0.035,
+     "price": {
+      "compare_at_price": 161.01,
+      "currency": "USD",
+      "price": 97.0
+     },
+     "url": "https://buy.trychannel3.com/Q4YQdLL-n0yg-7u2QxB"
+    },
+    {
+     "availability": "InStock",
+     "condition": "new",
+     "domain": "bestbuy.com",
+     "max_commission_rate": 0.005,
+     "price": {
+      "compare_at_price": null,
+      "currency": "USD",
+      "price": 305.32
+     },
+     "url": "https://buy.trychannel3.com/Q4YQdLL-p1PB-7u2QxB"
+    }
+   ],
+   "title": "MX Master 3S Performance Wireless Mouse"
+  }
+ ]
+}

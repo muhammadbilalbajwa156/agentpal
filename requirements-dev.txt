@@ -1,0 +1,9 @@
+-r requirements.txt
+# Training / evaluation / tests
+scikit-learn>=1.4
+numpy>=1.26
+pytest>=8
+# OpenAPI 3.1 response-schema contract checks (APIMatic workflow tests)
+jsonschema>=4.26
+# Optional: local open-weight LLM backend (compiles llama.cpp; takes a few minutes)
+# llama-cpp-python>=0.3

@@ -1,0 +1,9 @@
+# AgentPal-Bench v2: locked items and raw annotations must NEVER be committed to the
+# engineering repository (docs/BENCHMARK_ANNOTATION_PROTOCOL.md section 6). The custodian
+# keeps them outside the repo; only LOCK.json and aggregate reports may be committed.
+locked/
+custodian/
+*.locked.jsonl
+annotator_packets/
+annotations_raw/
+predictions_per_item*.jsonl

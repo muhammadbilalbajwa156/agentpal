@@ -1,0 +1,24 @@
+{
+  "request_id": "req_demo_002",
+  "agent_id": "agent_demo_002",
+  "amount": 120.0,
+  "currency": "USD",
+  "merchant_name": "Taskloom",
+  "merchant_domain": "taskloom.app",
+  "purpose": "Project management workspace seats, monthly subscription",
+  "business_justification": "Five seats for the Atlas delivery team per the approved Q4 plan.",
+  "recurring": true,
+  "billing_interval": "monthly",
+  "monthly_budget": 500.0,
+  "previous_payment_reference": null,
+  "evidence": [
+    {
+      "type": "quote",
+      "description": "Vendor quote for 5 seats",
+      "reference": "Q-2291",
+      "amount": 120.0,
+      "currency": "USD",
+      "merchant_domain": "taskloom.app"
+    }
+  ]
+}

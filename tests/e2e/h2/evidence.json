@@ -1,0 +1,139 @@
+{
+  "base_commit": "ab24447fd1af6013e5403264a1993c3bcac5c9e9",
+  "confirmed_findings": [],
+  "suspected_findings": [],
+  "baseline": {
+    "passed": 3039,
+    "skipped": 42,
+    "ruff": "passed"
+  },
+  "offline_expanded": {
+    "passed": 122,
+    "failed": 0
+  },
+  "mutations": [
+    {
+      "mutation": "self_receiver",
+      "caught": true,
+      "assertion_failures": 1,
+      "errors": 0
+    },
+    {
+      "mutation": "current_execute_grant",
+      "caught": true,
+      "assertion_failures": 1,
+      "errors": 0
+    },
+    {
+      "mutation": "independent_ledger_terms",
+      "caught": true,
+      "assertion_failures": 1,
+      "errors": 0
+    },
+    {
+      "mutation": "refund_capture_bound",
+      "caught": true,
+      "assertion_failures": 1,
+      "errors": 0
+    }
+  ],
+  "live": {
+    "h2_orders_created": 1,
+    "h2_purchase_usd": "1.00",
+    "h2_refunds_usd": [
+      "0.40",
+      "0.60"
+    ],
+    "h2_payouts_created": 2,
+    "h2_payout_usd_each": "1.00",
+    "redacted_runs": [
+      {
+        "environment": "sandbox",
+        "checks": {
+          "payout_execute_race": [
+            200,
+            200
+          ],
+          "payout": "SUCCESS item verified; replay uses same batch"
+        },
+        "payout_batch_suffix": "DHQL"
+      },
+      {
+        "environment": "sandbox",
+        "checks": {
+          "execute_race": [
+            200,
+            409
+          ],
+          "buyer": "approved:buyer_submit_clicked_not_payment_evidence",
+          "capture_races": [
+            [
+              409,
+              200
+            ]
+          ],
+          "capture_status": "provider_confirmed",
+          "purchase": "verified provider_confirmed; duplicate capture refused",
+          "refunds": "0.40+0.60 verified; replay, changed body and excess refused"
+        },
+        "order_suffix": "823E",
+        "refund_suffixes": [
+          "7440",
+          "5205"
+        ],
+        "initial_payout_readonly_recovery": {
+          "http": 200,
+          "status": "provider_confirmed",
+          "item": "SUCCESS",
+          "batch_suffix": "A5JU"
+        }
+      }
+    ]
+  },
+  "focused_final": {
+    "passed": 123,
+    "skipped": 3,
+    "failed": 0,
+    "elapsed_seconds": 53.82,
+    "external_io": false
+  },
+  "ruff": {
+    "agentpal_training_tests": "passed",
+    "agentpal_tests": "passed"
+  },
+  "interrupted_full_attempt": {
+    "progress_percent": 87,
+    "reason": "usage reset",
+    "counted_as_pass": false
+  },
+  "resumed_full_attempt": {
+    "tests": 3206,
+    "passed": 3104,
+    "skipped": 62,
+    "failures": 0,
+    "setup_errors": 40,
+    "elapsed_seconds": 346.299,
+    "cause": "Inherited T2 fixed-port fixture received invalid_token during setup; port 8102 remained occupied after our suite ended.",
+    "counted_as_pass": false,
+    "h2_passed": 123,
+    "h2_skipped": 3
+  },
+  "final_full_suite": {
+    "tests": 3206,
+    "passed": 3144,
+    "skipped": 62,
+    "failures": 0,
+    "errors": 0,
+    "elapsed_seconds": 382.86,
+    "exit_code": 0,
+    "external_credentials_disabled": true,
+    "private_pytest_basetemp": true
+  },
+  "delivery": {
+    "branch": "m8-h2-review",
+    "bundle": "/tmp/m8-h2.bundle",
+    "source_commit": "acaa71bcb14f2ea7b5760ad721cb643f6848f904",
+    "existing_files_changed": 0,
+    "new_files": 12
+  }
+}

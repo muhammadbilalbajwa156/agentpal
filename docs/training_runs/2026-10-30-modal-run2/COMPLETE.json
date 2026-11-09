@@ -1,0 +1,58 @@
+{
+  "run_kind": "training",
+  "notice": "LoRA adapter for Qwen3-1.7B. Advisory model only; evaluate before use.",
+  "base_model": "Qwen/Qwen3-1.7B",
+  "base_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "precision": "bf16",
+  "hardware": {
+    "device": "cuda",
+    "name": "NVIDIA L40S",
+    "vram_bytes": 47695921152,
+    "capability": [
+      8,
+      9
+    ]
+  },
+  "libraries": {
+    "python": "3.13.18",
+    "torch": "2.15.0",
+    "transformers": "5.22.0",
+    "peft": "0.21.2",
+    "trl": "1.17.0",
+    "datasets": "5.1.0",
+    "accelerate": "1.15.0",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.23.3"
+  },
+  "data_manifest_sha256": "4c79a8c305df35b596c6c19fc7f1e7668b2f9a9011eb4516d876ce569463e74c",
+  "data_files_sha256": {
+    "train": "2a94fa755fbfce5cdb94660833892f722623464a660b149256fbd9416eff8661",
+    "dev": "0488aed4b73cdfa9cc8fcc9da2e2db9baf4701570ae7448990d95a70d1e2af4b"
+  },
+  "rows": {
+    "train": 2194,
+    "dev": 405
+  },
+  "global_step": 276,
+  "best_checkpoint": "/vol/run2/checkpoints/checkpoint-260",
+  "best_eval_loss": 0.12598249316215515,
+  "resumed_from": null,
+  "started_at": "2026-10-30T21:12:46+00:00",
+  "train_seconds": 1079.5,
+  "inference_contract": {
+    "enable_thinking": false,
+    "include_rule_findings": false,
+    "prompt_suffix": "<think>\n\n</think>\n\n"
+  },
+  "files_sha256": {
+    "README.md": "d238607bc039ce90a53c079136aa9456803ec25d0fb68538ab46dc79a802cd55",
+    "adapter_config.json": "6b37941dccaa27be64c5f77a2c205b4d77c54f4ce64887c7ea9661586160c23a",
+    "adapter_model.safetensors": "e1d314d6e3d63f27014ac0b1bcd3c5ee7b8ef496c5851bed9d0eda94ec2c5323",
+    "chat_template.jinja": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "tokenizer.json": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+    "tokenizer_config.json": "04b1682c59acbd057f4c9072297faa73d56fc9de053094c659cdb4c464f58f86",
+    "train_config.json": "5bb876bfe66b358c12d6fa82e979d99f7ff235fb98fe748717327cfc9b086898",
+    "training_args.bin": "4b19ef851ec5512f9eadbe25357d10ecbcdbb51e2965fd5f8557cbefd720f8b9"
+  },
+  "completed_at": "2026-10-30T21:30:45+00:00"
+}

@@ -1,0 +1,280 @@
+{
+ "_note": "PayPal SANDBOX personas (fake money). Verified by real sandbox login on 2026-11-02. Passwords are NOT stored here.",
+ "personas": [
+  {
+   "role": "merchant",
+   "name": "Northwind Office Supply",
+   "email": "agentpal.northwind.16742b@business.example.com",
+   "account_type": "BUSINESS",
+   "country": "US",
+   "balance": 1000,
+   "card": "Visa",
+   "purpose": "Legit office-supplies merchant (normal approvals)",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "merchant",
+   "name": "Bluepeak Electronics",
+   "email": "agentpal.bluepeak.df8162@business.example.com",
+   "account_type": "BUSINESS",
+   "country": "US",
+   "balance": 1000,
+   "card": "Visa",
+   "purpose": "Legit electronics merchant (laptops, mice)",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "merchant",
+   "name": "CloudDesk Software",
+   "email": "agentpal.clouddesk.c3844c@business.example.com",
+   "account_type": "BUSINESS",
+   "country": "US",
+   "balance": 1000,
+   "card": "Visa",
+   "purpose": "SaaS merchant for recurring/subscription demos",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "merchant",
+   "name": "Shady Deals Outlet",
+   "email": "agentpal.shadydeals.905fd8@business.example.com",
+   "account_type": "BUSINESS",
+   "country": "US",
+   "balance": 0,
+   "card": "Visa",
+   "purpose": "Risky merchant; turn Negative Testing ON here",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "merchant",
+   "name": "AgentPal Payouts Desk",
+   "email": "agentpal.payoutsdesk.d64d0c@business.example.com",
+   "account_type": "BUSINESS",
+   "country": "US",
+   "balance": 50000,
+   "card": "Visa",
+   "purpose": "Funds Payouts to freelancers",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "owner",
+   "name": "Maria Lopez",
+   "email": "agentpal.maria.b864e8@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "US",
+   "balance": 5000,
+   "card": "Visa",
+   "purpose": "Main demo owner, approves agent purchases",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "owner",
+   "name": "James Carter",
+   "email": "agentpal.james.ec889e@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "US",
+   "balance": 0,
+   "card": "Mastercard",
+   "purpose": "Card-only funding (no balance)",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "owner",
+   "name": "Aisha Khan",
+   "email": "agentpal.aisha.4e7ace@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "US",
+   "balance": 25,
+   "card": "Amex",
+   "purpose": "Low balance: insufficient-funds path",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "owner",
+   "name": "Oliver Bennett",
+   "email": "agentpal.oliver.0073df@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "GB",
+   "balance": 3000,
+   "card": "none (non-US)",
+   "purpose": "UK owner (GBP); currency-mismatch checks",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "owner",
+   "name": "Lena Schmidt",
+   "email": "agentpal.lena.2e805f@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "DE",
+   "balance": 3000,
+   "card": "none (non-US)",
+   "purpose": "German owner (EUR)",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "owner",
+   "name": "Noah Tremblay",
+   "email": "agentpal.noah.bc656a@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "CA",
+   "balance": 2000,
+   "card": "none (non-US)",
+   "purpose": "Canadian owner (CAD)",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "owner",
+   "name": "Chloe Nguyen",
+   "email": "agentpal.chloe.7bb79a@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "AU",
+   "balance": 2000,
+   "card": "none (non-US)",
+   "purpose": "Australian owner (AUD)",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "owner",
+   "name": "Daniel Reyes",
+   "email": "agentpal.daniel.c35d90@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "US",
+   "balance": 10000,
+   "card": "Discover",
+   "purpose": "High-volume owner: budget/velocity limits",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "payee",
+   "name": "Priya Shah",
+   "email": "agentpal.priya.cbb860@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "US",
+   "balance": 0,
+   "card": "Visa",
+   "purpose": "Freelance designer paid via Payouts",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "payee",
+   "name": "Tom Walsh",
+   "email": "agentpal.tom.53025e@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "US",
+   "balance": 0,
+   "card": "Visa",
+   "purpose": "Freelance translator paid via Payouts",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "merchant",
+   "name": "Harborline Logistics",
+   "email": "agentpal.harborline.a1c2e3@business.example.com",
+   "account_type": "BUSINESS",
+   "country": "US",
+   "balance": 2500,
+   "card": "Visa",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "merchant",
+   "name": "Summit Coffee Roasters",
+   "email": "agentpal.summitcoffee.b4d5f6@business.example.com",
+   "account_type": "BUSINESS",
+   "country": "US",
+   "balance": 1800,
+   "card": "Mastercard",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "merchant",
+   "name": "Brightpath Tutoring",
+   "email": "agentpal.brightpath.c7e8a9@business.example.com",
+   "account_type": "BUSINESS",
+   "country": "US",
+   "balance": 900,
+   "card": "Visa",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "merchant",
+   "name": "Redwood Hardware",
+   "email": "agentpal.redwood.d0f1b2@business.example.com",
+   "account_type": "BUSINESS",
+   "country": "US",
+   "balance": 4000,
+   "card": "Discover",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "customer",
+   "name": "Emily Carter",
+   "email": "agentpal.emily.e3a4c5@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "US",
+   "balance": 1500,
+   "card": "Visa",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "customer",
+   "name": "Michael Brown",
+   "email": "agentpal.michael.f6b7d8@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "US",
+   "balance": 750,
+   "card": "Mastercard",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "customer",
+   "name": "Sofia Rossi",
+   "email": "agentpal.sofia.a9c0e1@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "US",
+   "balance": 300,
+   "card": "Amex",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "customer",
+   "name": "Liam Wilson",
+   "email": "agentpal.liam.b2d3f4@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "GB",
+   "balance": 2200,
+   "card": "none (non-US)",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "customer",
+   "name": "Hannah Mueller",
+   "email": "agentpal.hannah.c5e6a7@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "DE",
+   "balance": 1200,
+   "card": "none (non-US)",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  },
+  {
+   "role": "customer",
+   "name": "Ethan Clarke",
+   "email": "agentpal.ethan.d8f9b0@personal.example.com",
+   "account_type": "PERSONAL",
+   "country": "AU",
+   "balance": 600,
+   "card": "none (non-US)",
+   "purpose": "Extra customer-style account",
+   "verified_login_2026_11_02": true
+  }
+ ]
+}

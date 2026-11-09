@@ -1,0 +1,9 @@
+{
+  "name": "agentpal-postman",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pinned local API security test runner for AgentPal",
+  "devDependencies": {
+    "newman": "6.2.3"
+  }
+}

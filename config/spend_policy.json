@@ -1,0 +1,151 @@
+{
+  "policy_version": "2026.11.2-final-demo",
+  "configuration": "demo",
+  "note": "DEMO CONFIGURATION - NOT APPROVED SPENDING LIMITS. Every amount here (including the default_agent USD 100 / GBP 80 / JPY 15000) is a hackathon placeholder. default_agent is only accepted because this file is labelled \"configuration\": \"demo\"; any request that uses it gets DEMO_DEFAULT_BUDGET_APPLIED and requires review. An operator configuration (see spend_policy.operator.example.json) cannot contain default_agent, so unlisted agents are rejected (NO_SPENDING_POLICY). Agents can never set or raise budgets through request fields. Money is a decimal string in the currency's units; there is no currency conversion.",
+  "budget_period": "calendar_month_utc",
+  "rolling_window_hours": 24,
+  "approval_validity_minutes": 15,
+  "default_agent": {
+    "owner_id": "owner_default",
+    "currencies": {
+      "USD": {
+        "monthly_budget": "100.00",
+        "rolling_window_limit": "100.00",
+        "per_transaction_hard_limit": "5000.00",
+        "per_transaction_review_limit": "1000.00"
+      },
+      "GBP": {
+        "monthly_budget": "80.00",
+        "rolling_window_limit": "80.00",
+        "per_transaction_hard_limit": "4000.00",
+        "per_transaction_review_limit": "800.00"
+      },
+      "JPY": {
+        "monthly_budget": "15000",
+        "rolling_window_limit": "15000",
+        "per_transaction_hard_limit": "750000",
+        "per_transaction_review_limit": "150000"
+      }
+    }
+  },
+  "agents": {
+    "agent_demo_001": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "100.00",
+          "rolling_window_limit": "100.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    },
+    "agent_demo_002": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "500.00",
+          "rolling_window_limit": "500.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    },
+    "agent_demo_003": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "200.00",
+          "rolling_window_limit": "200.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    },
+    "agent_demo_004": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "100.00",
+          "rolling_window_limit": "100.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    },
+    "agent_demo_005": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "100.00",
+          "rolling_window_limit": "100.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    },
+    "agent_demo_006": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "300.00",
+          "rolling_window_limit": "300.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    },
+    "agent_demo_007": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "300.00",
+          "rolling_window_limit": "300.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    },
+    "agent_demo_008": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "100.00",
+          "rolling_window_limit": "100.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    },
+    "agent_demo_009": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "100.00",
+          "rolling_window_limit": "100.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    },
+    "agent_demo_010": {
+      "owner_id": "owner_demo",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "100.00",
+          "rolling_window_limit": "100.00",
+          "per_transaction_hard_limit": "5000.00",
+          "per_transaction_review_limit": "1000.00"
+        }
+      }
+    }
+  },
+  "owners": {
+    "owner_demo": {
+      "share_verified_merchant_history_across_agents": false
+    },
+    "owner_default": {
+      "share_verified_merchant_history_across_agents": false
+    }
+  }
+}

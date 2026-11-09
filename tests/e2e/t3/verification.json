@@ -1,0 +1,77 @@
+{
+  "base": "db7d00870563cb55c6702787408e9bbcfbe65fec",
+  "baseline": {
+    "passed": 2914,
+    "skipped": 38,
+    "failed": 0,
+    "seconds": 597.01
+  },
+  "first_final_full": {
+    "passed": 2927,
+    "skipped": 38,
+    "xfailed": 6,
+    "failed": 1,
+    "seconds": 474.01,
+    "failure": "unchanged tests/test_kernel_browser.py::test_overall_deadline_and_eventual_cleanup[screenshot], elapsed 1.73s vs <0.5s"
+  },
+  "inherited_deadline_isolation": {
+    "passed": 3,
+    "failed": 2,
+    "failures": [
+      "create: handler not entered before 80ms deadline",
+      "execute: handler not entered before 80ms deadline"
+    ]
+  },
+  "new_checks_with_xfail_disabled": {
+    "passed": 14,
+    "failed": 6,
+    "all_failures_at_intended_assertions": true
+  },
+  "new_checks_with_network_transport_guard": {
+    "passed": 14,
+    "xfailed": 6,
+    "failed": 0
+  },
+  "e2e_required_command": {
+    "command": "python -m pytest -q -p no:cacheprovider tests/e2e",
+    "exit_code": 0
+  },
+  "ruff": {
+    "agentpal_training_tests": "clean",
+    "agentpal_tests": "clean"
+  },
+  "credentials_scan": {
+    "matched_files": 0
+  },
+  "final_rerun": {
+    "passed": 2913,
+    "skipped": 52,
+    "xfailed": 6,
+    "failed": 1,
+    "seconds": 459.53,
+    "paypal_credentials_present": false,
+    "channel3_credentials_present": true,
+    "failure": "unchanged tests/test_kernel_browser.py::test_overall_deadline_and_eventual_cleanup[screenshot], elapsed 2.25s vs <0.5s"
+  },
+  "full_suite_acceptance_gate": "BLOCKED: repeated inherited screenshot deadline assertion failure; no source or assertion change authorized",
+  "inherited_deadline_warm_isolation": {
+    "passed": 6,
+    "failed": 0,
+    "seconds": 1.3,
+    "setup": "existing successful-capture test before deadline parameter group"
+  },
+  "final_t3_suite": {
+    "passed": 14,
+    "xfailed": 6,
+    "failed": 0,
+    "seconds": 6.11
+  },
+  "credential_scan_owned_file_count": 23,
+  "complete_validation_channel3_search_upper_bound": 20,
+  "t3_plus_entire_kernel_browser_module": {
+    "passed": 119,
+    "xfailed": 6,
+    "failed": 0,
+    "seconds": 7.86
+  }
+}

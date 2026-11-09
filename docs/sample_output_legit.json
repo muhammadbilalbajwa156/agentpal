@@ -1,0 +1,86 @@
+{
+  "request_id": "req_demo_001",
+  "agent_id": "agent_demo_001",
+  "assessed_at": "2026-10-28T16:53:01.352472Z",
+  "risk_score": 38,
+  "risk_category": "medium",
+  "recommendation": "require_review",
+  "explanation": "Risk score 38/100 (medium); recommendation: require_review. Information gaps (not evidence of fraud): MISSING_EVIDENCE. No configured risk rule was triggered. This does not establish that the merchant or payment is legitimate. Model (logistic-regression-baseline) estimated 50/100; model output is a prediction, not verified fact.",
+  "signals": [
+    {
+      "code": "MISSING_EVIDENCE",
+      "kind": "uncertainty",
+      "source": "rule",
+      "points": 13,
+      "message": "No supporting evidence (invoice, quote, contract) was provided.",
+      "evidence": {}
+    },
+    {
+      "code": "MODEL_ML_MISSING_EVIDENCE",
+      "kind": "risk_indicator",
+      "source": "model",
+      "points": 0,
+      "message": "Feature 'missing_evidence' increased predicted risk.",
+      "evidence": {
+        "model_evidence": "contribution=1.72",
+        "note": "model prediction; not a verified fact"
+      }
+    },
+    {
+      "code": "MODEL_ML_RECURRING",
+      "kind": "risk_indicator",
+      "source": "model",
+      "points": 0,
+      "message": "Feature 'recurring' increased predicted risk.",
+      "evidence": {
+        "model_evidence": "contribution=0.77",
+        "note": "model prediction; not a verified fact"
+      }
+    },
+    {
+      "code": "MODEL_ML_BUDGET_RATIO",
+      "kind": "risk_indicator",
+      "source": "model",
+      "points": 0,
+      "message": "Feature 'budget_ratio' increased predicted risk.",
+      "evidence": {
+        "model_evidence": "contribution=0.33",
+        "note": "model prediction; not a verified fact"
+      }
+    },
+    {
+      "code": "MODEL_ML_NO_HISTORY",
+      "kind": "risk_indicator",
+      "source": "model",
+      "points": 0,
+      "message": "Feature 'no_history' increased predicted risk.",
+      "evidence": {
+        "model_evidence": "contribution=0.33",
+        "note": "model prediction; not a verified fact"
+      }
+    }
+  ],
+  "hard_violations": [],
+  "missing_information": [
+    "No supporting evidence (invoice, quote, contract) was provided."
+  ],
+  "inconsistencies": [],
+  "rule_score": 13,
+  "model_score": 50,
+  "model_uncertainty": 0.94,
+  "model_summary": "Logistic-regression baseline trained on synthetic data: P(needs review)=0.53. Prediction only; nothing was verified.",
+  "model": {
+    "backend": "ml",
+    "model_name": "logistic-regression-baseline",
+    "model_version": "lr-20261028-C0.3",
+    "is_fallback": false,
+    "attempted_backends": [
+      "ml"
+    ],
+    "errors": [],
+    "latency_ms": 3.28
+  },
+  "rules_version": "2026.10.1",
+  "disclaimer": "Automated risk assessment only. It is not proof of fraud or legitimacy, has not verified the merchant or any evidence, and does not authorize or execute any payment.",
+  "payment_executed": false
+}

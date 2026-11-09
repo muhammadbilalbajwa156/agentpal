@@ -1,0 +1,30 @@
+/* Live financial presentation regressions; no network, storage or credentials. */
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const hostile='<img src=x onerror=alert(1)>',nodes=new Map(),listeners={};
+const escape=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const node=s=>{if(!nodes.has(s))nodes.set(s,{innerHTML:'',classList:{toggle(){}},dataset:{},querySelector:node,querySelectorAll:()=>[],setAttribute(){},removeAttribute(){},addEventListener(){}});return nodes.get(s);};
+const today=new Date().toISOString(),yesterday=new Date(Date.now()-86400000).toISOString();
+const payment=(id,status,amount,currency='USD')=>({request_id:id,agent_id:'one',wallet_id:'wallet',status,created_at:today,terms:{amount,currency,merchant_name:hostile}});
+const data={agents:[{agent_id:'one',name:hostile,description:hostile,status:'active',created_at:today,capabilities:[hostile,'payment.prepare','payment.execute_sandbox','research.fetch']}],wallets:[{wallet_id:'wallet',agent_id:'one',currency:'USD',status:'active',limits:{monthly_budget:'100.00',per_transaction_limit:'30.00'},allowance:{spent:'10.00',available:'70.00',reserved:'12.00',pending:'8.00'}}],payments:[payment('p1','provider_confirmed','0.10'),payment('p2','provider_confirmed','0.20'),payment('unverified','approved','900.00'),payment('rejected','rejected','200.00')],payouts:[{request_id:'po',agent_id:'one',created_at:yesterday,status:'provider_confirmed',amount:'2.00',currency:'USD'}],approvals:[],transactions:{},disputes:[],health:{status:'ok'},errors:[]};
+const c={Intl,Date,Math,Number,String,Array,Set,Map,BigInt,JSON,Object,console,document:{querySelector:node,addEventListener(){}},AgentPalAPI:{live:true,data,money:(a,currency)=>`${currency} ${Number(a).toFixed(2)}`},App:{escape,icon:()=>'<svg/>',modal(){},toast(){}},addEventListener:(n,f)=>(listeners[n]??=[]).push(f),CustomEvent:class{}};
+c.window=c;vm.createContext(c);require('./visual-harness.cjs')(c,node);const v=c.AgentPalVisuals.live;
+assert.equal(v.totals(v.confirmed()),'USD 2.30','Only verified payments and payouts enter confirmed spend, summed exactly');
+assert.equal(v.holdsText(),'USD 20.00');assert.equal(v.budgetText(),'USD 100.00');assert.equal(v.usage(),10);assert.equal(v.availability(),70);assert.equal(v.availability(data.wallets,true),78,'Available vs allocated excludes already spent allowance');
+assert.equal(v.series(v.confirmed(),7).reduce((sum,p)=>sum+p.value,0),2.3,'Real daily amounts, no fabricated trend');
+assert.equal(v.series([],7).length,7);assert.ok(v.series([],7).every(p=>p.value===0),'Empty dates are flat zero');
+assert.equal(v.series([{created_at:'invalid',amount:'500.00',currency:'USD'}],7).reduce((sum,p)=>sum+p.value,0),0);
+assert.equal(v.thisMonth([{created_at:today},{created_at:'2000-01-01'},{created_at:'invalid'}]).length,1);
+data.wallets.push({...data.wallets[0],wallet_id:'eur',currency:'EUR'});
+assert.equal(v.usage(),null,'A mixed-currency percentage cannot imply conversion');assert.equal(v.availability(),null);
+assert.equal(v.totals([{amount:'0.10',currency:'USD'},{amount:'0.20',currency:'USD'},{amount:'4.00',currency:'EUR'}]),'USD 0.30 · EUR 4.00');
+assert.equal(v.series([...v.confirmed(),{created_at:today,amount:'200.00',currency:'EUR'}],7).reduce((sum,p)=>sum+p.value,0),4,'Mixed currency sparkline counts records instead of adding money');
+assert.ok(v.avatar(data.agents[0]).includes('&lt;'));assert.ok(!v.avatar(data.agents[0]).includes(hostile));
+assert.ok(!v.friendly('payment.prepare').includes('.'));assert.equal(v.friendly('payout.request'),'Payouts');
+for(const file of ['agents-screen.js','wallets-screen.js'])vm.runInContext(fs.readFileSync(file==='agents-screen.js'&&process.env.AGENTPAL_DESIGN_AGENT_SOURCE||'site/'+file,'utf8'),c);
+const html=c.AgentScreen.render();assert.match(html,/a-stats/);assert.match(html,/a-bottom/);assert.match(html,/a-performance/);assert.match(html,/a-security/);assert.doesNotMatch(html,/Revenue|Profit|ChatGPT|Claude|Gemini|\+12\.5%/);
+c.AgentScreen.mount();const grid=c.__testGrids.at(-1);assert.equal(grid.rowHeight,55);assert.equal(grid.headerHeight,44);assert.equal(grid.pagination,false);
+assert.deepEqual(Array.from(grid.columnDefs,c=>c.headerName),['Spent This Month','Status','□','Agent','Company','Wallet','Monthly Budget','Permissions','Last Activity','Actions']);
+for(const field of ['name','capabilities']){const col=grid.columnDefs.find(c=>c.field===field),cell=col.cellRenderer({data:grid.rowData[0],value:grid.rowData[0][field]});assert.ok(!cell.innerHTML.includes(hostile),field+' custom cell must escape API markup');assert.match(cell.innerHTML,/&lt;img src=x onerror=alert\(1\)&gt;/);}
+assert.match(c.WalletScreen.render(),/ws-main-grid/);assert.match(c.WalletScreen.render(),/ws-wallet-detail/);assert.match(c.WalletScreen.render(),/Edit Limits/);assert.match(c.WalletScreen.render(),/wallet-spend-chart/);assert.doesNotMatch(c.WalletScreen.render(),/Add Funds|Withdraw|Crypto|Business Bank|Revenue|Profit/);
+const original=data.agents[0];data.agents=Array.from({length:11},(_,i)=>({...original,agent_id:'a'+i}));c.AgentPalVisuals.destroyWithin({contains:()=>true});c.AgentScreen.mount();assert.equal(c.__testGrids.at(-1).pagination,true,'Pagination appears only above ten agents');
+console.log('PASS: restored live layout; exact confirmed payment/payout totals; currency-safe percentages and sparklines; real zero-filled days; current-month counts; generic avatars; escaped custom AG cells; original columns/row heights; conditional pagination.');

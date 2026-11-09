@@ -1,0 +1,297 @@
+[
+  {
+    "case_id": "T3-01-fair",
+    "source": "read-only wallet SQLite snapshot after successful owner refresh HTTP 200",
+    "request_id": "\u2026da57",
+    "initial_confidence": "high",
+    "refreshed_snapshot": {
+      "advisory_level": "no_concern",
+      "advisory_only": true,
+      "authoritative": false,
+      "better_deals": [],
+      "checked_at": "2026-11-03T16:20:51.149005+00:00",
+      "disclosure": "We may earn a commission when you buy through links on this page.",
+      "discount_codes_available": false,
+      "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+      "evidence": {
+        "content_sha256": "f632f48987b16226536f1e903b65d6210fcf75f8d66d61ee6b102fa96d4ebdd9",
+        "endpoint": "product",
+        "method": "search_result",
+        "retrieved_at": "2026-11-03T16:20:51.148849+00:00",
+        "source_url": "https://api.trychannel3.com/v1/products/\u2026KmNT"
+      },
+      "input": {
+        "claimed_amount": "99.99",
+        "currency": "USD",
+        "merchant_domain": "officedepot.com",
+        "product_query": "Logitech MX Master 3S",
+        "product_url": null
+      },
+      "market": {
+        "claimed_vs_median": "0.89",
+        "currency": "USD",
+        "high": "118.00",
+        "low": "99.99",
+        "median": "112.44",
+        "offers_compared": 4
+      },
+      "merchant_offer": {
+        "availability": "InStock",
+        "compare_at_price": null,
+        "condition": "new",
+        "currency": "USD",
+        "domain": "officedepot.com",
+        "price": "99.99"
+      },
+      "product": {
+        "brands": [
+          "Logitech"
+        ],
+        "id": "\u2026KmNT",
+        "match_confidence": "exact",
+        "offer_count": 5,
+        "title": "Logitech MX Master 3S Performance Wireless Mouse"
+      },
+      "provider": "channel3",
+      "signals": [],
+      "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+      "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes."
+    }
+  },
+  {
+    "case_id": "T3-02-fair",
+    "source": "read-only wallet SQLite snapshot after successful owner refresh HTTP 200",
+    "request_id": "\u20269d71",
+    "initial_confidence": "high",
+    "refreshed_snapshot": {
+      "advisory_level": "no_concern",
+      "advisory_only": true,
+      "authoritative": false,
+      "better_deals": [],
+      "checked_at": "2026-11-03T16:21:31.484688+00:00",
+      "disclosure": "We may earn a commission when you buy through links on this page.",
+      "discount_codes_available": false,
+      "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+      "evidence": {
+        "content_sha256": "0037ce062771829f1f20c702f39b2bbbed5fc9219688c81bd080e2ec2f4c52d0",
+        "endpoint": "product",
+        "method": "search_result",
+        "retrieved_at": "2026-11-03T16:21:31.484558+00:00",
+        "source_url": "https://api.trychannel3.com/v1/products/\u20264MAW"
+      },
+      "input": {
+        "claimed_amount": "398.00",
+        "currency": "USD",
+        "merchant_domain": "6ave.com",
+        "product_query": "Sony WH-1000XM5",
+        "product_url": null
+      },
+      "market": {
+        "claimed_vs_median": "1.00",
+        "currency": "USD",
+        "high": "398.00",
+        "low": "398.00",
+        "median": "398.00",
+        "offers_compared": 1
+      },
+      "merchant_offer": {
+        "availability": "InStock",
+        "compare_at_price": null,
+        "condition": "new",
+        "currency": "USD",
+        "domain": "6ave.com",
+        "price": "398.00"
+      },
+      "product": {
+        "brands": [
+          "Sony"
+        ],
+        "id": "\u20264MAW",
+        "match_confidence": "exact",
+        "offer_count": 1,
+        "title": "Sony WH-1000XM5 Noise-Canceling Wireless Over-Ear Headphones"
+      },
+      "provider": "channel3",
+      "signals": [],
+      "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+      "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes."
+    }
+  },
+  {
+    "case_id": "T3-03-fair",
+    "source": "read-only wallet SQLite snapshot after successful owner refresh HTTP 200",
+    "request_id": "\u2026d920",
+    "initial_confidence": "high",
+    "refreshed_snapshot": {
+      "advisory_level": "no_concern",
+      "advisory_only": true,
+      "authoritative": false,
+      "better_deals": [],
+      "checked_at": "2026-11-03T16:22:07.704383+00:00",
+      "disclosure": "We may earn a commission when you buy through links on this page.",
+      "discount_codes_available": false,
+      "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+      "evidence": {
+        "content_sha256": "24ecae8fe28deb29437105145772dc346321b98511b73de2b5fa88e6489ec4a5",
+        "endpoint": "product",
+        "method": "search_result",
+        "retrieved_at": "2026-11-03T16:22:07.704254+00:00",
+        "source_url": "https://api.trychannel3.com/v1/products/\u2026s5vc"
+      },
+      "input": {
+        "claimed_amount": "309.99",
+        "currency": "USD",
+        "merchant_domain": "hsn.com",
+        "product_query": "Apple AirPods Pro 2",
+        "product_url": null
+      },
+      "market": {
+        "claimed_vs_median": "1.00",
+        "currency": "USD",
+        "high": "309.99",
+        "low": "309.99",
+        "median": "309.99",
+        "offers_compared": 1
+      },
+      "merchant_offer": {
+        "availability": "InStock",
+        "compare_at_price": null,
+        "condition": "new",
+        "currency": "USD",
+        "domain": "hsn.com",
+        "price": "309.99"
+      },
+      "product": {
+        "brands": [
+          "Apple"
+        ],
+        "id": "\u2026s5vc",
+        "match_confidence": "exact",
+        "offer_count": 1,
+        "title": "Apple AirPods Pro 2 with Active Noise Cancellation & Hearing Health"
+      },
+      "provider": "channel3",
+      "signals": [],
+      "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+      "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes."
+    }
+  },
+  {
+    "case_id": "T3-04-fair",
+    "source": "read-only wallet SQLite snapshot after successful owner refresh HTTP 200",
+    "request_id": "\u2026e431",
+    "initial_confidence": "high",
+    "refreshed_snapshot": {
+      "advisory_level": "no_concern",
+      "advisory_only": true,
+      "authoritative": false,
+      "better_deals": [],
+      "checked_at": "2026-11-03T16:22:43.789108+00:00",
+      "disclosure": "We may earn a commission when you buy through links on this page.",
+      "discount_codes_available": false,
+      "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+      "evidence": {
+        "content_sha256": "48b5b069a42afcc116927a101e380eb4c93c89928982e8ee7b0b4d24ce9f4176",
+        "endpoint": "product",
+        "method": "search_result",
+        "retrieved_at": "2026-11-03T16:22:43.788969+00:00",
+        "source_url": "https://api.trychannel3.com/v1/products/\u2026QFpX"
+      },
+      "input": {
+        "claimed_amount": "275.00",
+        "currency": "USD",
+        "merchant_domain": "newegg.com",
+        "product_query": "Samsung 990 PRO 2TB",
+        "product_url": null
+      },
+      "market": {
+        "claimed_vs_median": "0.86",
+        "currency": "USD",
+        "high": "418.49",
+        "low": "275.00",
+        "median": "319.63",
+        "offers_compared": 4
+      },
+      "merchant_offer": {
+        "availability": "InStock",
+        "compare_at_price": null,
+        "condition": "new",
+        "currency": "USD",
+        "domain": "newegg.com",
+        "price": "275.00"
+      },
+      "product": {
+        "brands": [
+          "Samsung"
+        ],
+        "id": "\u2026QFpX",
+        "match_confidence": "exact",
+        "offer_count": 5,
+        "title": "Samsung 990 Pro 2TB with Heatsink M.2 NVMe PCIe 4.0 SSD"
+      },
+      "provider": "channel3",
+      "signals": [],
+      "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+      "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes."
+    }
+  },
+  {
+    "case_id": "T3-05-fair",
+    "source": "read-only wallet SQLite snapshot after successful owner refresh HTTP 200",
+    "request_id": "\u20265863",
+    "initial_confidence": "medium",
+    "refreshed_snapshot": {
+      "advisory_level": "no_concern",
+      "advisory_only": true,
+      "authoritative": false,
+      "better_deals": [],
+      "checked_at": "2026-11-03T16:23:19.116379+00:00",
+      "disclosure": "We may earn a commission when you buy through links on this page.",
+      "discount_codes_available": false,
+      "discount_codes_note": "Channel3's data contains sale prices (compare_at_price) but no discount or coupon codes, so none are shown.",
+      "evidence": {
+        "content_sha256": "e322478b176a805e05cbfc6c052286e4e97c11fb538221922a81b50a4e9a1cc0",
+        "endpoint": "product",
+        "method": "search_result",
+        "retrieved_at": "2026-11-03T16:23:19.116286+00:00",
+        "source_url": "https://api.trychannel3.com/v1/products/\u2026ijhG"
+      },
+      "input": {
+        "claimed_amount": "444.99",
+        "currency": "USD",
+        "merchant_domain": "walmart.com",
+        "product_query": "Nintendo Switch OLED",
+        "product_url": null
+      },
+      "market": {
+        "claimed_vs_median": "1.00",
+        "currency": "USD",
+        "high": "444.99",
+        "low": "444.99",
+        "median": "444.99",
+        "offers_compared": 1
+      },
+      "merchant_offer": {
+        "availability": "InStock",
+        "compare_at_price": "547.34",
+        "condition": "new",
+        "currency": "USD",
+        "domain": "walmart.com",
+        "price": "444.99"
+      },
+      "product": {
+        "brands": [
+          "Nintendo"
+        ],
+        "id": "\u2026ijhG",
+        "match_confidence": "exact",
+        "offer_count": 1,
+        "title": "Nintendo Switch OLED Model"
+      },
+      "provider": "channel3",
+      "signals": [],
+      "switch_notice": "AgentPal never switches merchants automatically: buying elsewhere needs a new payment request and a new owner approval of its exact terms.",
+      "verify_notice": "Prices and stock come from Channel3's retailer catalogue and can change. Open the retailer's site and check the price, seller, condition, shipping and return terms yourself before buying. AI agents can make mistakes."
+    }
+  }
+]

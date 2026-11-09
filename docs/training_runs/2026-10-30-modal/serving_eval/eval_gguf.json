@@ -1,0 +1,1188 @@
+{
+  "meta": {
+    "evaluated_at": "2026-10-30T18:52:26+00:00",
+    "backend": "gguf (serving path)",
+    "model": "build/modal_out/export/agentpal-qwen3-1.7b-q4_k_m.gguf",
+    "training_run": {
+      "run_kind": "training",
+      "notice": "LoRA adapter for Qwen3-1.7B. Advisory model only; evaluate before use.",
+      "base_model": "Qwen/Qwen3-1.7B",
+      "base_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+      "llama_cpp_commit": "78febbad9d4fcb6d85d65207265c875f5aa1c1af"
+    },
+    "gguf_sha256": "92522e111321ea348b7981976e6e98a9fbfe27167711ce2d405a2e1da29c9817",
+    "banner": "Synthetic/author labels: development evidence only, not real-world accuracy"
+  },
+  "sft_dev": {
+    "units": 371,
+    "risky": 217,
+    "legitimate": 154,
+    "validity": {
+      "calls": 371,
+      "invalid": 0,
+      "invalid_rate": 0.0,
+      "invalid_rate_ci95": [
+        0.0,
+        0.0102
+      ],
+      "examples": []
+    },
+    "model_only_on_valid_outputs": {
+      "n": 371,
+      "precision": 0.9926,
+      "recall": 0.6175,
+      "f1": 0.7614,
+      "false_positive_rate": 0.0065,
+      "false_negative_rate": 0.3825,
+      "confusion_matrix": {
+        "tp": 134,
+        "fp": 1,
+        "tn": 153,
+        "fn": 83
+      },
+      "ci95": {
+        "precision": [
+          0.9592,
+          0.9987
+        ],
+        "recall": [
+          0.5513,
+          0.6796
+        ],
+        "false_positive_rate": [
+          0.0011,
+          0.0359
+        ]
+      }
+    },
+    "model_only_invalid_counted_as_not_flagged": {
+      "n": 371,
+      "precision": 0.9926,
+      "recall": 0.6175,
+      "f1": 0.7614,
+      "false_positive_rate": 0.0065,
+      "false_negative_rate": 0.3825,
+      "confusion_matrix": {
+        "tp": 134,
+        "fp": 1,
+        "tn": 153,
+        "fn": 83
+      },
+      "ci95": {
+        "precision": [
+          0.9592,
+          0.9987
+        ],
+        "recall": [
+          0.5513,
+          0.6796
+        ],
+        "false_positive_rate": [
+          0.0011,
+          0.0359
+        ]
+      }
+    },
+    "rules_only": {
+      "missed_risky_FN": {
+        "count": 59,
+        "n": 217,
+        "rate": 0.2719,
+        "ci95": [
+          0.217,
+          0.3347
+        ]
+      },
+      "legitimate_flagged_FP": {
+        "count": 55,
+        "n": 154,
+        "rate": 0.3571,
+        "ci95": [
+          0.2858,
+          0.4355
+        ]
+      },
+      "legitimate_blocked": {
+        "count": 0,
+        "n": 154,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.0243
+        ]
+      },
+      "review_rate": {
+        "count": 193,
+        "n": 371,
+        "rate": 0.5202,
+        "ci95": [
+          0.4694,
+          0.5706
+        ]
+      },
+      "block_rate": {
+        "count": 20,
+        "n": 371,
+        "rate": 0.0539,
+        "ci95": [
+          0.0352,
+          0.0818
+        ]
+      },
+      "binary": {
+        "n": 371,
+        "precision": 0.7418,
+        "recall": 0.7281,
+        "f1": 0.7349,
+        "false_positive_rate": 0.3571,
+        "false_negative_rate": 0.2719,
+        "confusion_matrix": {
+          "tp": 158,
+          "fp": 55,
+          "tn": 99,
+          "fn": 59
+        },
+        "ci95": {
+          "precision": [
+            0.6791,
+            0.7959
+          ],
+          "recall": [
+            0.6653,
+            0.783
+          ],
+          "false_positive_rate": [
+            0.2858,
+            0.4355
+          ]
+        }
+      }
+    },
+    "rules_plus_model": {
+      "missed_risky_FN": {
+        "count": 17,
+        "n": 217,
+        "rate": 0.0783,
+        "ci95": [
+          0.0495,
+          0.1219
+        ]
+      },
+      "legitimate_flagged_FP": {
+        "count": 55,
+        "n": 154,
+        "rate": 0.3571,
+        "ci95": [
+          0.2858,
+          0.4355
+        ]
+      },
+      "legitimate_blocked": {
+        "count": 0,
+        "n": 154,
+        "rate": 0.0,
+        "ci95": [
+          0.0,
+          0.0243
+        ]
+      },
+      "review_rate": {
+        "count": 235,
+        "n": 371,
+        "rate": 0.6334,
+        "ci95": [
+          0.5833,
+          0.6809
+        ]
+      },
+      "block_rate": {
+        "count": 20,
+        "n": 371,
+        "rate": 0.0539,
+        "ci95": [
+          0.0352,
+          0.0818
+        ]
+      },
+      "binary": {
+        "n": 371,
+        "precision": 0.7843,
+        "recall": 0.9217,
+        "f1": 0.8475,
+        "false_positive_rate": 0.3571,
+        "false_negative_rate": 0.0783,
+        "confusion_matrix": {
+          "tp": 200,
+          "fp": 55,
+          "tn": 99,
+          "fn": 17
+        },
+        "ci95": {
+          "precision": [
+            0.7298,
+            0.8304
+          ],
+          "recall": [
+            0.8781,
+            0.9505
+          ],
+          "false_positive_rate": [
+            0.2858,
+            0.4355
+          ]
+        }
+      }
+    },
+    "rules_plus_model_degraded_rate": 0.0,
+    "never_less_strict_than_rules": true,
+    "latency": {
+      "n": 371,
+      "p50_ms": 8570.8,
+      "p95_ms": 19056.7,
+      "mean_ms": 10614.0,
+      "over_serving_timeout": 0
+    },
+    "per_category": {
+      "aug_duplicate_visible": {
+        "n": 7,
+        "risky": 7,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 5,
+        "rules_plus_model_flagged": 5
+      },
+      "aug_evidence_routine_legit": {
+        "n": 15,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 1
+      },
+      "aug_fabricated_evidence_with_signal": {
+        "n": 12,
+        "risky": 12,
+        "invalid": 0,
+        "model_flagged": 8,
+        "rules_only_flagged": 9,
+        "rules_plus_model_flagged": 12
+      },
+      "aug_hard_negative_large_in_budget": {
+        "n": 9,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 7,
+        "rules_plus_model_flagged": 7
+      },
+      "aug_hard_negative_new_merchant": {
+        "n": 3,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 3,
+        "rules_plus_model_flagged": 3
+      },
+      "aug_hard_negative_plain": {
+        "n": 7,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      },
+      "aug_hard_negative_urgent": {
+        "n": 8,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 8,
+        "rules_plus_model_flagged": 8
+      },
+      "aug_injection_multilingual": {
+        "n": 15,
+        "risky": 15,
+        "invalid": 0,
+        "model_flagged": 15,
+        "rules_only_flagged": 2,
+        "rules_plus_model_flagged": 15
+      },
+      "aug_injection_obfuscated": {
+        "n": 17,
+        "risky": 17,
+        "invalid": 0,
+        "model_flagged": 17,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 17
+      },
+      "aug_injection_paraphrased": {
+        "n": 17,
+        "risky": 17,
+        "invalid": 0,
+        "model_flagged": 9,
+        "rules_only_flagged": 3,
+        "rules_plus_model_flagged": 10
+      },
+      "aug_legit_multilingual": {
+        "n": 22,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      },
+      "aug_missing_or_inconsistent": {
+        "n": 12,
+        "risky": 12,
+        "invalid": 0,
+        "model_flagged": 3,
+        "rules_only_flagged": 8,
+        "rules_plus_model_flagged": 9
+      },
+      "aug_near_name": {
+        "n": 12,
+        "risky": 12,
+        "invalid": 0,
+        "model_flagged": 9,
+        "rules_only_flagged": 12,
+        "rules_plus_model_flagged": 12
+      },
+      "aug_near_name_legit": {
+        "n": 10,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 1
+      },
+      "aug_purpose_mismatch": {
+        "n": 10,
+        "risky": 10,
+        "invalid": 0,
+        "model_flagged": 4,
+        "rules_only_flagged": 8,
+        "rules_plus_model_flagged": 10
+      },
+      "aug_renewal_legit": {
+        "n": 10,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 10,
+        "rules_plus_model_flagged": 10
+      },
+      "excessive_amount": {
+        "n": 20,
+        "risky": 20,
+        "invalid": 0,
+        "model_flagged": 10,
+        "rules_only_flagged": 20,
+        "rules_plus_model_flagged": 20
+      },
+      "legit_low_risk": {
+        "n": 35,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      },
+      "legit_unusual": {
+        "n": 35,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 1,
+        "rules_only_flagged": 25,
+        "rules_plus_model_flagged": 25
+      },
+      "prompt_injection": {
+        "n": 5,
+        "risky": 5,
+        "invalid": 0,
+        "model_flagged": 5,
+        "rules_only_flagged": 5,
+        "rules_plus_model_flagged": 5
+      },
+      "purpose_mismatch": {
+        "n": 10,
+        "risky": 10,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 5,
+        "rules_plus_model_flagged": 5
+      },
+      "suspicious_combination": {
+        "n": 15,
+        "risky": 15,
+        "invalid": 0,
+        "model_flagged": 7,
+        "rules_only_flagged": 15,
+        "rules_plus_model_flagged": 15
+      },
+      "suspicious_domain": {
+        "n": 35,
+        "risky": 35,
+        "invalid": 0,
+        "model_flagged": 32,
+        "rules_only_flagged": 35,
+        "rules_plus_model_flagged": 35
+      },
+      "unexpected_recurring": {
+        "n": 30,
+        "risky": 30,
+        "invalid": 0,
+        "model_flagged": 15,
+        "rules_only_flagged": 30,
+        "rules_plus_model_flagged": 30
+      }
+    },
+    "per_language": {
+      "en": {
+        "n": 334,
+        "risky": 202,
+        "invalid": 0,
+        "model_flagged": 120,
+        "rules_only_flagged": 211,
+        "rules_plus_model_flagged": 240
+      },
+      "es": {
+        "n": 8,
+        "risky": 3,
+        "invalid": 0,
+        "model_flagged": 3,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 3
+      },
+      "hi": {
+        "n": 7,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      },
+      "it": {
+        "n": 8,
+        "risky": 4,
+        "invalid": 0,
+        "model_flagged": 4,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 4
+      },
+      "nl": {
+        "n": 3,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      },
+      "pl": {
+        "n": 2,
+        "risky": 2,
+        "invalid": 0,
+        "model_flagged": 2,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 2
+      },
+      "pt": {
+        "n": 2,
+        "risky": 2,
+        "invalid": 0,
+        "model_flagged": 2,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 2
+      },
+      "ru": {
+        "n": 2,
+        "risky": 2,
+        "invalid": 0,
+        "model_flagged": 2,
+        "rules_only_flagged": 2,
+        "rules_plus_model_flagged": 2
+      },
+      "uk": {
+        "n": 2,
+        "risky": 2,
+        "invalid": 0,
+        "model_flagged": 2,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 2
+      },
+      "zh": {
+        "n": 3,
+        "risky": 0,
+        "invalid": 0,
+        "model_flagged": 0,
+        "rules_only_flagged": 0,
+        "rules_plus_model_flagged": 0
+      }
+    },
+    "per_wording": {
+      "non_english": {
+        "n": 37,
+        "risky": 15,
+        "invalid": 0,
+        "model_flagged": 15,
+        "rules_only_flagged": 2,
+        "rules_plus_model_flagged": 15
+      },
+      "obfuscated": {
+        "n": 17,
+        "risky": 17,
+        "invalid": 0,
+        "model_flagged": 17,
+        "rules_only_flagged": 1,
+        "rules_plus_model_flagged": 17
+      },
+      "paraphrased": {
+        "n": 17,
+        "risky": 17,
+        "invalid": 0,
+        "model_flagged": 9,
+        "rules_only_flagged": 3,
+        "rules_plus_model_flagged": 10
+      },
+      "plain": {
+        "n": 115,
+        "risky": 53,
+        "invalid": 0,
+        "model_flagged": 24,
+        "rules_only_flagged": 72,
+        "rules_plus_model_flagged": 78
+      },
+      "templated": {
+        "n": 185,
+        "risky": 115,
+        "invalid": 0,
+        "model_flagged": 70,
+        "rules_only_flagged": 135,
+        "rules_plus_model_flagged": 135
+      }
+    }
+  },
+  "bench_v2_dev": {
+    "units": 210,
+    "banner": "DEV SMOKE RUN - SELF-LABELLED (labels are the AI item author's proposals) - NOT INDEPENDENT - NOT A BENCHMARK RESULT",
+    "overall": {
+      "rules_only": {
+        "units": 210,
+        "risky_units": 137,
+        "legitimate_units": 73,
+        "missed_risky_FN": {
+          "count": 40,
+          "n": 137,
+          "rate": 0.292,
+          "ci95": [
+            0.2223,
+            0.3729
+          ]
+        },
+        "legitimate_flagged_FP": {
+          "count": 19,
+          "n": 73,
+          "rate": 0.2603,
+          "ci95": [
+            0.1734,
+            0.3711
+          ]
+        },
+        "legitimate_blocked": {
+          "count": 0,
+          "n": 73,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.05
+          ]
+        },
+        "required_block_missed": {
+          "count": 0,
+          "n": 19,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.1682
+          ]
+        },
+        "allow_rate": {
+          "count": 94,
+          "n": 210,
+          "rate": 0.4476,
+          "ci95": [
+            0.3819,
+            0.5152
+          ]
+        },
+        "review_rate": {
+          "count": 97,
+          "n": 210,
+          "rate": 0.4619,
+          "ci95": [
+            0.3958,
+            0.5294
+          ]
+        },
+        "block_rate": {
+          "count": 19,
+          "n": 210,
+          "rate": 0.0905,
+          "ci95": [
+            0.0587,
+            0.137
+          ]
+        },
+        "degraded_rate": {
+          "count": 0,
+          "n": 210,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.018
+          ]
+        },
+        "http_rejected": 0,
+        "exact_action_match": {
+          "count": 151,
+          "n": 210,
+          "rate": 0.719,
+          "ci95": [
+            0.6547,
+            0.7755
+          ]
+        },
+        "latency_ms": {
+          "p50": 1.292,
+          "p95": 5.708,
+          "n": 210
+        },
+        "action_confusion_rows_expected_cols_predicted": {
+          "allow_for_review": {
+            "allow_for_review": 54,
+            "require_review": 19,
+            "block": 0
+          },
+          "require_review": {
+            "allow_for_review": 40,
+            "require_review": 78,
+            "block": 0
+          },
+          "block": {
+            "allow_for_review": 0,
+            "require_review": 0,
+            "block": 19
+          }
+        }
+      },
+      "hybrid": {
+        "units": 210,
+        "risky_units": 137,
+        "legitimate_units": 73,
+        "missed_risky_FN": {
+          "count": 40,
+          "n": 137,
+          "rate": 0.292,
+          "ci95": [
+            0.2223,
+            0.3729
+          ]
+        },
+        "legitimate_flagged_FP": {
+          "count": 20,
+          "n": 73,
+          "rate": 0.274,
+          "ci95": [
+            0.1849,
+            0.3856
+          ]
+        },
+        "legitimate_blocked": {
+          "count": 0,
+          "n": 73,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.05
+          ]
+        },
+        "required_block_missed": {
+          "count": 0,
+          "n": 19,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.1682
+          ]
+        },
+        "allow_rate": {
+          "count": 93,
+          "n": 210,
+          "rate": 0.4429,
+          "ci95": [
+            0.3773,
+            0.5105
+          ]
+        },
+        "review_rate": {
+          "count": 98,
+          "n": 210,
+          "rate": 0.4667,
+          "ci95": [
+            0.4004,
+            0.5341
+          ]
+        },
+        "block_rate": {
+          "count": 19,
+          "n": 210,
+          "rate": 0.0905,
+          "ci95": [
+            0.0587,
+            0.137
+          ]
+        },
+        "degraded_rate": {
+          "count": 0,
+          "n": 210,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.018
+          ]
+        },
+        "http_rejected": 0,
+        "exact_action_match": {
+          "count": 150,
+          "n": 210,
+          "rate": 0.7143,
+          "ci95": [
+            0.6498,
+            0.7711
+          ]
+        },
+        "latency_ms": {
+          "p50": 1.352,
+          "p95": 5.781,
+          "n": 210
+        },
+        "action_confusion_rows_expected_cols_predicted": {
+          "allow_for_review": {
+            "allow_for_review": 53,
+            "require_review": 20,
+            "block": 0
+          },
+          "require_review": {
+            "allow_for_review": 40,
+            "require_review": 78,
+            "block": 0
+          },
+          "block": {
+            "allow_for_review": 0,
+            "require_review": 0,
+            "block": 19
+          }
+        }
+      },
+      "classifier_only": {
+        "units": 144,
+        "risky_units": 105,
+        "legitimate_units": 39,
+        "missed_risky_FN": {
+          "count": 49,
+          "n": 105,
+          "rate": 0.4667,
+          "ci95": [
+            0.3741,
+            0.5616
+          ]
+        },
+        "legitimate_flagged_FP": {
+          "count": 12,
+          "n": 39,
+          "rate": 0.3077,
+          "ci95": [
+            0.1857,
+            0.4642
+          ]
+        },
+        "legitimate_blocked": {
+          "count": 0,
+          "n": 39,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.0897
+          ]
+        },
+        "required_block_missed": {
+          "count": 10,
+          "n": 10,
+          "rate": 1.0,
+          "ci95": [
+            0.7225,
+            1.0
+          ]
+        },
+        "allow_rate": {
+          "count": 76,
+          "n": 144,
+          "rate": 0.5278,
+          "ci95": [
+            0.4466,
+            0.6075
+          ]
+        },
+        "review_rate": {
+          "count": 68,
+          "n": 144,
+          "rate": 0.4722,
+          "ci95": [
+            0.3925,
+            0.5534
+          ]
+        },
+        "block_rate": {
+          "count": 0,
+          "n": 144,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.026
+          ]
+        },
+        "degraded_rate": {
+          "count": 0,
+          "n": 144,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.026
+          ]
+        },
+        "http_rejected": 0,
+        "exact_action_match": {
+          "count": 76,
+          "n": 144,
+          "rate": 0.5278,
+          "ci95": [
+            0.4466,
+            0.6075
+          ]
+        },
+        "latency_ms": {
+          "p50": 0.695,
+          "p95": 2.293,
+          "n": 144
+        },
+        "action_confusion_rows_expected_cols_predicted": {
+          "allow_for_review": {
+            "allow_for_review": 27,
+            "require_review": 12,
+            "block": 0
+          },
+          "require_review": {
+            "allow_for_review": 46,
+            "require_review": 49,
+            "block": 0
+          },
+          "block": {
+            "allow_for_review": 3,
+            "require_review": 7,
+            "block": 0
+          }
+        }
+      },
+      "gguf_rules_plus_model": {
+        "units": 210,
+        "risky_units": 137,
+        "legitimate_units": 73,
+        "missed_risky_FN": {
+          "count": 13,
+          "n": 137,
+          "rate": 0.0949,
+          "ci95": [
+            0.0563,
+            0.1556
+          ]
+        },
+        "legitimate_flagged_FP": {
+          "count": 20,
+          "n": 73,
+          "rate": 0.274,
+          "ci95": [
+            0.1849,
+            0.3856
+          ]
+        },
+        "legitimate_blocked": {
+          "count": 0,
+          "n": 73,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.05
+          ]
+        },
+        "required_block_missed": {
+          "count": 0,
+          "n": 19,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.1682
+          ]
+        },
+        "allow_rate": {
+          "count": 66,
+          "n": 210,
+          "rate": 0.3143,
+          "ci95": [
+            0.2553,
+            0.3799
+          ]
+        },
+        "review_rate": {
+          "count": 125,
+          "n": 210,
+          "rate": 0.5952,
+          "ci95": [
+            0.5277,
+            0.6593
+          ]
+        },
+        "block_rate": {
+          "count": 19,
+          "n": 210,
+          "rate": 0.0905,
+          "ci95": [
+            0.0587,
+            0.137
+          ]
+        },
+        "degraded_rate": {
+          "count": 0,
+          "n": 210,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.018
+          ]
+        },
+        "http_rejected": 0,
+        "exact_action_match": {
+          "count": 177,
+          "n": 210,
+          "rate": 0.8429,
+          "ci95": [
+            0.7875,
+            0.8859
+          ]
+        },
+        "latency_ms": {
+          "p50": 7819.981,
+          "p95": 16785.684,
+          "n": 210
+        },
+        "action_confusion_rows_expected_cols_predicted": {
+          "allow_for_review": {
+            "allow_for_review": 53,
+            "require_review": 20,
+            "block": 0
+          },
+          "require_review": {
+            "allow_for_review": 13,
+            "require_review": 105,
+            "block": 0
+          },
+          "block": {
+            "allow_for_review": 0,
+            "require_review": 0,
+            "block": 19
+          }
+        }
+      },
+      "gguf_model_only": {
+        "units": 144,
+        "risky_units": 105,
+        "legitimate_units": 39,
+        "missed_risky_FN": {
+          "count": 45,
+          "n": 105,
+          "rate": 0.4286,
+          "ci95": [
+            0.3381,
+            0.5241
+          ]
+        },
+        "legitimate_flagged_FP": {
+          "count": 0,
+          "n": 39,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.0897
+          ]
+        },
+        "legitimate_blocked": {
+          "count": 0,
+          "n": 39,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.0897
+          ]
+        },
+        "required_block_missed": {
+          "count": 10,
+          "n": 10,
+          "rate": 1.0,
+          "ci95": [
+            0.7225,
+            1.0
+          ]
+        },
+        "allow_rate": {
+          "count": 84,
+          "n": 144,
+          "rate": 0.5833,
+          "ci95": [
+            0.5017,
+            0.6607
+          ]
+        },
+        "review_rate": {
+          "count": 60,
+          "n": 144,
+          "rate": 0.4167,
+          "ci95": [
+            0.3393,
+            0.4983
+          ]
+        },
+        "block_rate": {
+          "count": 0,
+          "n": 144,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.026
+          ]
+        },
+        "degraded_rate": {
+          "count": 0,
+          "n": 144,
+          "rate": 0.0,
+          "ci95": [
+            0.0,
+            0.026
+          ]
+        },
+        "http_rejected": 0,
+        "exact_action_match": {
+          "count": 95,
+          "n": 144,
+          "rate": 0.6597,
+          "ci95": [
+            0.5791,
+            0.7321
+          ]
+        },
+        "latency_ms": {
+          "p50": 8199.262,
+          "p95": 17317.435,
+          "n": 144
+        },
+        "action_confusion_rows_expected_cols_predicted": {
+          "allow_for_review": {
+            "allow_for_review": 39,
+            "require_review": 0,
+            "block": 0
+          },
+          "require_review": {
+            "allow_for_review": 39,
+            "require_review": 56,
+            "block": 0
+          },
+          "block": {
+            "allow_for_review": 6,
+            "require_review": 4,
+            "block": 0
+          }
+        }
+      }
+    },
+    "comparisons": {
+      "rules_only vs gguf_rules_plus_model": {
+        "all_units_correct_decision": {
+          "n": 210,
+          "both_correct": 150,
+          "neither_correct": 32,
+          "only_a_correct": 1,
+          "only_b_correct": 27,
+          "difference_b_minus_a": 0.1238,
+          "difference_ci95_agresti_min": [
+            0.0757,
+            0.1696
+          ],
+          "p_value_exact": 0.0,
+          "significant_at_0_05_and_ci_excludes_0": true
+        },
+        "risky_units_caught (recall)": {
+          "n": 137,
+          "both_correct": 97,
+          "neither_correct": 13,
+          "only_a_correct": 0,
+          "only_b_correct": 27,
+          "difference_b_minus_a": 0.1971,
+          "difference_ci95_agresti_min": [
+            0.127,
+            0.2615
+          ],
+          "p_value_exact": 0.0,
+          "significant_at_0_05_and_ci_excludes_0": true
+        },
+        "legitimate_units_not_flagged (1 - FPR)": {
+          "n": 73,
+          "both_correct": 53,
+          "neither_correct": 19,
+          "only_a_correct": 1,
+          "only_b_correct": 0,
+          "difference_b_minus_a": -0.0137,
+          "difference_ci95_agresti_min": [
+            -0.0502,
+            0.0235
+          ],
+          "p_value_exact": 1.0,
+          "significant_at_0_05_and_ci_excludes_0": false
+        }
+      }
+    },
+    "report": "build/modal_out/reports_gguf_local/bench_v2_gguf.json",
+    "validity": {
+      "calls": 208,
+      "invalid": 0,
+      "invalid_rate": 0.0,
+      "invalid_rate_ci95": [
+        0.0,
+        0.0181
+      ],
+      "examples": []
+    },
+    "latency": {
+      "n": 208,
+      "p50_ms": 7825.0,
+      "p95_ms": 16783.6,
+      "mean_ms": 9552.6,
+      "over_serving_timeout": 0
+    }
+  },
+  "memory": {
+    "process_max_rss_bytes": 2789974016
+  },
+  "reference_baselines": {
+    "zero_shot_qwen2.5_1.5b_q4km_risk_model_plan": {
+      "note": "docs/RISK_MODEL_PLAN.md section 1 (40 rows of the OLD SFT dev split, without rule findings): 35/40 valid JSON, 19/19 legitimate flagged, 0/16 risky missed, p50 12.3 s / p95 16.5 s on 4 CPU cores"
+    },
+    "rules_hybrid_classifier": "see bench_v2_dev.overall (scored on identical units)"
+  }
+}

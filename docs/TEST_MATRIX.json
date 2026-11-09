@@ -1,0 +1,881 @@
+{
+ "review_revision": "c87a509 (review); updated for branches agentpal-p0-remediation and agentpal-owner-decisions",
+ "generated": "2026-10-29",
+ "status_legend": {
+  "existing": "covered by the current suite (108 passed in this review)",
+  "probe-confirmed-gap": "executed in this review; FAILED the secure expectation",
+  "code-inspection-gap": "gap found by reading code; not executed",
+  "verified-by-inspection": "property verified by reading code; no automated test yet",
+  "proposed": "not yet written or run",
+  "executed-pass": "executed in branch agentpal-p0-remediation or agentpal-owner-decisions; passes",
+  "executed-partial": "partly executed; the note says what is not covered",
+  "open-gap": "known, unresolved; NOT fixed in P0 (P1 work or owner decision)",
+  "documented-limitation": "executed; the current behaviour is pinned by a test and documented as a limitation (not fixed)"
+ },
+ "areas": {
+  "A": "Unit and schema",
+  "B": "Rule and policy",
+  "C": "Model quality",
+  "D": "Adversarial",
+  "E": "API and persistence",
+  "F": "Security",
+  "G": "Integration and regression",
+  "H": "Product-owner decisions (docs/OWNER_DECISIONS.md)"
+ },
+ "cases": [
+  {
+   "id": "A-01",
+   "area": "A",
+   "case": "Amount zero/negative/NaN/inf/bool/1e12/excess decimals",
+   "expected": "HTTP 422 / ValidationError",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_schema.py::test_bad_amounts_rejected"
+  },
+  {
+   "id": "A-02",
+   "area": "A",
+   "case": "Decimal precision per currency (JPY 0dp, USD 2dp)",
+   "expected": "Quantized or rejected",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_schema.py::test_zero_decimal_currency"
+  },
+  {
+   "id": "A-03",
+   "area": "A",
+   "case": "Currency normalization (case/whitespace) and unknown codes",
+   "expected": "Upper-cased; unknown -> 422",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_schema.py::test_invalid_fields_rejected"
+  },
+  {
+   "id": "A-04",
+   "area": "A",
+   "case": "Invalid/ambiguous domains (spaces, localhost, credentials, IP, IDN)",
+   "expected": "Rejected, or normalized and flagged",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_schema.py"
+  },
+  {
+   "id": "A-05",
+   "area": "A",
+   "case": "Trailing-dot, mixed-script and uppercase IDN domains",
+   "expected": "Normalized; mixed-script flagged",
+   "severity": "medium",
+   "status": "executed-partial",
+   "how_to_run": "tests/test_p0_6_normalization.py (trailing dot, case, mixed script, punycode homograph); uppercase IDN input not separately tested"
+  },
+  {
+   "id": "A-06",
+   "area": "A",
+   "case": "Naive vs aware timestamps; expires_at <= created_at",
+   "expected": "UTC assumed / 422",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_schema.py"
+  },
+  {
+   "id": "A-07",
+   "area": "A",
+   "case": "Agent created_at far past/future does not move duplicate/TTL windows",
+   "expected": "Server receive time governs",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_3_time.py::test_altered_client_timestamp_does_not_evade_duplicate_detection, ::test_repeated_requests_with_altered_timestamps_all_detected"
+  },
+  {
+   "id": "A-08",
+   "area": "A",
+   "case": "Missing expires_at gets default server TTL",
+   "expected": "Request expires after policy TTL",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_3_time.py::test_missing_expiry_gets_conservative_default_ttl"
+  },
+  {
+   "id": "A-09",
+   "area": "A",
+   "case": "Missing and contradictory fields (interval without recurring)",
+   "expected": "422",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_schema.py"
+  },
+  {
+   "id": "A-10",
+   "area": "A",
+   "case": "Unknown fields; >20 evidence items; oversize text",
+   "expected": "422",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_schema.py"
+  },
+  {
+   "id": "A-11",
+   "area": "A",
+   "case": "Body > limit with Content-Length",
+   "expected": "413",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_api.py::test_malformed_json_and_oversized_body"
+  },
+  {
+   "id": "A-12",
+   "area": "A",
+   "case": "Chunked body > limit without Content-Length",
+   "expected": "413 without buffering whole body",
+   "severity": "medium",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_7b_body_limit.py (endless stream unit test; chunked via TestClient; raw chunked request to real uvicorn)"
+  },
+  {
+   "id": "A-13",
+   "area": "A",
+   "case": "Invalid request_id/agent_id patterns",
+   "expected": "422",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_schema.py"
+  },
+  {
+   "id": "A-14",
+   "area": "A",
+   "case": "Malformed model output (empty, prose, broken JSON, array, out-of-range, bad enum, missing keys)",
+   "expected": "Fallback to heuristic; error recorded",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_orchestrator.py::test_malformed_model_output_rejected_and_falls_back"
+  },
+  {
+   "id": "A-15",
+   "area": "A",
+   "case": "Score band boundaries 24/25/49/50/74/75",
+   "expected": "Correct category and recommendation",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_orchestrator.py::test_score_bands_and_recommendation"
+  },
+  {
+   "id": "A-16",
+   "area": "A",
+   "case": "Ollama timeout / unreachable",
+   "expected": "Fallback",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_orchestrator.py::test_ollama_unreachable_falls_back"
+  },
+  {
+   "id": "A-17",
+   "area": "A",
+   "case": "llama.cpp inference exceeding timeout",
+   "expected": "Fallback within configured timeout",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_7a_timeout.py::test_llamacpp_inference_is_bounded_and_cooperatively_stopped (fake); real Qwen2.5-1.5B verified manually (see docs/P0_REMEDIATION_REPORT.md)"
+  },
+  {
+   "id": "B-18",
+   "area": "B",
+   "case": "Each hard rule independently (DUPLICATE_REQUEST_ID, CURRENCY_NOT_ALLOWED, AMOUNT_ABOVE_HARD_LIMIT, BUDGET_EXCEEDED, REQUEST_EXPIRED, BLOCKED_MERCHANT_DOMAIN)",
+   "expected": "block + code",
+   "severity": "critical",
+   "status": "existing",
+   "how_to_run": "tests/test_rules.py"
+  },
+  {
+   "id": "B-19",
+   "area": "B",
+   "case": "Multiple simultaneous hard violations",
+   "expected": "All codes listed; single block",
+   "severity": "high",
+   "status": "proposed",
+   "how_to_run": "new test_rules case"
+  },
+  {
+   "id": "B-20",
+   "area": "B",
+   "case": "Each risk-indicator rule independently",
+   "expected": "Code + evidence",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_rules.py (most codes)"
+  },
+  {
+   "id": "B-21",
+   "area": "B",
+   "case": "TIMESTAMP_IN_FUTURE, STALE_REQUEST, INCOMING_DIRECTION_LIMITED_SUPPORT individually",
+   "expected": "Code present",
+   "severity": "medium",
+   "status": "executed-partial",
+   "how_to_run": "TIMESTAMP_IN_FUTURE in tests/test_p0_3_time.py; STALE_REQUEST and INCOMING_DIRECTION_LIMITED_SUPPORT not individually tested"
+  },
+  {
+   "id": "B-22",
+   "area": "B",
+   "case": "Missing-information cap",
+   "expected": "Missing-only <= medium",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_api.py::test_missing_information_alone_is_not_high_risk"
+  },
+  {
+   "id": "B-23",
+   "area": "B",
+   "case": "Blocked domain (exact and subdomain)",
+   "expected": "Hard block",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_rules.py::test_blocked_domain"
+  },
+  {
+   "id": "B-24",
+   "area": "B",
+   "case": "Subdomain of approved domain under shared-hosting suffix",
+   "expected": "Not auto-approved (PSL-aware)",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_6_normalization.py::test_deceptive_subdomain_of_approved_domain_not_approved, ::test_registrable_domain_uses_public_suffix_list"
+  },
+  {
+   "id": "B-25",
+   "area": "B",
+   "case": "Allowed vs disallowed currency",
+   "expected": "Disallowed -> block",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_rules.py::test_currency_not_allowed_by_policy"
+  },
+  {
+   "id": "B-26",
+   "area": "B",
+   "case": "Budget boundary amount == remaining and remaining+0.01",
+   "expected": "allow / block",
+   "severity": "high",
+   "status": "proposed",
+   "how_to_run": "new test_rules case"
+  },
+  {
+   "id": "B-27",
+   "area": "B",
+   "case": "Budget omitted or agent-claimed budget larger than operator budget",
+   "expected": "Operator budget governs",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_2_spending.py::test_omitting_budget_field_does_not_disable_budget_control, ::test_falsely_high_budget_claim_is_ignored_and_flagged, ::test_unconfigured_agent_is_blocked_not_uncontrolled"
+  },
+  {
+   "id": "B-28",
+   "area": "B",
+   "case": "Cumulative per-agent spend over window (structuring)",
+   "expected": "Block or review",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_2_spending.py::test_three_near_limit_transactions_collectively_exceeding_hard_limit, ::test_rolling_window_cumulative_limit_across_merchants, ::test_splits_below_review_limit_are_flagged_for_review"
+  },
+  {
+   "id": "B-29",
+   "area": "B",
+   "case": "Currency-aware hard/review limits",
+   "expected": "Per-currency limits",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_5_currency.py (USD, GBP, JPY, CAD-unconfigured, CHF-disallowed, XXX-unsupported, precision)"
+  },
+  {
+   "id": "B-30",
+   "area": "B",
+   "case": "Rule determinism (same input twice)",
+   "expected": "Identical signals/order/score",
+   "severity": "medium",
+   "status": "proposed",
+   "how_to_run": "new property test"
+  },
+  {
+   "id": "B-31",
+   "area": "B",
+   "case": "Model cannot relax hard blocks (10k random analyzer outputs)",
+   "expected": "Final rec >= rules rec",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decision_9_adversarial.py::test_ten_thousand_random_model_outputs_respect_hard_rules_and_bounds (10,000 seeded outputs, 4 base requests)"
+  },
+  {
+   "id": "B-32",
+   "area": "B",
+   "case": "Model cannot block alone",
+   "expected": "No block without deterministic block",
+   "severity": "critical",
+   "status": "existing",
+   "how_to_run": "tests/test_orchestrator.py::test_model_can_escalate_to_review_but_not_block"
+  },
+  {
+   "id": "B-33",
+   "area": "B",
+   "case": "Model score delta within [-10,+25]",
+   "expected": "Bounded",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_orchestrator.py::test_model_downward_adjustment_is_bounded"
+  },
+  {
+   "id": "B-34",
+   "area": "B",
+   "case": "Model recommendation escalation tied to calibrated score (if adopted)",
+   "expected": "Low-score model require_review does not escalate",
+   "severity": "medium",
+   "status": "executed-pass",
+   "how_to_run": "Owner decision 9: model_escalation=score_only; tests/test_od_decisions_2_5_9.py::test_model_label_alone_does_not_escalate, ::test_model_escalates_through_bounded_score, ::test_label_escalation_can_be_enabled_explicitly"
+  },
+  {
+   "id": "B-35",
+   "area": "B",
+   "case": "Soft-indicator block policy (Q3)",
+   "expected": "Documented decision enforced",
+   "severity": "medium",
+   "status": "executed-pass",
+   "how_to_run": "Owner decision 2: soft signals never block; explicit combination_blocks only. tests/test_od_decisions_2_5_9.py"
+  },
+  {
+   "id": "C-36",
+   "area": "C",
+   "case": "Rules vs LR vs GBDT vs hybrid on identical rows, all slices",
+   "expected": "Paired CIs reported",
+   "severity": "high",
+   "status": "executed-partial",
+   "how_to_run": "Harness implemented (agentpal/benchmark.py) and run on the seed dev set only; no independent locked split exists"
+  },
+  {
+   "id": "C-37",
+   "area": "C",
+   "case": "Legitimate-request review rate",
+   "expected": "<= agreed review budget (Q1)",
+   "severity": "high",
+   "status": "executed-partial",
+   "how_to_run": "Legitimate-flagged rate with Wilson CI reported separately in evaluate and bench (owner decision 1). Validation split only; independent benchmark not built (docs/BENCHMARK_ANNOTATION_PROTOCOL.md)."
+  },
+  {
+   "id": "C-38",
+   "area": "C",
+   "case": "High-severity slice FNR",
+   "expected": "Not worse than rules-only (paired)",
+   "severity": "critical",
+   "status": "proposed",
+   "how_to_run": "make bench (proposed AgentPal-Bench)"
+  },
+  {
+   "id": "C-39",
+   "area": "C",
+   "case": "Calibration (reliability, ECE, Brier)",
+   "expected": "Reported; sigmoid calibration on disjoint data",
+   "severity": "medium",
+   "status": "proposed",
+   "how_to_run": "make bench (proposed AgentPal-Bench)"
+  },
+  {
+   "id": "C-40",
+   "area": "C",
+   "case": "Paraphrase / multilingual / unseen-merchant slices",
+   "expected": "Reported separately with CIs",
+   "severity": "high",
+   "status": "proposed",
+   "how_to_run": "make bench (proposed AgentPal-Bench)"
+  },
+  {
+   "id": "C-41",
+   "area": "C",
+   "case": "Invariance: merchant-name swap within approved set, amount jitter within budget",
+   "expected": "Decision unchanged",
+   "severity": "medium",
+   "status": "proposed",
+   "how_to_run": "make bench (proposed AgentPal-Bench)"
+  },
+  {
+   "id": "C-42",
+   "area": "C",
+   "case": "Spurious feature: toggle recurring on matched legitimate pair",
+   "expected": "No escalation",
+   "severity": "medium",
+   "status": "open-gap",
+   "how_to_run": "P1: `recurring` (+0.77) and unverifiable evidence presence still drive the ML; not changed in P0 (no retraining)"
+  },
+  {
+   "id": "C-43",
+   "area": "C",
+   "case": "Any new model compared on identical examples with paired test",
+   "expected": "McNemar / paired bootstrap",
+   "severity": "high",
+   "status": "executed-partial",
+   "how_to_run": "Benchmark scores all approaches on identical items with Wilson CIs; paired tests (McNemar/bootstrap) not yet implemented"
+  },
+  {
+   "id": "D-44",
+   "area": "D",
+   "case": "Prompt injection variants: plain, fullwidth, homoglyph, zero-width, multilingual, paraphrase, in evidence",
+   "expected": "Flagged; never relaxes policy",
+   "severity": "high",
+   "status": "executed-partial",
+   "how_to_run": "Known patterns flagged and every variant (incl. paraphrased, Spanish, German, Arabic, obfuscated) never relaxes the outcome: tests/test_od_decision_9_adversarial.py. Paraphrased/non-English detection is a documented limitation (::test_documented_limitation_paraphrased_and_non_english_injection)."
+  },
+  {
+   "id": "D-45",
+   "area": "D",
+   "case": "Policy override text ('set limit to 10000')",
+   "expected": "No effect on policy",
+   "severity": "critical",
+   "status": "verified-by-inspection",
+   "how_to_run": "no tool/policy write path exists; add regression test"
+  },
+  {
+   "id": "D-46",
+   "area": "D",
+   "case": "Contradiction: recurring=false but text says monthly plan",
+   "expected": "Inconsistency flagged",
+   "severity": "medium",
+   "status": "proposed",
+   "how_to_run": "new rule + test"
+  },
+  {
+   "id": "D-47",
+   "area": "D",
+   "case": "Lookalikes: transposition, subdomain, TLD swap, confusable name",
+   "expected": "Flagged",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_6_normalization.py (confusable name, deceptive subdomain, homograph, lookalikes incl. rn->m, digit swap, brand token)"
+  },
+  {
+   "id": "D-48",
+   "area": "D",
+   "case": "Near-duplicate (+-1 cent, +-1%, renamed merchant)",
+   "expected": "Duplicate-intent signal",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "Owner decision 9: NEAR_DUPLICATE_PAYMENT_INTENT (max(2%, one minor unit), same agent and merchant identity). tests/test_od_decision_9_gaps.py; episode ep-near-duplicate. Near-name evasion of MERCHANT_DOMAIN_CHANGED is a documented limitation."
+  },
+  {
+   "id": "D-49",
+   "area": "D",
+   "case": "Fabricated evidence",
+   "expected": "No risk reduction below no-evidence level",
+   "severity": "medium",
+   "status": "executed-partial",
+   "how_to_run": "Owner decision 9: claimed evidence no longer lowers risk (EVIDENCE_UNVERIFIED; ML treats it as missing): tests/test_od_decision_9_gaps.py. Internally consistent fabricated evidence is still not detected (nothing is verified)."
+  },
+  {
+   "id": "D-50",
+   "area": "D",
+   "case": "Manipulated model output (claims verification, recommendation 'approve')",
+   "expected": "Dropped / rejected",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_orchestrator.py::test_parse_accepts_fenced_json_and_drops_unverifiable_claims"
+  },
+  {
+   "id": "D-51",
+   "area": "D",
+   "case": "Extremely long / control chars / deeply nested JSON",
+   "expected": "413/422, never 500",
+   "severity": "medium",
+   "status": "proposed",
+   "how_to_run": "new API fuzz test"
+  },
+  {
+   "id": "D-52",
+   "area": "D",
+   "case": "History poisoning across agents",
+   "expected": "No cross-agent trust transfer",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_4_trust.py::test_verified_completed_payment_establishes_trust_for_that_agent_only, ::test_allow_recommendation_alone_does_not_make_merchant_known"
+  },
+  {
+   "id": "D-53",
+   "area": "D",
+   "case": "Baseline inflation with flagged requests",
+   "expected": "Flagged rows excluded from baseline",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_4_trust.py::test_flagged_and_unverified_requests_do_not_inflate_spend_baseline"
+  },
+  {
+   "id": "E-54",
+   "area": "E",
+   "case": "Status codes and response schemas (200/404/413/422/500)",
+   "expected": "As documented",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_api.py"
+  },
+  {
+   "id": "E-55",
+   "area": "E",
+   "case": "Unknown assessment id",
+   "expected": "404",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_api.py::test_get_unknown_and_invalid_ids"
+  },
+  {
+   "id": "E-56",
+   "area": "E",
+   "case": "Sequential duplicate request_id",
+   "expected": "block + original kept",
+   "severity": "critical",
+   "status": "existing",
+   "how_to_run": "tests/test_api.py::test_replayed_request_id_is_blocked_and_original_kept"
+  },
+  {
+   "id": "E-57",
+   "area": "E",
+   "case": "Concurrent identical request_id (N=8..64)",
+   "expected": "Exactly one assessed",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_1_replay.py (8 threads, 8 spawn processes, 2 real uvicorn workers)"
+  },
+  {
+   "id": "E-58",
+   "area": "E",
+   "case": "Persistence across process restart (file DB)",
+   "expected": "History and assessments survive",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_1_replay.py::test_duplicates_rejected_after_restart"
+  },
+  {
+   "id": "E-59",
+   "area": "E",
+   "case": "SQLite integrity under concurrent writes",
+   "expected": "No lost/partial rows",
+   "severity": "high",
+   "status": "executed-partial",
+   "how_to_run": "Concurrent writes on a file DB covered by tests/test_p0_1_replay.py and test_p0_2_spending.py::test_concurrent_requests_cannot_overspend_remaining_budget; no fault-injection test Fresh-database multi-process startup race (journal-mode switch) fixed and covered by tests/test_p0_1_replay.py::test_concurrent_first_open_of_a_fresh_database."
+  },
+  {
+   "id": "E-60",
+   "area": "E",
+   "case": "Storage unavailable (read-only/disk full)",
+   "expected": "503, fail closed",
+   "severity": "high",
+   "status": "proposed",
+   "how_to_run": "new test"
+  },
+  {
+   "id": "E-61",
+   "area": "E",
+   "case": "422 rejections audited without raw input",
+   "expected": "Audit row present",
+   "severity": "medium",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_7c_rejection_audit.py"
+  },
+  {
+   "id": "E-62",
+   "area": "E",
+   "case": "Assessment never presented as payment outcome",
+   "expected": "payment_executed false; wording",
+   "severity": "critical",
+   "status": "existing",
+   "how_to_run": "tests/test_api.py"
+  },
+  {
+   "id": "F-63",
+   "area": "F",
+   "case": "Secrets/tokens/card numbers in logs, responses, DB",
+   "expected": "Redacted",
+   "severity": "critical",
+   "status": "existing",
+   "how_to_run": "tests/test_api.py::test_audit_does_not_store_secrets (add fuzzing)"
+  },
+  {
+   "id": "F-64",
+   "area": "F",
+   "case": "No unsafe deserialization",
+   "expected": "No pickle/yaml.load/eval",
+   "severity": "high",
+   "status": "verified-by-inspection",
+   "how_to_run": "grep; add bandit gate"
+  },
+  {
+   "id": "F-65",
+   "area": "F",
+   "case": "No command injection / path traversal via ids",
+   "expected": "Ids never used as paths/commands",
+   "severity": "medium",
+   "status": "verified-by-inspection",
+   "how_to_run": "code inspection; add regression test"
+  },
+  {
+   "id": "F-66",
+   "area": "F",
+   "case": "No outbound request to user-controlled URL",
+   "expected": "merchant_domain never fetched",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_6_normalization.py::test_assessment_never_opens_network_connections"
+  },
+  {
+   "id": "F-67",
+   "area": "F",
+   "case": "AuthN/AuthZ documented for exposed deployment; BOLA on /assessments/{id}",
+   "expected": "Documented requirement + tests in Phase 2",
+   "severity": "critical",
+   "status": "proposed",
+   "how_to_run": "Mitigated for now by owner decision 10 (loopback-only bind and peer check; tests/test_od_decision_10.py). AuthN/AuthZ not implemented."
+  },
+  {
+   "id": "F-68",
+   "area": "F",
+   "case": "Rate limiting / resource consumption (LLM concurrency)",
+   "expected": "Per-agent quotas",
+   "severity": "high",
+   "status": "proposed",
+   "how_to_run": "Mitigated for now by owner decision 10 (loopback only). Rate limiting not implemented."
+  },
+  {
+   "id": "F-69",
+   "area": "F",
+   "case": "Model artifact integrity",
+   "expected": "SHA-256 pinned; mismatch refused",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_7d_integrity.py"
+  },
+  {
+   "id": "G-70",
+   "area": "G",
+   "case": "Full request->assessment->persist->GET",
+   "expected": "Consistent",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_api.py"
+  },
+  {
+   "id": "G-71",
+   "area": "G",
+   "case": "Each backend + every fallback path",
+   "expected": "Correct model trace",
+   "severity": "high",
+   "status": "existing",
+   "how_to_run": "tests/test_orchestrator.py (mocked)"
+  },
+  {
+   "id": "G-72",
+   "area": "G",
+   "case": "History isolation legitimate vs flagged",
+   "expected": "Flagged rows never trusted",
+   "severity": "critical",
+   "status": "existing",
+   "how_to_run": "tests/test_api.py::test_flagged_request_does_not_poison_merchant_history (partial; see P07/P08)"
+  },
+  {
+   "id": "G-73",
+   "area": "G",
+   "case": "Reproducible dataset / training / evaluation",
+   "expected": "Identical hashes and metrics",
+   "severity": "medium",
+   "status": "existing",
+   "how_to_run": "tests/test_dataset_eval.py"
+  },
+  {
+   "id": "G-74",
+   "area": "G",
+   "case": "Regression test per fixed bug and per probe P01-P17",
+   "expected": "Secure expectation asserted",
+   "severity": "critical",
+   "status": "executed-partial",
+   "how_to_run": "Regression tests for P01-P12 (P0), P04/P13/P14 (owner decisions), plus adversarial and multi-request suites. Probes needing an independent benchmark (paraphrase recall) remain open."
+  },
+  {
+   "id": "H-01",
+   "area": "H",
+   "case": "Missed-risky, legitimate-flagged, review/block/degraded rates and latency reported separately",
+   "expected": "separate fields with Wilson CIs",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_p0_8_evaluation.py::test_operational_metrics_report_misses_false_positives_and_rates_separately; python -m agentpal evaluate --split validation"
+  },
+  {
+   "id": "H-02",
+   "area": "H",
+   "case": "Only deterministic violations block; soft signals review; explicit enabled combination blocks only",
+   "expected": "block iff hard violation or enabled combination",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decisions_2_5_9.py"
+  },
+  {
+   "id": "H-03",
+   "area": "H",
+   "case": "Time policy 60 min / 48 h / 10 min / 24 h exact boundaries on server time",
+   "expected": "as documented in OWNER_DECISIONS.md section 3",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decision_3.py"
+  },
+  {
+   "id": "H-04",
+   "area": "H",
+   "case": "Operator-only per-currency budgets; separated reserved/approved/attempted/completed/failed; unverified never completed",
+   "expected": "exact decimals per state",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decisions_4_6.py; tests/test_p0_2_spending.py; tests/test_p0_5_currency.py"
+  },
+  {
+   "id": "H-05",
+   "area": "H",
+   "case": "Model timeout/failure -> rules, degraded, review on material risk",
+   "expected": "degraded=true, require_review when rule score >= 1",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decisions_2_5_9.py; tests/test_p0_7a_timeout.py"
+  },
+  {
+   "id": "H-06",
+   "area": "H",
+   "case": "Approval holds 15 min; expired/cancelled holds released; concurrent approvals within budget; approval != attempt != completion",
+   "expected": "hold released with approval_expired; no overspend",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decisions_4_6.py; tests/test_od_multi_request_episodes.py"
+  },
+  {
+   "id": "H-07",
+   "area": "H",
+   "case": "Integrity required; unpinned disabled; read-only storage; hash-while-copy staged load; warm-up",
+   "expected": "backend unavailable unless all hold; loaded bytes == pinned digest",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decision_7.py; tests/test_p0_7d_integrity.py"
+  },
+  {
+   "id": "H-08",
+   "area": "H",
+   "case": "Merchant history isolated per agent and owner; explicit owner sharing of verified outcomes only",
+   "expected": "approval/allow_for_review never trust",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decision_8.py; tests/test_p0_4_trust.py"
+  },
+  {
+   "id": "H-09",
+   "area": "H",
+   "case": "Adversarial: injection invariance, 10k random model outputs, agent-field manipulation, multi-request episodes",
+   "expected": "never relaxes; never blocks alone; bounds held",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decision_9_adversarial.py; tests/test_od_multi_request_episodes.py"
+  },
+  {
+   "id": "H-10",
+   "area": "H",
+   "case": "API bound to loopback; non-loopback peers 403 and audited",
+   "expected": "serve refuses non-loopback hosts",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decision_10.py"
+  },
+  {
+   "id": "H-11",
+   "area": "H",
+   "case": "Final F1: degraded with zero rule points is never presented as safe; threshold 0 forces review",
+   "expected": "degraded flag, uncertainty signal, explanation; configurable",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decisions_2_5_9.py"
+  },
+  {
+   "id": "H-12",
+   "area": "H",
+   "case": "Final F3: near-duplicate rounding, inclusive boundaries, minor-unit floor, JPY, window boundary, currency separation, concurrency",
+   "expected": "review, never block",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_final_3_near_duplicate.py"
+  },
+  {
+   "id": "H-13",
+   "area": "H",
+   "case": "Final F4: default budgets only in a demo-labelled configuration; demo default always reviews; unlisted agents rejected otherwise",
+   "expected": "validator + DEMO_DEFAULT_BUDGET_APPLIED / NO_SPENDING_POLICY",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_final_4_demo_budgets.py"
+  },
+  {
+   "id": "H-14",
+   "area": "H",
+   "case": "Final F5: approval and payment attempt bound to exact request, agent, amount, currency, recipient, purpose",
+   "expected": "ApprovalTermsMismatch; state unchanged",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_final_5_approval_binding.py"
+  },
+  {
+   "id": "H-15",
+   "area": "H",
+   "case": "Final F6: sharing never raises another agent's budget or replaces its checks",
+   "expected": "identical limits and hard violations with sharing on/off",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decision_8.py::test_sharing_never_raises_another_agents_budget_or_replaces_its_checks"
+  },
+  {
+   "id": "H-16",
+   "area": "H",
+   "case": "Final F8: forwarded headers never establish client identity",
+   "expected": "403 for remote peer with forged headers; serve proxy_headers=False",
+   "severity": "critical",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_decision_10.py"
+  },
+  {
+   "id": "H-17",
+   "area": "H",
+   "case": "Final F9: real ML artifact is advisory only on every example and seed case",
+   "expected": "never blocks, unblocks or relaxes",
+   "severity": "high",
+   "status": "executed-pass",
+   "how_to_run": "tests/test_od_final_9_ml_advisory.py (skipped without the git-ignored artifact)"
+  }
+ ],
+ "p0_regression_suites": {
+  "tests/test_p0_1_replay.py": 6,
+  "tests/test_p0_2_spending.py": 18,
+  "tests/test_p0_3_time.py": 14,
+  "tests/test_p0_4_trust.py": 9,
+  "tests/test_p0_5_currency.py": 12,
+  "tests/test_p0_6_normalization.py": 34,
+  "tests/test_p0_7a_timeout.py": 6,
+  "tests/test_p0_7b_body_limit.py": 9,
+  "tests/test_p0_7c_rejection_audit.py": 6,
+  "tests/test_p0_7d_integrity.py": 11,
+  "tests/test_p0_8_evaluation.py": 8
+ },
+ "suite_result": {
+  "date": "2026-10-29",
+  "branch": "agentpal-owner-decisions",
+  "collected": 577,
+  "passed": 577,
+  "command": "python -m pytest -o addopts='' -q -p no:cacheprovider (3 consecutive runs)"
+ },
+ "owner_decision_suites": {
+  "tests/test_od_decision_10.py": 18,
+  "tests/test_od_decision_3.py": 12,
+  "tests/test_od_decision_7.py": 9,
+  "tests/test_od_decision_8.py": 5,
+  "tests/test_od_decision_9_adversarial.py": 160,
+  "tests/test_od_decision_9_gaps.py": 16,
+  "tests/test_od_decisions_2_5_9.py": 26,
+  "tests/test_od_decisions_4_6.py": 9,
+  "tests/test_od_final_3_near_duplicate.py": 19,
+  "tests/test_od_final_4_demo_budgets.py": 5,
+  "tests/test_od_final_5_approval_binding.py": 18,
+  "tests/test_od_final_9_ml_advisory.py": 25,
+  "tests/test_od_multi_request_episodes.py": 14
+ }
+}

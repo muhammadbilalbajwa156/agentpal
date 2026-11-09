@@ -1,0 +1,3215 @@
+{
+  "auth": {
+    "bearer": [
+      {
+        "key": "token",
+        "type": "string",
+        "value": "{{agent_a_key}}"
+      }
+    ],
+    "type": "bearer"
+  },
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+          "pm.test('error body never echoes credentials', function () {",
+          "  if (pm.response.code >= 400) {",
+          "    ['agent_a_key', 'agent_b_key', 'owner_key', 'invalid_key'].forEach(function (key) {",
+          "      const value = pm.collectionVariables.get(key);",
+          "      if (value) { pm.expect(pm.response.text()).not.to.include(value); }",
+          "    });",
+          "  }",
+          "});"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "info": {
+    "_postman_id": "c8f52f4e-fb8a-53b9-8310-3efcf97adaa4",
+    "description": "IMPLEMENTED — TESTED: legacy security scenarios. V1 scenarios are DESIGN ONLY until verified with WS1/WS2 wiring. OpenAPI examples are documentation; select the security folder to run assertions. No real money.",
+    "name": "AgentPal v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "description": "Generated documentation examples. Security scenarios run separately.",
+      "id": "0924847c-9bca-502e-9bb5-07b2fc102481",
+      "item": [
+        {
+          "id": "a6a3e5b4-e392-57b7-9c2e-065e876b2111",
+          "name": "POST /assess",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"agent_id\": \"example\",\n  \"amount\": 1,\n  \"currency\": \"example\",\n  \"merchant_name\": \"example\",\n  \"purpose\": \"example\",\n  \"request_id\": \"example\"\n}\n"
+            },
+            "description": "Assess Endpoint",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assess"
+              ],
+              "raw": "{{base_url}}/assess"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "22116d82-6f40-5134-b0e1-212c538139f5",
+          "name": "GET /assessments/{request_id}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Get Assessment",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "assessments",
+                "{{request_id}}"
+              ],
+              "raw": "{{base_url}}/assessments/{{request_id}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "308b02a7-899a-5732-90f9-86950291f820",
+          "name": "GET /health",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Health",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ],
+              "raw": "{{base_url}}/health"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "312cfd8c-8b77-581c-b84e-2684e7a4e0aa",
+          "name": "GET /model-info",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Model Info",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "model-info"
+              ],
+              "raw": "{{base_url}}/model-info"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "5ce55766-ba7f-5ef4-9a33-40516bc54d61",
+          "name": "GET /v1/agents",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "List Agents",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents"
+              ],
+              "raw": "{{base_url}}/v1/agents"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "a8d28e25-c266-5c7f-96c3-2ab437c23138",
+          "name": "POST /v1/agents",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"description\": \"Buys SaaS seats for the team\",\n  \"metadata\": {\n    \"framework\": \"claude\"\n  },\n  \"name\": \"procurement-bot\",\n  \"role\": \"external\"\n}\n"
+            },
+            "description": "Register Agent",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents"
+              ],
+              "raw": "{{base_url}}/v1/agents"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "f45708a7-1f58-5ee2-a249-497187dd54cf",
+          "name": "GET /v1/agents/{agent_id}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Get Agent",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents",
+                "{{agent_id}}"
+              ],
+              "raw": "{{base_url}}/v1/agents/{{agent_id}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "e6f66cae-c1ad-5415-8c1e-29a481ad70f2",
+          "name": "POST /v1/agents/{agent_id}/credentials",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"overlap_seconds\": 3600\n}\n"
+            },
+            "description": "Rotate Credential",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents",
+                "{{agent_id}}",
+                "credentials"
+              ],
+              "raw": "{{base_url}}/v1/agents/{{agent_id}}/credentials"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "89898fd1-0822-5622-b2c4-a66024870293",
+          "name": "DELETE /v1/agents/{agent_id}/credentials/{key_id}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Revoke Credential",
+            "header": [],
+            "method": "DELETE",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents",
+                "{{agent_id}}",
+                "credentials",
+                "{{key_id}}"
+              ],
+              "raw": "{{base_url}}/v1/agents/{{agent_id}}/credentials/{{key_id}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "131f460f-10f9-5466-a354-ed5c9856b45c",
+          "name": "GET /v1/agents/{agent_id}/permissions",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Get Permissions",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents",
+                "{{agent_id}}",
+                "permissions"
+              ],
+              "raw": "{{base_url}}/v1/agents/{{agent_id}}/permissions"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "88a6f162-4272-5699-b788-3059bd82eaf2",
+          "name": "PUT /v1/agents/{agent_id}/permissions",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"capabilities\": [\n    \"wallet.read\",\n    \"payment.prepare\",\n    \"owner.request_decision\",\n    \"payment.execute_sandbox\"\n  ]\n}\n"
+            },
+            "description": "Set Permissions",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents",
+                "{{agent_id}}",
+                "permissions"
+              ],
+              "raw": "{{base_url}}/v1/agents/{{agent_id}}/permissions"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "50f54799-baca-5824-8d57-7a42112afb05",
+          "name": "POST /v1/agents/{agent_id}/reactivate",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Reactivate Agent",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents",
+                "{{agent_id}}",
+                "reactivate"
+              ],
+              "raw": "{{base_url}}/v1/agents/{{agent_id}}/reactivate"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "9bd5d83c-594c-50be-8916-efc3b79412be",
+          "name": "POST /v1/agents/{agent_id}/suspend",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Suspend Agent",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents",
+                "{{agent_id}}",
+                "suspend"
+              ],
+              "raw": "{{base_url}}/v1/agents/{{agent_id}}/suspend"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "75fe1d1f-bdd8-5861-9482-34c9abba5401",
+          "name": "GET /v1/approvals",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "List Approvals",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "approvals"
+              ],
+              "raw": "{{base_url}}/v1/approvals"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "17ca2b87-3eca-5063-9f13-90eb9681e325",
+          "name": "GET /v1/disputes",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "List Disputes",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "disputes"
+              ],
+              "raw": "{{base_url}}/v1/disputes"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "2bdb8f57-d0f8-579d-bf9c-564ec06b33aa",
+          "name": "GET /v1/health",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "V1 Health",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "health"
+              ],
+              "raw": "{{base_url}}/v1/health"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "f5159866-42cc-54d7-85be-8273874c6090",
+          "name": "GET /v1/integrations",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "List Integrations",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "integrations"
+              ],
+              "raw": "{{base_url}}/v1/integrations"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "22bb3d1a-5011-5beb-97b6-22fa27f54f3d",
+          "name": "DELETE /v1/integrations/{provider}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Delete Integration",
+            "header": [],
+            "method": "DELETE",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "integrations",
+                "{{provider}}"
+              ],
+              "raw": "{{base_url}}/v1/integrations/{{provider}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "41dfc4b6-ab6b-594c-b922-dfafaa2df424",
+          "name": "PUT /v1/integrations/{provider}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"fields\": {}\n}\n"
+            },
+            "description": "Put Integration",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "integrations",
+                "{{provider}}"
+              ],
+              "raw": "{{base_url}}/v1/integrations/{{provider}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "f6b542bd-ea5b-58cc-b730-b0782b03d0a5",
+          "name": "POST /v1/integrations/{provider}/verify",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Verify Integration",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "integrations",
+                "{{provider}}",
+                "verify"
+              ],
+              "raw": "{{base_url}}/v1/integrations/{{provider}}/verify"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "2a2a361f-2e12-545d-95fc-c72ab866e610",
+          "name": "POST /v1/lab/agent",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Lab Agent",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "lab",
+                "agent"
+              ],
+              "raw": "{{base_url}}/v1/lab/agent"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "f8137240-050e-5256-bfe1-4b4639069ce1",
+          "name": "POST /v1/lab/errands",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"task\": \"example\"\n}\n"
+            },
+            "description": "Lab Errand",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "lab",
+                "errands"
+              ],
+              "raw": "{{base_url}}/v1/lab/errands"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "22e553be-887e-51f5-9137-77c5f2ce7382",
+          "name": "POST /v1/lab/payment-requests",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"amount\": \"49.99\",\n  \"currency\": \"USD\",\n  \"merchant_domain\": \"example.com\",\n  \"merchant_name\": \"Example Hosting\",\n  \"purpose\": \"Monthly hosting plan\"\n}\n"
+            },
+            "description": "Lab Payment",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "lab",
+                "payment-requests"
+              ],
+              "raw": "{{base_url}}/v1/lab/payment-requests"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "8922245c-d918-5ab1-bc69-1ef7e1d13b7f",
+          "name": "POST /v1/lab/payment-requests/{request_id}/execute",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Lab Execute",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "lab",
+                "payment-requests",
+                "{{request_id}}",
+                "execute"
+              ],
+              "raw": "{{base_url}}/v1/lab/payment-requests/{{request_id}}/execute"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "5c24db28-3099-5f30-a356-fba6db705bd3",
+          "name": "GET /v1/me",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Get Me",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "me"
+              ],
+              "raw": "{{base_url}}/v1/me"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "6ba6404a-41b2-593b-b589-531e98914e19",
+          "name": "GET /v1/me/wallet",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "My Wallet",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "me",
+                "wallet"
+              ],
+              "raw": "{{base_url}}/v1/me/wallet"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "82e40b4e-7a50-56e8-94c6-8b22dbd2e4a3",
+          "name": "GET /v1/me/wallet/transactions",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "My Transactions",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "me",
+                "wallet",
+                "transactions"
+              ],
+              "raw": "{{base_url}}/v1/me/wallet/transactions"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "5be1ef7e-7177-5d58-b649-fb4e7353ea69",
+          "name": "GET /v1/payment-requests",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "List Payments",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "975447fa-6ce9-59a4-b65c-62b69a7043ae",
+          "name": "POST /v1/payment-requests",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"amount\": \"49.99\",\n  \"currency\": \"USD\",\n  \"merchant_domain\": \"example.com\",\n  \"merchant_name\": \"Example Hosting\",\n  \"purpose\": \"Monthly hosting plan\"\n}\n"
+            },
+            "description": "Create Payment",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "example"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "3430c4d4-a453-52cd-99c7-1669e0e719e3",
+          "name": "GET /v1/payment-requests/{request_id}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Get Payment",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "a832464c-0c54-58fd-ad6a-93bc1c5f909a",
+          "name": "POST /v1/payment-requests/{request_id}/approve",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"terms_sha256\": \"0000000000000000000000000000000000000000000000000000000000000000\"\n}\n"
+            },
+            "description": "Approve Payment",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "approve"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/approve"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "862bccc3-6e03-529e-9b71-e023b970ada4",
+          "name": "POST /v1/payment-requests/{request_id}/capture",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Capture only after an authenticated provider read verifies exact payer approval.",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "capture"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/capture"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "7011bd63-1a53-5c2b-8933-799763c28d5f",
+          "name": "POST /v1/payment-requests/{request_id}/execute",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Execute Payment",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "execute"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/execute"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "bb2a37f5-cdd2-54a8-8f95-e861091164c2",
+          "name": "POST /v1/payment-requests/{request_id}/market-check",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Owner-only: refresh the Channel3 market check with live offers before approving\n(Channel3's product endpoint is free). Advisory only; changes no payment state.",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "market-check"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/market-check"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "c46f0eae-a4aa-59e6-b349-88c0475f1e92",
+          "name": "POST /v1/payment-requests/{request_id}/page-check",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{}\n"
+            },
+            "description": "Owner-only read-only merchant evidence; changes no payment state.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "page-check"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/page-check"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "c718213e-2c73-530e-b080-f52122bc7a4a",
+          "name": "GET /v1/payment-requests/{request_id}/reconciliation",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Reconciliation",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "reconciliation"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/reconciliation"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "29ad7130-9a31-5716-bbaf-8985d808afa8",
+          "name": "POST /v1/payment-requests/{request_id}/reconciliation",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Refresh from a verified provider read; GET remains a local status read.",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "reconciliation"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/reconciliation"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "2eed0d68-ed68-5dd1-abc1-415879ba0e26",
+          "name": "GET /v1/payment-requests/{request_id}/refunds",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "List Refunds",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "refunds"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/refunds"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "ae0dd776-4cdf-5f9e-bc8f-23086e43079d",
+          "name": "POST /v1/payment-requests/{request_id}/refunds",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{}\n"
+            },
+            "description": "Refund Payment",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "example"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "refunds"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/refunds"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "a088a1b0-97c8-5243-80dd-db4de0180ba2",
+          "name": "POST /v1/payment-requests/{request_id}/refunds/reconciliation",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Reconcile Refunds",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "refunds",
+                "reconciliation"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/refunds/reconciliation"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "76fe10c9-5c6c-59c8-b56d-eb0d77a29ffc",
+          "name": "POST /v1/payment-requests/{request_id}/reject",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Reject Payment",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "reject"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/reject"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "ff6535a6-e11d-583c-8647-1a7e3d2031c8",
+          "name": "POST /v1/payment-requests/{request_id}/request-decision",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Request Decision",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "request-decision"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/request-decision"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "99142bf9-eff0-5a8a-9adf-24cc47efa3b1",
+          "name": "GET /v1/payment-requests/{request_id}/timeline",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Payment Timeline",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "timeline"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/timeline"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "61abb62c-40ba-5316-87e8-4aec1c6bea9d",
+          "name": "GET /v1/payout-requests",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "List Payouts",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payout-requests"
+              ],
+              "raw": "{{base_url}}/v1/payout-requests"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "3c823735-ec91-5a0d-81d2-d2095d87ac87",
+          "name": "POST /v1/payout-requests",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"amount\": \"49.99\",\n  \"currency\": \"USD\",\n  \"purpose\": \"example\",\n  \"receiver_email\": \"example\"\n}\n"
+            },
+            "description": "Create Payout",
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "example"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payout-requests"
+              ],
+              "raw": "{{base_url}}/v1/payout-requests"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "f768d1d1-134d-5675-a43c-458ceb3fa6b0",
+          "name": "GET /v1/payout-requests/{request_id}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Get Payout",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payout-requests",
+                "{{request_id}}"
+              ],
+              "raw": "{{base_url}}/v1/payout-requests/{{request_id}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "ec414a5c-31d7-5c84-aac5-a24cb1af8408",
+          "name": "POST /v1/payout-requests/{request_id}/approve",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"terms_sha256\": \"0000000000000000000000000000000000000000000000000000000000000000\"\n}\n"
+            },
+            "description": "Approve Payout",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payout-requests",
+                "{{request_id}}",
+                "approve"
+              ],
+              "raw": "{{base_url}}/v1/payout-requests/{{request_id}}/approve"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "614dc94e-720f-580d-bb06-561b6fc9f2dd",
+          "name": "POST /v1/payout-requests/{request_id}/execute",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Execute Payout",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payout-requests",
+                "{{request_id}}",
+                "execute"
+              ],
+              "raw": "{{base_url}}/v1/payout-requests/{{request_id}}/execute"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "58d5a893-47af-581c-9b3e-0940b329fc3e",
+          "name": "POST /v1/payout-requests/{request_id}/reconciliation",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Reconcile Payout",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payout-requests",
+                "{{request_id}}",
+                "reconciliation"
+              ],
+              "raw": "{{base_url}}/v1/payout-requests/{{request_id}}/reconciliation"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "a84b15e3-b667-5813-a046-31366d9bf5d4",
+          "name": "POST /v1/payout-requests/{request_id}/reject",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Reject Payout",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payout-requests",
+                "{{request_id}}",
+                "reject"
+              ],
+              "raw": "{{base_url}}/v1/payout-requests/{{request_id}}/reject"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "459da610-a916-5210-8a2c-0fcccbbcc00f",
+          "name": "GET /v1/payout-requests/{request_id}/timeline",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Payout Timeline",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payout-requests",
+                "{{request_id}}",
+                "timeline"
+              ],
+              "raw": "{{base_url}}/v1/payout-requests/{{request_id}}/timeline"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "08ebd2e8-6f6c-58d4-8a8e-248ebca964cf",
+          "name": "GET /v1/paypal/reconciliation",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Reconcile With Paypal",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "paypal",
+                "reconciliation"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "end",
+                  "value": "example"
+                },
+                {
+                  "disabled": false,
+                  "key": "start",
+                  "value": "example"
+                }
+              ],
+              "raw": "{{base_url}}/v1/paypal/reconciliation?end=example&start=example"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "92b43edf-782c-5a2c-8da1-9279f22c8c1c",
+          "name": "POST /v1/providers/paypal/webhooks",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{}\n"
+            },
+            "description": "Signature-verified by the injected PaymentProvider. Never trusted unverified:\nonly a verified event from the configured sandbox provider reaches the sink.",
+            "header": [
+              {
+                "key": "PAYPAL-AUTH-ALGO",
+                "value": "example"
+              },
+              {
+                "key": "PAYPAL-CERT-URL",
+                "value": "example"
+              },
+              {
+                "key": "PAYPAL-TRANSMISSION-ID",
+                "value": "example"
+              },
+              {
+                "key": "PAYPAL-TRANSMISSION-SIG",
+                "value": "example"
+              },
+              {
+                "key": "PAYPAL-TRANSMISSION-TIME",
+                "value": "example"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "providers",
+                "paypal",
+                "webhooks"
+              ],
+              "raw": "{{base_url}}/v1/providers/paypal/webhooks"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "32af8bc0-085a-557a-a574-d0d154ea39ed",
+          "name": "POST /v1/research/browse",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"url\": \"example\"\n}\n"
+            },
+            "description": "Governed browser visit: requires a registry grant for research.fetch.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "research",
+                "browse"
+              ],
+              "raw": "{{base_url}}/v1/research/browse"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "386250b0-7c73-5350-980a-da00fbf0d4eb",
+          "name": "POST /v1/setup/owner",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"code\": \"example\",\n  \"display_name\": \"example\",\n  \"owner_id\": \"example\"\n}\n"
+            },
+            "description": "Setup Owner",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "setup",
+                "owner"
+              ],
+              "raw": "{{base_url}}/v1/setup/owner"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "4fa5e93b-a68f-5ecc-a8ca-ca51a3322d63",
+          "name": "GET /v1/setup/status",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Setup Status",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "setup",
+                "status"
+              ],
+              "raw": "{{base_url}}/v1/setup/status"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "8c5c1610-5ccc-519d-b428-e71c1503e218",
+          "name": "GET /v1/wallets",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "List Wallets",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "wallets"
+              ],
+              "raw": "{{base_url}}/v1/wallets"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "c8d13803-ba1c-5039-8fe1-108e27d40d8a",
+          "name": "POST /v1/wallets",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"agent_id\": \"agt_0123456789abcdef0123456789abcdef\",\n  \"currency\": \"USD\",\n  \"monthly_budget\": \"100.00\",\n  \"per_transaction_limit\": \"50.00\"\n}\n"
+            },
+            "description": "Create Wallet",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "wallets"
+              ],
+              "raw": "{{base_url}}/v1/wallets"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "e4ce4914-b0a6-5684-bd4f-5239d4188e40",
+          "name": "GET /v1/wallets/{wallet_id}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Get Wallet",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "wallets",
+                "{{wallet_id}}"
+              ],
+              "raw": "{{base_url}}/v1/wallets/{{wallet_id}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "2c1fd8e6-6a68-5779-b897-ea5383ec7383",
+          "name": "PATCH /v1/wallets/{wallet_id}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"monthly_budget\": \"250.00\"\n}\n"
+            },
+            "description": "Update Wallet",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "wallets",
+                "{{wallet_id}}"
+              ],
+              "raw": "{{base_url}}/v1/wallets/{{wallet_id}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "579318dd-658d-5758-b6e7-8a1a1f8f4ab1",
+          "name": "POST /v1/wallets/{wallet_id}/freeze",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Freeze Wallet",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "wallets",
+                "{{wallet_id}}",
+                "freeze"
+              ],
+              "raw": "{{base_url}}/v1/wallets/{{wallet_id}}/freeze"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "17ec525d-17c8-539f-9cf8-61d8d9c07079",
+          "name": "GET /v1/wallets/{wallet_id}/transactions",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Wallet Transactions",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "wallets",
+                "{{wallet_id}}",
+                "transactions"
+              ],
+              "raw": "{{base_url}}/v1/wallets/{{wallet_id}}/transactions"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "6ecbddee-1c31-5554-b126-7e14104c5fb3",
+          "name": "POST /v1/wallets/{wallet_id}/unfreeze",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Unfreeze Wallet",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "wallets",
+                "{{wallet_id}}",
+                "unfreeze"
+              ],
+              "raw": "{{base_url}}/v1/wallets/{{wallet_id}}/unfreeze"
+            }
+          },
+          "response": []
+        }
+      ],
+      "name": "OpenAPI v1"
+    },
+    {
+      "description": "Real /v1 security scenarios. run_newman provisions owner identity, agents, virtual wallets and sandbox grants against serve --platform. Local simulator never completes payments. Never uses real money.",
+      "id": "2486cca8-2096-5451-aa6d-112f484e37f6",
+      "item": [
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(403);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "708a52a4-fd39-574b-95ec-ac7af49d7ec5",
+          "name": "V1 owner cannot act as agent",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "me"
+              ],
+              "raw": "{{base_url}}/v1/me"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(403);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "c87c24cb-82ef-5fa8-bf52-c8ef275accea",
+          "name": "V1 agent cannot act as owner",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "agents"
+              ],
+              "raw": "{{base_url}}/v1/agents"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('virtual ledger-derived allowance', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.is_real_money).to.equal(false);",
+                  "  pm.expect(body.unit).to.equal('virtual_allowance');",
+                  "  pm.expect(body.wallets).to.be.an('array').that.is.not.empty;",
+                  "  body.wallets.forEach(function (wallet) {",
+                  "    pm.expect(wallet.is_real_money).to.equal(false);",
+                  "    pm.expect(wallet.unit).to.equal('virtual_allowance');",
+                  "    ['available', 'reserved', 'spent', 'committed'].forEach(function (field) {",
+                  "      pm.expect(wallet.allowance[field]).to.match(/^[0-9]+(?:\\.[0-9]+)?$/);",
+                  "    });",
+                  "  });",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "cfa2fdaf-0864-59d3-b17b-0a9499f47686",
+          "name": "V1 virtual allowance is not money",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "me",
+                "wallet"
+              ],
+              "raw": "{{base_url}}/v1/me/wallet"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.collectionVariables.set('v1_idempotency', pm.variables.replaceIn('postman-{{$guid}}'));"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('prepared request requires exact owner approval', function () {",
+                  "  pm.response.to.have.status(201);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.is_real_money).to.equal(false);",
+                  "  pm.expect(body.requires_owner_approval).to.equal(true);",
+                  "  pm.expect(body.terms_sha256).to.match(/^[0-9a-f]{64}$/);",
+                  "  pm.expect(body.status).to.equal('awaiting_approval');",
+                  "  pm.collectionVariables.set('v1_request_id', body.request_id);",
+                  "  pm.collectionVariables.set('v1_terms_sha256', body.terms_sha256);",
+                  "  pm.collectionVariables.set('v1_created_response', JSON.stringify(body));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "e2d214aa-06c5-5f9a-9c11-61870bb9b4e0",
+          "name": "V1 create idempotent request",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"amount\": \"1.00\",\n  \"currency\": \"USD\",\n  \"merchant_domain\": \"example.com\",\n  \"merchant_name\": \"Example Hosting\",\n  \"purpose\": \"Postman sandbox verification\",\n  \"request_owner_decision\": true\n}"
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{v1_idempotency}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('replay returns the original response', function () {",
+                  "  pm.response.to.have.status(200);  // documented: first create 201, exact replay 200",
+                  "  pm.expect(pm.response.json()).to.deep.equal(JSON.parse(pm.collectionVariables.get('v1_created_response')));",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "28f78d91-888e-59eb-a8c6-578cdc7c9909",
+          "name": "V1 idempotency exact replay",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"amount\": \"1.00\",\n  \"currency\": \"USD\",\n  \"merchant_domain\": \"example.com\",\n  \"merchant_name\": \"Example Hosting\",\n  \"purpose\": \"Postman sandbox verification\",\n  \"request_owner_decision\": true\n}"
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{v1_idempotency}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(409);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "41fbc5cc-dc92-5628-8135-351ac1263fde",
+          "name": "V1 idempotency body mismatch",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"amount\": \"2.00\",\n  \"currency\": \"USD\",\n  \"merchant_domain\": \"example.com\",\n  \"merchant_name\": \"Example Hosting\",\n  \"purpose\": \"Postman sandbox verification\",\n  \"request_owner_decision\": true\n}"
+            },
+            "header": [
+              {
+                "key": "Idempotency-Key",
+                "value": "{{v1_idempotency}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(409);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "19d4ec26-42da-5c8e-9083-24550d19d95f",
+          "name": "V1 execute before approval refused",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}",
+                "execute"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}/execute"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(403);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "7ce40476-899d-5a01-9d37-adcd815bbf3a",
+          "name": "V1 agent cannot approve itself",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"terms_sha256\": \"{{v1_terms_sha256}}\"\n}"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}",
+                "approve"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}/approve"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(409);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "7d089068-cae5-5d83-bcb1-e72ec2d0eb37",
+          "name": "V1 tampered approval terms refused",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"terms_sha256\": \"0000000000000000000000000000000000000000000000000000000000000000\"\n}"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}",
+                "approve"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}/approve"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('no refusal bypassed the owner gate', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.status).to.equal('awaiting_approval');",
+                  "  pm.expect(body.terms_sha256).to.equal(pm.collectionVariables.get('v1_terms_sha256'));",
+                  "  pm.expect(body.requires_owner_approval).to.equal(true);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "e81058ab-2f81-5dd8-bb4d-9e1a84403621",
+          "name": "V1 refusal preserves approval gate",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('owner approval binds this request', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.request_id).to.equal(pm.collectionVariables.get('v1_request_id'));",
+                  "  pm.expect(body.decision).to.equal('approved');",
+                  "  pm.expect(body.status).to.equal('approved');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "19fec841-c16e-533c-a0c8-2cdd4c7a6ae4",
+          "name": "V1 exact terms owner approval",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"terms_sha256\": \"{{v1_terms_sha256}}\"\n}"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}",
+                "approve"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}/approve"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(409);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "e86a062e-3a11-5b01-ad6c-6f2191cb2f8f",
+          "name": "V1 double approval refused",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"terms_sha256\": \"{{v1_terms_sha256}}\"\n}"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}",
+                "approve"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}/approve"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('simulator cannot claim completion', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(pm.response.json().status).to.equal('provider_pending');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "47a8240a-1724-58a3-97f3-edd86e624f43",
+          "name": "V1 sandbox execute remains pending",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}",
+                "execute"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}/execute"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(409);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "4cdd6b08-5d92-514e-8b4a-adf9716c8cf4",
+          "name": "V1 execution approval is single use",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}",
+                "execute"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}/execute"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(404);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "51febed2-3389-5a93-8987-6dbfd94b228d",
+          "name": "V1 other agent cannot read request",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_b_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('refused with safe JSON error', function () {",
+                  "  pm.response.to.have.status(400);",
+                  "  pm.expect(pm.response.json().error).to.be.a('string').and.not.empty;",
+                  "  pm.expect(pm.response.json()).not.to.have.property('decision');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "94d299a5-0cf9-5c07-8440-da5c2e900450",
+          "name": "V1 unsigned webhook refused",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"status\": \"completed\",\n  \"verified\": true\n}"
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "providers",
+                "paypal",
+                "webhooks"
+              ],
+              "raw": "{{base_url}}/v1/providers/paypal/webhooks"
+            }
+          }
+        },
+        {
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('only verified provider events can complete', function () {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(pm.response.json().status).to.equal('provider_pending');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "id": "c6922a2c-05fb-5058-a3a8-a02433cedd84",
+          "name": "V1 status stays pending",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{agent_a_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{v1_request_id}}"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{v1_request_id}}"
+            }
+          }
+        }
+      ],
+      "name": "V1 security"
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "type": "string",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "agent_a_id",
+      "type": "string",
+      "value": "agent_demo_001"
+    },
+    {
+      "key": "agent_b_id",
+      "type": "string",
+      "value": "agent_demo_002"
+    },
+    {
+      "key": "request_id",
+      "type": "string",
+      "value": "req_postman_001"
+    },
+    {
+      "key": "agent_a_key",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "key": "agent_b_key",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "key": "owner_key",
+      "type": "string",
+      "value": ""
+    },
+    {
+      "key": "invalid_key",
+      "type": "string",
+      "value": ""
+    }
+  ]
+}

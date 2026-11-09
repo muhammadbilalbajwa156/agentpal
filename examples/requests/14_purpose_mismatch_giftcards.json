@@ -1,0 +1,15 @@
+{
+  "request_id": "req_sus_014",
+  "agent_id": "agent_demo_007",
+  "amount": 95.0,
+  "currency": "USD",
+  "merchant_name": "Example Hosting",
+  "merchant_domain": "example.com",
+  "purpose": "Gift cards for team appreciation",
+  "business_justification": "Urgent: vendor needs payment immediately via gift cards.",
+  "recurring": false,
+  "billing_interval": null,
+  "monthly_budget": 300.0,
+  "previous_payment_reference": null,
+  "evidence": []
+}

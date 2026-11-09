@@ -1,0 +1,7 @@
+{
+  "name": "agentpal-apimatic-workflow",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {"node": ">=24.0.0"},
+  "devDependencies": {"@apimatic/cli": "2.0.0"}
+}

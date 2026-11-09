@@ -1,0 +1,637 @@
+[
+  {
+    "case_id": "T3-01-fair",
+    "request_id": "\u2026da57",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-01-fair_currency_unknown",
+    "request_id": "\u20264fba",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-01-overpriced",
+    "request_id": "\u2026e96e",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-01-too_cheap",
+    "request_id": "\u2026dde1",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-01-lookalike",
+    "request_id": "\u202656ee",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-01-wrong_merchant",
+    "request_id": "\u2026dad2",
+    "internal_risk_signals": [
+      "LOOKALIKE_DOMAIN",
+      "MERCHANT_NAME_DOMAIN_MISMATCH",
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 88,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-01-giftcard_urgency",
+    "request_id": "\u20269912",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PURPOSE_MERCHANT_MISMATCH",
+      "PRESSURE_LANGUAGE",
+      "HIGH_RISK_PAYMENT_METHOD_LANGUAGE",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 99,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-01-purpose_injection",
+    "request_id": "\u2026fb1e",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PROMPT_INJECTION_ATTEMPT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 80,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-01-recurring_unexplained",
+    "request_id": "\u2026e2bf",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "RECURRING_NOT_EXPLAINED",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 53,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-01-recurring_explained",
+    "request_id": "\u202611b0",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-fair",
+    "request_id": "\u20269d71",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-fair_currency_unknown",
+    "request_id": "\u20266f72",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-overpriced",
+    "request_id": "\u2026b962",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-too_cheap",
+    "request_id": "\u20262e31",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-lookalike",
+    "request_id": "\u2026bceb",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-wrong_merchant",
+    "request_id": "\u2026785f",
+    "internal_risk_signals": [
+      "LOOKALIKE_DOMAIN",
+      "MERCHANT_NAME_DOMAIN_MISMATCH",
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 88,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-giftcard_urgency",
+    "request_id": "\u20264a14",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PURPOSE_MERCHANT_MISMATCH",
+      "PRESSURE_LANGUAGE",
+      "HIGH_RISK_PAYMENT_METHOD_LANGUAGE",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 99,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-purpose_injection",
+    "request_id": "\u20261b6c",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PROMPT_INJECTION_ATTEMPT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 80,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-recurring_unexplained",
+    "request_id": "\u2026213d",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "RECURRING_NOT_EXPLAINED",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 53,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-02-recurring_explained",
+    "request_id": "\u20267e24",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-fair",
+    "request_id": "\u2026d920",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-fair_currency_unknown",
+    "request_id": "\u20268d6b",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-overpriced",
+    "request_id": "\u20269f12",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-too_cheap",
+    "request_id": "\u2026f7ab",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-lookalike",
+    "request_id": "\u202680bb",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-wrong_merchant",
+    "request_id": "\u2026a715",
+    "internal_risk_signals": [
+      "LOOKALIKE_DOMAIN",
+      "MERCHANT_NAME_DOMAIN_MISMATCH",
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 88,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-giftcard_urgency",
+    "request_id": "\u2026dc23",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PURPOSE_MERCHANT_MISMATCH",
+      "PRESSURE_LANGUAGE",
+      "HIGH_RISK_PAYMENT_METHOD_LANGUAGE",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 99,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-purpose_injection",
+    "request_id": "\u2026fb45",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PROMPT_INJECTION_ATTEMPT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 80,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-recurring_unexplained",
+    "request_id": "\u2026298c",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "RECURRING_NOT_EXPLAINED",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 53,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-03-recurring_explained",
+    "request_id": "\u20261825",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-fair",
+    "request_id": "\u2026e431",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-fair_currency_unknown",
+    "request_id": "\u20261b23",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-overpriced",
+    "request_id": "\u20261827",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-too_cheap",
+    "request_id": "\u2026e3b1",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-lookalike",
+    "request_id": "\u2026efdc",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-wrong_merchant",
+    "request_id": "\u2026aee8",
+    "internal_risk_signals": [
+      "LOOKALIKE_DOMAIN",
+      "MERCHANT_NAME_DOMAIN_MISMATCH",
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 88,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-giftcard_urgency",
+    "request_id": "\u2026babe",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PURPOSE_MERCHANT_MISMATCH",
+      "PRESSURE_LANGUAGE",
+      "HIGH_RISK_PAYMENT_METHOD_LANGUAGE",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 99,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-purpose_injection",
+    "request_id": "\u20269e34",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PROMPT_INJECTION_ATTEMPT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 80,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-recurring_unexplained",
+    "request_id": "\u2026a13d",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "RECURRING_NOT_EXPLAINED",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 53,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-04-recurring_explained",
+    "request_id": "\u2026b18d",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-fair",
+    "request_id": "\u20265863",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-fair_currency_unknown",
+    "request_id": "\u20262324",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-overpriced",
+    "request_id": "\u20262e79",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-too_cheap",
+    "request_id": "\u2026aa65",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-lookalike",
+    "request_id": "\u20263db2",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-wrong_merchant",
+    "request_id": "\u202685b5",
+    "internal_risk_signals": [
+      "LOOKALIKE_DOMAIN",
+      "MERCHANT_NAME_DOMAIN_MISMATCH",
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 88,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-giftcard_urgency",
+    "request_id": "\u20261765",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PURPOSE_MERCHANT_MISMATCH",
+      "PRESSURE_LANGUAGE",
+      "HIGH_RISK_PAYMENT_METHOD_LANGUAGE",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 99,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-purpose_injection",
+    "request_id": "\u20269452",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "PROMPT_INJECTION_ATTEMPT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 80,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-recurring_unexplained",
+    "request_id": "\u202626ca",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "RECURRING_NOT_EXPLAINED",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 53,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  },
+  {
+    "case_id": "T3-05-recurring_explained",
+    "request_id": "\u2026a91f",
+    "internal_risk_signals": [
+      "UNAPPROVED_MERCHANT",
+      "MISSING_EVIDENCE",
+      "MODEL_UNAVAILABLE_OR_TIMED_OUT"
+    ],
+    "rule_score": 25,
+    "degraded": true,
+    "degraded_reason": "ml: unavailable"
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "request_id": "req_sus_010",
+  "agent_id": "agent_demo_003",
+  "amount": 89.0,
+  "currency": "USD",
+  "merchant_name": "Example Hosting",
+  "merchant_domain": "examp1e-billing.com",
+  "purpose": "Monthly hosting subscription",
+  "business_justification": "Hosting renewal for the customer project; vendor moved billing to a new portal.",
+  "recurring": true,
+  "billing_interval": "monthly",
+  "monthly_budget": 200.0,
+  "previous_payment_reference": null,
+  "evidence": []
+}

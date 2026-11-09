@@ -1,0 +1,29 @@
+# Training / evaluation / export dependencies for agentpal/training/. NOT needed to run
+# the AgentPal service.
+#
+# EXACT versions with which the training LOOP was verified on 2026-10-29, as a PIPELINE
+# SMOKE TEST only (CPU, tiny random Qwen3 test model, a few steps, interrupt + --resume,
+# evaluation and GGUF export of the result; Python 3.13.17). No real model was trained.
+# The full transitive set is in requirements-train.lock (Python >= 3.12 because of
+# numpy 2.5.x; these top-level pins all support Python >= 3.11).
+#
+# torch: verified with the CPU wheel 2.15.0+cpu
+#   (pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cpu).
+#   On a GPU machine install the CUDA build of the SAME version, e.g. on Kaggle:
+#   pip install torch==2.15.0 --index-url https://download.pytorch.org/whl/cu126
+#   (UNVERIFIED here: no GPU; pick the cuXXX index matching the machine's driver).
+torch==2.15.0
+transformers==5.22.0
+peft==0.21.2
+trl==1.17.0
+datasets==5.1.0
+accelerate==1.15.0
+safetensors==0.8.0
+tokenizers==0.23.3
+huggingface_hub==2.4.0
+Jinja2==3.1.6           # chat templates (apply_chat_template)
+# export (training/export.py): llama.cpp's convert_hf_to_gguf.py needs sentencepiece
+# and llama.cpp's own gguf-py (used from the llama.cpp checkout, tag b11989 verified);
+# quantization uses llama-cpp-python, the same library the service uses.
+sentencepiece==0.2.1
+llama_cpp_python==0.3.36

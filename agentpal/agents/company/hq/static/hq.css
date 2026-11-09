@@ -1,0 +1,18 @@
+:root { color-scheme: dark; font: 16px/1.6 system-ui, sans-serif; color: #e7e9ef; background: #10141e; }
+body { margin: 0; }
+main { max-width: 860px; margin: 3rem auto; padding: 1.5rem; }
+h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); line-height: 1.12; letter-spacing: -.04em; }
+.eyebrow { color: #91edcb; font-size: .8rem; letter-spacing: .13em; }
+form { display: grid; gap: .7rem; padding: 1.5rem; border: 1px solid #354052; border-radius: 16px; }
+select, button { font: inherit; padding: .75rem; border: 1px solid #46536c; border-radius: 8px; }
+select { color: #edf1fa; background: #182131; }
+button { background: #91edcb; color: #10141e; font-weight: 700; cursor: pointer; }
+button:disabled { opacity: .5; cursor: wait; }
+.agent { border: 1px solid #2c3647; border-radius: 12px; padding: .7rem 1rem; margin: .6rem 0; }
+.agent h3 { margin: 0; font-size: 1rem; }
+.agent p, .agent li { margin: .2rem 0; font-size: .9rem; color: #b4bfd3; }
+#log p { background: #1b2535; padding: .6rem .9rem; border-radius: 10px; overflow-wrap: anywhere; white-space: pre-wrap; margin: .4rem 0; }
+#log strong { color: #91edcb; }
+#results table { width: 100%; border-collapse: collapse; font-size: .9rem; }
+#results td, #results th { border-bottom: 1px solid #2c3647; padding: .4rem; text-align: left; }
+#status, .notice { font-size: .85rem; color: #b4bfd3; overflow-wrap: anywhere; }

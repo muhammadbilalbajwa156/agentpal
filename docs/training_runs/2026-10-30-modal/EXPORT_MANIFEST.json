@@ -1,0 +1,54 @@
+{
+  "exported_at": "2026-10-30T18:45:45+00:00",
+  "run_kind": "training",
+  "notice": "LoRA adapter for Qwen3-1.7B. Advisory model only; evaluate before use.",
+  "adapter_complete_json_sha256": "d7f08035428b0240072acfdbd0ce3fe01c746a4f78f880129cc4248fca05ef50",
+  "base_model": "Qwen/Qwen3-1.7B",
+  "base_revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+  "llama_cpp_commit": "78febbad9d4fcb6d85d65207265c875f5aa1c1af",
+  "libraries": {
+    "python": "3.13.18",
+    "torch": "2.15.0",
+    "transformers": "5.22.0",
+    "peft": "0.21.2",
+    "trl": "1.17.0",
+    "datasets": "5.1.0",
+    "accelerate": "1.15.0",
+    "safetensors": "0.8.0",
+    "tokenizers": "0.23.3"
+  },
+  "files": {
+    "agentpal-qwen3-1.7b-q4_k_m.gguf": {
+      "sha256": "92522e111321ea348b7981976e6e98a9fbfe27167711ce2d405a2e1da29c9817",
+      "bytes": 1107408736
+    }
+  },
+  "gguf_check": {
+    "architecture": "qwen3",
+    "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+    "no_think_prompt_ok": true,
+    "n_vocab": 151936
+  },
+  "steps": [
+    {
+      "step": "merge",
+      "dtype": "float16",
+      "out": "/vol/agentpal-lora/export/merged"
+    },
+    {
+      "at": "2026-10-30T18:45:17+00:00",
+      "cmd": "/usr/local/bin/python /root/llama.cpp/convert_hf_to_gguf.py /vol/agentpal-lora/export/merged --outtype f16 --outfile /vol/agentpal-lora/export/agentpal-qwen3-1.7b-f16.gguf"
+    },
+    {
+      "at": "2026-10-30T18:45:43+00:00",
+      "cmd": "llama_cpp.llama_model_quantize(agentpal-qwen3-1.7b-f16.gguf, agentpal-qwen3-1.7b-q4_k_m.gguf, Q4_K_M) [llama-cpp-python 0.3.36] -> 0"
+    }
+  ],
+  "inference_contract": {
+    "enable_thinking": false,
+    "include_rule_findings": false,
+    "prompt_suffix": "<think>\n\n</think>\n\n"
+  },
+  "pin_command": "python -m agentpal pin-model llamacpp /vol/agentpal-lora/export/agentpal-qwen3-1.7b-q4_k_m.gguf --source 'training.export 92522e111321 from Qwen/Qwen3-1.7B@70d244cc86cc'",
+  "serving_settings": "llamacpp analyzer with include_rule_findings=False and disable_thinking=True (see docs/ML_AUDIT.md proposals)"
+}

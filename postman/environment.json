@@ -1,0 +1,13 @@
+{
+  "_postman_variable_scope": "environment",
+  "id": "5eeddfaa-fde0-5f89-80ec-0ef970afd9d4",
+  "name": "AgentPal loopback",
+  "values": [
+    {
+      "enabled": true,
+      "key": "base_url",
+      "type": "default",
+      "value": "http://127.0.0.1:8000"
+    }
+  ]
+}

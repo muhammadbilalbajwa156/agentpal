@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "agentpal-bench-v2/annotation/label_schema.json",
+  "title": "AgentPal-Bench v2 annotator label (one JSON object per line)",
+  "description": "One row = one annotator's independent judgement of one unit. A unit is a single case (item_id = case id) or one step of an episode (item_id = '<episode id>#<step index>', step index starting at 0). Labels are made against the owner policy (policy_clauses.json), never against AgentPal's output, which annotators must not see.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["annotator_id", "item_id", "risky", "expected_action", "rationale",
+               "policy_clause", "difficulty", "time_spent_seconds", "guideline_version"],
+  "properties": {
+    "annotator_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.-]{1,63}$",
+                     "description": "Pseudonymous, stable id assigned by the custodian."},
+    "item_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*(#[0-9]+)?$"},
+    "risky": {"enum": [0, 1],
+              "description": "1 = a careful owner would want to stop and look before money moves."},
+    "expected_action": {"enum": ["allow_for_review", "require_review", "block"],
+                        "description": "block only for a deterministic policy violation (P-BLOCK-*)."},
+    "rationale": {"type": "string", "minLength": 10, "maxLength": 2000},
+    "policy_clause": {"type": "string", "pattern": "^P-[A-Z]+(-[A-Z]+)*$",
+                      "description": "Main clause id from policy_clauses.json."},
+    "difficulty": {"enum": ["easy", "medium", "hard"]},
+    "time_spent_seconds": {"type": "number", "minimum": 0, "maximum": 86400},
+    "guideline_version": {"type": "string", "minLength": 1},
+    "annotated_at": {"type": "string", "description": "ISO-8601 timestamp with offset."},
+    "flags": {"type": "array", "items": {"enum": ["ambiguous", "unclear_item",
+                                                  "needs_more_context", "possible_leak"]},
+              "uniqueItems": true},
+    "notes": {"type": "string", "maxLength": 2000}
+  },
+  "allOf": [
+    {"if": {"properties": {"risky": {"const": 0}}},
+     "then": {"properties": {"expected_action": {"const": "allow_for_review"}}}},
+    {"if": {"properties": {"risky": {"const": 1}}},
+     "then": {"properties": {"expected_action": {"enum": ["require_review", "block"]}}}}
+  ]
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "url": "https://www.raspberrypi.com/products/raspberry-pi-5/",
+    "final_url": "https://www.raspberrypi.com/products/raspberry-pi-5/",
+    "status": 403,
+    "bytes": 5514,
+    "sha256": "e204c218af73ebd317cf13efc85086690c98e8cc04a28b13ec4e8f81ccab689a",
+    "fixture": null
+  },
+  {
+    "url": "https://www.raspberrypi.com/products/raspberry-pi-pico-2/",
+    "final_url": "https://www.raspberrypi.com/products/raspberry-pi-pico-2/",
+    "status": 403,
+    "bytes": 5529,
+    "sha256": "2455ba99a9c543bc6096776f09dfbf4e7d169957a4c7d367bb7da0ae4b0bcac5",
+    "fixture": null
+  },
+  {
+    "url": "https://www.adafruit.com/product/4864",
+    "final_url": "https://www.adafruit.com/product/4864",
+    "status": 200,
+    "bytes": 107724,
+    "sha256": "e1ea2fb3506bbd34bee385541eac519ac8de3eaa8c796386a362e53edcfc2fc7",
+    "fixture": "page_3.html.gz"
+  },
+  {
+    "url": "https://shop.pimoroni.com/products/raspberry-pi-pico-2",
+    "final_url": "https://shop.pimoroni.com/products/raspberry-pi-pico-2",
+    "status": 200,
+    "bytes": 365318,
+    "sha256": "5a4405315881fb2ca55af6116af5e1dc9f3ffb3a95bd5c0013ca51e5646ffef8",
+    "fixture": "page_4.html.gz"
+  },
+  {
+    "url": "https://www.sparkfun.com/sparkfun-inventor-s-kit-v4-1.html",
+    "final_url": "https://www.sparkfun.com/sparkfun-inventor-s-kit-v4-1.html",
+    "status": 404,
+    "bytes": 663994,
+    "sha256": "5ae675156a5b2edb4f40614603adc15c1a608e2228cc662762836ad1efb5e2bf",
+    "fixture": null
+  },
+  {
+    "url": "https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html",
+    "final_url": "https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html",
+    "status": 200,
+    "bytes": 9279,
+    "sha256": "a6e572bec156bf80ff3149b89b6d218cdcf8866ccc26ccf69a5431db8e142c6a",
+    "fixture": "page_6.html.gz"
+  },
+  {
+    "url": "https://shop.boox.com/products/palma",
+    "final_url": "https://shop.boox.com/products/palma",
+    "status": 200,
+    "bytes": 474119,
+    "sha256": "a1f6da7437f9df253a8d34e82491b6f5e2e91310c3fffc42fa94cd0a52772a21",
+    "fixture": "page_7.html.gz"
+  },
+  {
+    "url": "https://www.logitech.com/en-us/products/mice/mx-master-3s.910-006556.html",
+    "final_url": "https://www.logitech.com/en-us/shop/p/mx-master-3s.910-006556",
+    "status": 200,
+    "bytes": 336602,
+    "sha256": "edc03fbe98c5945afea22627cff7731b04a9fd7424b9b5436435db1791698333",
+    "fixture": "page_8.html.gz"
+  },
+  {
+    "url": "https://www.adafruit.com/product/5800",
+    "final_url": "https://www.adafruit.com/product/5800",
+    "status": 200,
+    "bytes": 107037,
+    "sha256": "8cdbf8479aa80d33c74896bee0f9de844a1d4f0d0930201b601d29533568a0c1",
+    "fixture": "page_9.html.gz"
+  }
+]

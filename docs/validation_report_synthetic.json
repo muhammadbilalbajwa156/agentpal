@@ -1,0 +1,326 @@
+{
+  "notice": "SYNTHETIC EVALUATION: generated data with hand-designed scenarios. Not evidence of real-world fraud-detection accuracy.",
+  "generated_at": "2026-10-28T16:29:21.033604+00:00",
+  "agentpal_version": "0.1.0",
+  "rules_version": "2026.10.1",
+  "dataset": {
+    "split": "validation",
+    "n": 370,
+    "seed": 20260,
+    "sha256": "c41bb25342dff69b7d152168f66a254fb1f6675213cd28110c8107564ce1da61",
+    "dataset_version": "1.0"
+  },
+  "positive_class": "needs review/intervention (require_review or block)",
+  "environment": {
+    "python": "3.13.17",
+    "machine": "x86_64",
+    "processor_count": 4
+  },
+  "approaches": {
+    "rules_only": {
+      "description": "Deterministic rules + heuristic fallback (no model)",
+      "binary": {
+        "n": 370,
+        "precision": 0.9578,
+        "recall": 0.9458,
+        "f1": 0.9518,
+        "false_positive_rate": 0.0769,
+        "false_negative_rate": 0.0542,
+        "confusion_matrix": {
+          "tp": 227,
+          "fp": 10,
+          "tn": 120,
+          "fn": 13
+        }
+      },
+      "actions": {
+        "rows=expected,cols=predicted": {
+          "allow_for_review": {
+            "allow_for_review": 120,
+            "require_review": 10,
+            "block": 0
+          },
+          "require_review": {
+            "allow_for_review": 13,
+            "require_review": 157,
+            "block": 45
+          },
+          "block": {
+            "allow_for_review": 0,
+            "require_review": 0,
+            "block": 25
+          }
+        },
+        "exact_action_accuracy": 0.8162
+      },
+      "per_category": {
+        "duplicate": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "excessive_amount": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "legit_low_risk": {
+          "label": 0,
+          "n": 80,
+          "flagged": 0,
+          "false_positive_rate": 0.0
+        },
+        "legit_unusual": {
+          "label": 0,
+          "n": 50,
+          "flagged": 10,
+          "false_positive_rate": 0.2
+        },
+        "missing_or_inconsistent": {
+          "label": 1,
+          "n": 30,
+          "flagged": 28,
+          "detection_rate": 0.9333
+        },
+        "prompt_injection": {
+          "label": 1,
+          "n": 30,
+          "flagged": 20,
+          "detection_rate": 0.6667
+        },
+        "purpose_mismatch": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "suspicious_combination": {
+          "label": 1,
+          "n": 30,
+          "flagged": 29,
+          "detection_rate": 0.9667
+        },
+        "suspicious_domain": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "unexpected_recurring": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        }
+      },
+      "latency_ms": {
+        "mean": 0.485,
+        "p50": 0.372,
+        "p95": 0.926,
+        "max": 2.972
+      },
+      "backend_usage": {
+        "heuristic": 370
+      }
+    },
+    "ml_classifier_only": {
+      "description": "Logistic-regression baseline alone (threshold from validation)",
+      "model_version": "lr-20261028-C0.3",
+      "binary": {
+        "n": 370,
+        "precision": 0.9749,
+        "recall": 0.9708,
+        "f1": 0.9728,
+        "false_positive_rate": 0.0462,
+        "false_negative_rate": 0.0292,
+        "confusion_matrix": {
+          "tp": 233,
+          "fp": 6,
+          "tn": 124,
+          "fn": 7
+        }
+      },
+      "per_category": {
+        "duplicate": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "excessive_amount": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "legit_low_risk": {
+          "label": 0,
+          "n": 80,
+          "flagged": 5,
+          "false_positive_rate": 0.0625
+        },
+        "legit_unusual": {
+          "label": 0,
+          "n": 50,
+          "flagged": 1,
+          "false_positive_rate": 0.02
+        },
+        "missing_or_inconsistent": {
+          "label": 1,
+          "n": 30,
+          "flagged": 28,
+          "detection_rate": 0.9333
+        },
+        "prompt_injection": {
+          "label": 1,
+          "n": 30,
+          "flagged": 25,
+          "detection_rate": 0.8333
+        },
+        "purpose_mismatch": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "suspicious_combination": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "suspicious_domain": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "unexpected_recurring": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        }
+      },
+      "latency_ms": {
+        "mean": 0.376,
+        "p50": 0.304,
+        "p95": 0.751,
+        "max": 0.87
+      },
+      "threshold": 0.3
+    },
+    "rules_plus_ml": {
+      "description": "Orchestrator: rules + ML classifier (bounded blending)",
+      "model_version": "lr-20261028-C0.3",
+      "binary": {
+        "n": 370,
+        "precision": 0.9289,
+        "recall": 0.9792,
+        "f1": 0.9534,
+        "false_positive_rate": 0.1385,
+        "false_negative_rate": 0.0208,
+        "confusion_matrix": {
+          "tp": 235,
+          "fp": 18,
+          "tn": 112,
+          "fn": 5
+        }
+      },
+      "actions": {
+        "rows=expected,cols=predicted": {
+          "allow_for_review": {
+            "allow_for_review": 112,
+            "require_review": 18,
+            "block": 0
+          },
+          "require_review": {
+            "allow_for_review": 5,
+            "require_review": 165,
+            "block": 45
+          },
+          "block": {
+            "allow_for_review": 0,
+            "require_review": 0,
+            "block": 25
+          }
+        },
+        "exact_action_accuracy": 0.8162
+      },
+      "per_category": {
+        "duplicate": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "excessive_amount": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "legit_low_risk": {
+          "label": 0,
+          "n": 80,
+          "flagged": 5,
+          "false_positive_rate": 0.0625
+        },
+        "legit_unusual": {
+          "label": 0,
+          "n": 50,
+          "flagged": 13,
+          "false_positive_rate": 0.26
+        },
+        "missing_or_inconsistent": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "prompt_injection": {
+          "label": 1,
+          "n": 30,
+          "flagged": 25,
+          "detection_rate": 0.8333
+        },
+        "purpose_mismatch": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "suspicious_combination": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "suspicious_domain": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        },
+        "unexpected_recurring": {
+          "label": 1,
+          "n": 30,
+          "flagged": 30,
+          "detection_rate": 1.0
+        }
+      },
+      "latency_ms": {
+        "mean": 0.514,
+        "p50": 0.395,
+        "p95": 0.908,
+        "max": 1.797
+      },
+      "backend_usage": {
+        "ml": 370
+      }
+    }
+  },
+  "peak_rss_mb": 40.2
+}

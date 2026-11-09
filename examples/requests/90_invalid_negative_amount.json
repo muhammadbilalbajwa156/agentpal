@@ -1,0 +1,15 @@
+{
+  "request_id": "req_bad_090",
+  "agent_id": "agent_demo_010",
+  "amount": -5,
+  "currency": "USD",
+  "merchant_name": "Example Hosting",
+  "merchant_domain": "example.com",
+  "purpose": "Monthly hosting subscription",
+  "business_justification": "Hosting for a customer project",
+  "recurring": true,
+  "billing_interval": "monthly",
+  "monthly_budget": 100.0,
+  "previous_payment_reference": null,
+  "evidence": []
+}

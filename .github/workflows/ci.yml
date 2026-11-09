@@ -1,0 +1,39 @@
+# Runs on a fresh checkout: no git-ignored data or model artifacts, so tests that need them are
+# skipped, never faked. Live provider tests skip without keys.
+name: ci
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-dev.txt ruff
+      - name: Lint (ruff)
+        run: python -m ruff check agentpal training tests
+      - name: Generate synthetic data (git-ignored, reproducible)
+        run: python -m agentpal data
+      - name: Tests
+        run: python -m pytest -o addopts="" -q -p no:cacheprovider -rs
+      - name: OpenAPI and Postman are up to date
+        run: |
+          python -m agentpal.platform.openapi --check
+          python -m postman.generate --check
+      - name: Hash-locked runtime install
+        run: |
+          python -m venv /tmp/locked
+          /tmp/locked/bin/pip install --require-hashes --no-deps -r requirements.lock
+          /tmp/locked/bin/pip check

@@ -1,0 +1,26 @@
+{
+  "policy_version": "2026.11.2-final",
+  "configuration": "operator",
+  "note": "TEMPLATE for an owner-approved operator configuration. List every agent and currency explicitly; amounts below are examples only and must be replaced by the owner. There is no default_agent: an agent not listed here is rejected with NO_SPENDING_POLICY. Agents can never set or raise budgets through request fields.",
+  "budget_period": "calendar_month_utc",
+  "rolling_window_hours": 24,
+  "approval_validity_minutes": 15,
+  "agents": {
+    "agent_example_001": {
+      "owner_id": "owner_example",
+      "currencies": {
+        "USD": {
+          "monthly_budget": "0.01",
+          "rolling_window_limit": "0.01",
+          "per_transaction_hard_limit": "0.01",
+          "per_transaction_review_limit": "0.01"
+        }
+      }
+    }
+  },
+  "owners": {
+    "owner_example": {
+      "share_verified_merchant_history_across_agents": false
+    }
+  }
+}
