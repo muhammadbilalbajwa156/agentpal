@@ -722,8 +722,11 @@ class PaymentDesk:
         if self.deps.resources:
             self.deps.resources.check_amount(meta["owner_id"], terms.amount,
                                              server_provided=provider is self.deps.provider)
-            self.deps.resources.consume_execution(meta["owner_id"],
-                                                  server_provided=provider is self.deps.provider)
+            # Count only a real execution of an approved request; refused, unapproved
+            # and replayed attempts make no provider call and must not drain the budget.
+            if lifecycle.status(request_id, agent_id=ctx.agent_id) == PaymentLifecycle.approved:
+                self.deps.resources.consume_execution(meta["owner_id"],
+                                                      server_provided=provider is self.deps.provider)
         try:
             ticket = lifecycle.begin_execution(ctx.agent_id, request_id, terms, provider)
         except PermissionError:

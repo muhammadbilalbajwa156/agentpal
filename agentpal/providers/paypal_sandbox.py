@@ -29,6 +29,7 @@ from __future__ import annotations
 import base64
 import hashlib
 import json
+import os
 import logging
 import re
 import threading
@@ -461,6 +462,12 @@ class PayPalSandboxProvider:
                      return_url: str | None = None,
                      mock_response: str | None = None) -> ProviderOrderRef:
         validate_idempotency_key(idempotency_key)
+        if return_url is None:
+            # Optional operator setting: where PayPal sends the buyer after approval
+            # (for example the dashboard's static "back from PayPal" page). HTTPS only.
+            configured = os.environ.get("AGENTPAL_PAYPAL_RETURN_URL", "").strip()
+            if configured.startswith("https://"):
+                return_url = configured
         body = self.build_order_body(terms, return_url)
         # Remembered before the call: even an unknown outcome makes this a create key.
         self.remember_create_key(idempotency_key)

@@ -197,8 +197,6 @@ class PayoutDesk:
         if amount is not None and self.p.deps.resources:
             self.p.deps.resources.check_amount(owner_id, amount,
                                                server_provided=provider is self.p.deps.provider)
-            self.p.deps.resources.consume_execution(owner_id,
-                                                    server_provided=provider is self.p.deps.provider)
         return PayPalPayoutsProvider(provider.config, http_client=provider.http_client)
 
     def execute(self, ctx, request_id):
@@ -214,6 +212,11 @@ class PayoutDesk:
                 if self.ledger.order(row):
                     return self.view(row)  # replay is local; recovery is an explicit READ
                 ticket = self.ledger.begin(row)
+                if self.p.deps.resources:
+                    # Inside the claim transaction: a refusal here rolls the claim back.
+                    self.p.deps.resources.consume_execution(
+                        row["owner_id"],
+                        server_provided=self.p.deps.paypal_for(row["owner_id"]) is self.p.deps.provider)
                 self.event(row, ctx.agent_id, "execution_claimed")
         except (InvalidLedgerTransition, ValueError):
             self.event(row, ctx.agent_id, "execution_refused")

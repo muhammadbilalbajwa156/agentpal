@@ -403,3 +403,29 @@ def test_global_cap_ignores_own_keys_and_self_hosted(tmp_path):
     for _ in range(5):
         own.consume_execution("alice", server_provided=False)
         local.consume_execution("alice", server_provided=True)
+
+
+def test_refused_executions_do_not_drain_the_global_paypal_budget(tmp_path):
+    """Round-3 P1: unapproved or replayed executions make no provider call and must not
+    consume the operator account's global daily ceiling."""
+    with world(tmp_path, hosted(AGENTPAL_SERVER_PAYPAL_EXECUTIONS_DAILY="1")) as (c, d):
+        h = bearer(owner(d))
+        rid = c.post("/v1/lab/payment-requests", headers=h, json=payment("5.00")).json()["request_id"]
+        for _ in range(3):
+            assert c.post("/v1/lab/payment-requests/" + rid + "/execute", headers=h).status_code == 409
+        # The single daily slot is still free for a real execution.
+        d.integrations.resources.consume_execution("alice", server_provided=True)
+
+
+def test_research_quotas_have_one_ceiling_across_workspaces(tmp_path):
+    with world(tmp_path, env(AGENTPAL_SERVER_MARKET_CHECKS_GLOBAL_DAILY="2")) as (c, d):
+        d.market_checker = market = Market()
+        for i, name in enumerate(["alice", "bob", "carol"]):
+            h = bearer(owner(d, name))
+            r = c.post("/v1/lab/payment-requests", headers=h,
+                       json={**payment("5.00"), "product_query": "pencil " + str(i)})
+            if i < 2:
+                assert r.status_code == 201, r.text
+            else:
+                assert r.status_code == 429 and r.json() == {"error": "server_market_checks_global_daily_limit"}
+        assert market.calls == 2

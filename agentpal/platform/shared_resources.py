@@ -21,12 +21,18 @@ class SharedResources:
         self.hosted = hosted
         env = integrations.env
         self.daily = {}
+        self.global_daily = {}
         for name, default in self.DEFAULTS.items():
             value = int(env.get("AGENTPAL_SERVER_" + name.upper() + "_DAILY", default))
             if not 1 <= value <= 1_000_000:
                 raise ValueError("invalid shared provider daily cap")
             self.daily[name] = SQLiteSlidingWindowLimiter(
                 integrations.limiter_path, "server-" + name + "-daily", value, 86400.0)
+            total = int(env.get("AGENTPAL_SERVER_" + name.upper() + "_GLOBAL_DAILY", default * 12))
+            if not 1 <= total <= 10_000_000:
+                raise ValueError("invalid shared provider daily cap")
+            self.global_daily[name] = SQLiteSlidingWindowLimiter(
+                integrations.limiter_path, "server-" + name + "-global-daily", total, 86400.0)
         # One ceiling for the whole operator sandbox account, across every workspace.
         total = int(env.get("AGENTPAL_SERVER_PAYPAL_EXECUTIONS_DAILY", 100))
         if not 1 <= total <= 1_000_000:
@@ -67,6 +73,13 @@ class SharedResources:
             raise PlatformError(503, "server_quota_unavailable") from None
         if not allowed:
             raise PlatformError(429, "server_" + name + "_daily_limit",
+                                headers={"Retry-After": str(retry)})
+        try:
+            allowed, retry = self.global_daily[name].hit("all-workspaces")
+        except LimiterUnavailable:
+            raise PlatformError(503, "server_quota_unavailable") from None
+        if not allowed:
+            raise PlatformError(429, "server_" + name + "_global_daily_limit",
                                 headers={"Retry-After": str(retry)})
 
     def amount_limits(self, owner_id, *, server_provided=None):

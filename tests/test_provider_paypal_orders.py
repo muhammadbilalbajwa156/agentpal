@@ -407,3 +407,15 @@ def test_status_read_404_not_unknown():
     with pytest.raises(ProviderError) as exc:
         provider.get_order_status("NOSUCHORDER")
     assert exc.value.outcome_unknown is False
+
+
+@pytest.mark.parametrize("configured,expected", [
+    ("https://agentpal.example/app/paypal-return.html", "https://agentpal.example/app/paypal-return.html"),
+    ("http://insecure.example/return", None), ("", None)])
+def test_operator_return_url_setting_is_https_only(monkeypatch, configured, expected):
+    monkeypatch.setenv("AGENTPAL_PAYPAL_RETURN_URL", configured)
+    provider, fake = _provider_with(CREATE, json_response(201, order_json(OID)))
+    provider.create_order(make_terms(), idempotency_key="create-key-0001")
+    body = json.loads(fake.api_requests()[0].content)
+    got = body.get("payment_source", {}).get("paypal", {}).get("experience_context", {}).get("return_url")
+    assert got == expected

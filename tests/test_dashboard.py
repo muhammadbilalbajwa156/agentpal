@@ -139,3 +139,10 @@ def test_vendored_ag_bundles_are_served(hosted):  # noqa: F811
     for name in ("ag-grid-community.min.noStyle.js", "ag-charts-community.min.js",
                  "ag-grid.min.css", "ag-theme-quartz-no-font.min.css"):
         assert c.get("/app/" + name, headers=via_render()).status_code == 200, name
+
+
+def test_paypal_return_page_is_static_and_script_free(hosted):  # noqa: F811
+    _, c = hosted
+    r = c.get("/app/paypal-return.html", headers=via_render())
+    assert r.status_code == 200 and r.headers["content-type"].startswith("text/html")
+    assert "<script" not in r.text and "Capture" in r.text
