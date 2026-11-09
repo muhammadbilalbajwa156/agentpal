@@ -34,17 +34,22 @@ def _git(*args: str, cwd: Path) -> str:
 def create(out_dir: Path, ref: str = "HEAD", repo: Path | None = None) -> Path:
     repo = repo or Path(_git("rev-parse", "--show-toplevel", cwd=Path(__file__).parent))
     commit = _git("rev-parse", ref, cwd=repo)
-    if _git("status", "--porcelain", "--", "agentpal", cwd=repo) and ref == "HEAD":
+    # The project may be the repository root (public repo) or its agentpal/ folder (monorepo).
+    project = Path(__file__).resolve().parents[1]
+    sub = project.relative_to(Path(repo).resolve()).as_posix()
+    sub = "" if sub == "." else sub
+    if _git("status", "--porcelain", "--", sub or ".", cwd=repo) and ref == "HEAD":
         print("WARNING: agentpal/ has uncommitted changes; the bundle contains the COMMIT "
               f"{commit[:12]}, not the working tree", file=sys.stderr)
-    raw = subprocess.run(["git", "archive", "--format=zip", commit, "agentpal"], cwd=repo,
+    tree = f"{commit}:{sub}" if sub else commit
+    raw = subprocess.run(["git", "archive", "--format=zip", "--prefix=agentpal/", tree], cwd=repo,
                          check=True, capture_output=True).stdout
     files = {}
     with zipfile.ZipFile(io.BytesIO(raw)) as src:
         for name in sorted(src.namelist()):
             if not name.endswith("/"):
                 files[name] = hashlib.sha256(src.read(name)).hexdigest()
-    info = {"commit": commit, "repository": "muhammadbilalbajwa156/laptop-deal-hub (private)",
+    info = {"commit": commit, "repository": Path(repo).name,
             "branch_hint": _git("rev-parse", "--abbrev-ref", "HEAD", cwd=repo),
             "files": files}
     out_dir.mkdir(parents=True, exist_ok=True)
