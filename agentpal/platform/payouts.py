@@ -202,6 +202,12 @@ class PayoutDesk:
     def execute(self, ctx, request_id):
         row = self.agent_row(ctx, request_id)
         provider = self.provider(row["owner_id"], amount=Decimal(self.ledger.terms(row)["amount"]))
+        if self.p.deps.resources and self.ledger.status(row) == "approved" and not self.ledger.order(row):
+            # Charged once per request and before any claim: a denial leaves the payout
+            # approved and unclaimed; concurrent or replayed calls are not charged again.
+            self.p.deps.resources.charge_execution_once(
+                row["owner_id"], request_id,
+                server_provided=self.p.deps.paypal_for(row["owner_id"]) is self.p.deps.provider)
         try:
             with self.store.tx():
                 self.require(ctx, Capability.payment_execute_sandbox)
@@ -212,11 +218,6 @@ class PayoutDesk:
                 if self.ledger.order(row):
                     return self.view(row)  # replay is local; recovery is an explicit READ
                 ticket = self.ledger.begin(row)
-                if self.p.deps.resources:
-                    # Inside the claim transaction: a refusal here rolls the claim back.
-                    self.p.deps.resources.consume_execution(
-                        row["owner_id"],
-                        server_provided=self.p.deps.paypal_for(row["owner_id"]) is self.p.deps.provider)
                 self.event(row, ctx.agent_id, "execution_claimed")
         except (InvalidLedgerTransition, ValueError):
             self.event(row, ctx.agent_id, "execution_refused")

@@ -429,3 +429,24 @@ def test_research_quotas_have_one_ceiling_across_workspaces(tmp_path):
             else:
                 assert r.status_code == 429 and r.json() == {"error": "server_market_checks_global_daily_limit"}
         assert market.calls == 2
+
+
+def test_concurrent_duplicate_executions_charge_the_global_budget_once(tmp_path):
+    """Round-4 F1: one approved request charges once, however many times it is executed."""
+    with world(tmp_path, hosted(AGENTPAL_SERVER_PAYPAL_EXECUTIONS_DAILY="2")) as (c, d):
+        res = d.integrations.resources
+        with ThreadPoolExecutor(8) as pool:
+            list(pool.map(lambda _: res.charge_execution_once("alice", "pay_same", server_provided=True), range(8)))
+        res.charge_execution_once("alice", "pay_other", server_provided=True)  # second real request fits
+
+
+def test_quota_denial_leaves_the_request_executable_later(tmp_path):
+    """Round-4 F2: a denied charge is removed, so the approved request is not stranded."""
+    from agentpal.platform.errors import PlatformError
+    with world(tmp_path, hosted(AGENTPAL_SERVER_PAYPAL_EXECUTIONS_DAILY="1")) as (c, d):
+        res = d.integrations.resources
+        res.charge_execution_once("alice", "pay_first", server_provided=True)
+        with pytest.raises(PlatformError):
+            res.charge_execution_once("alice", "pay_second", server_provided=True)
+        assert not d.wallet_store.query(
+            "SELECT 1 FROM platform_paypal_execution_charges WHERE request_id='pay_second'")

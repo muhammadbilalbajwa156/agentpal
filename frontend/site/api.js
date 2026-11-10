@@ -60,6 +60,8 @@
   function message(err) {
     if (!(err instanceof ApiError)) return 'Could not reach AgentPal. Check your connection and try again.';
     if (MESSAGES[err.code]) return MESSAGES[err.code];
+    if (err.code === 'server_paypal_global_daily_limit') return 'Today\'s demo budget for the shared AgentPal PayPal sandbox account is used up. It resets within 24 hours; add your own PayPal sandbox keys under Integrations to keep testing now.';
+    if (/_daily_limit$/.test(String(err.code))) return 'The daily demo limit for this shared AgentPal service is reached. It resets within 24 hours; add your own key under Integrations to keep testing now.';
     if (err.status === 429) return MESSAGES.rate_limited;
     if (err.status === 409) return 'That action is not allowed in the request\'s current state.';
     if (err.status === 403) return 'Your account is not allowed to do that.';
