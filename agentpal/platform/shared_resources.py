@@ -103,25 +103,23 @@ class SharedResources:
     def charge_execution_once(self, owner_id, request_id, *, server_provided):
         """Charge the global PayPal budget at most once per request, before any claim.
 
-        Concurrent or replayed attempts find the existing charge and pay nothing; a
-        denial removes the charge so the approved request stays executable later."""
+        Concurrent or replayed attempts find the committed charge and pay nothing; a
+        denial commits nothing, so the approved request stays executable later."""
         if not (self.hosted and self._server_use(owner_id, "paypal_sandbox", server_provided)):
             return
         store = self.integrations.store
+        # One serialized transaction (BEGIN IMMEDIATE + store lock): the per-request marker
+        # is committed only together with a successful budget charge. A concurrent attempt
+        # waits, then either finds the committed marker (already paid) or charges itself.
         with store.tx() as c:
             c.execute("CREATE TABLE IF NOT EXISTS platform_paypal_execution_charges "
                       "(request_id TEXT PRIMARY KEY, owner_id TEXT NOT NULL)")
-            fresh = c.execute("INSERT OR IGNORE INTO platform_paypal_execution_charges "
-                              "VALUES (?,?)", (request_id, owner_id)).rowcount == 1
-        if not fresh:
-            return
-        try:
+            if c.execute("SELECT 1 FROM platform_paypal_execution_charges WHERE request_id=?",
+                         (request_id,)).fetchone():
+                return
             self.consume_execution(owner_id, server_provided=server_provided)
-        except Exception:
-            with store.tx() as c:
-                c.execute("DELETE FROM platform_paypal_execution_charges WHERE request_id=?",
-                          (request_id,))
-            raise
+            c.execute("INSERT INTO platform_paypal_execution_charges VALUES (?,?)",
+                      (request_id, owner_id))
 
     def consume_execution(self, owner_id, *, server_provided):
         """Hosted only: count each money movement on the operator's PayPal sandbox account

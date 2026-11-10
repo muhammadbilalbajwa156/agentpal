@@ -450,3 +450,23 @@ def test_quota_denial_leaves_the_request_executable_later(tmp_path):
             res.charge_execution_once("alice", "pay_second", server_provided=True)
         assert not d.wallet_store.query(
             "SELECT 1 FROM platform_paypal_execution_charges WHERE request_id='pay_second'")
+
+
+def test_concurrent_attempts_cannot_slip_past_an_exhausted_budget(tmp_path):
+    """Round-5 F1: no attempt may see an uncommitted marker and skip the denied charge."""
+    from agentpal.platform.errors import PlatformError
+    with world(tmp_path, hosted(AGENTPAL_SERVER_PAYPAL_EXECUTIONS_DAILY="1")) as (c, d):
+        res = d.integrations.resources
+        res.charge_execution_once("alice", "pay_first", server_provided=True)
+
+        def attempt(_):
+            try:
+                res.charge_execution_once("alice", "pay_over_cap", server_provided=True)
+                return "admitted"
+            except PlatformError as exc:
+                return exc.code
+        with ThreadPoolExecutor(8) as pool:
+            outcomes = list(pool.map(attempt, range(8)))
+        assert outcomes == ["server_paypal_global_daily_limit"] * 8
+        assert not d.wallet_store.query(
+            "SELECT 1 FROM platform_paypal_execution_charges WHERE request_id='pay_over_cap'")
