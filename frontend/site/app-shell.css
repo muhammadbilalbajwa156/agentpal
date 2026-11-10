@@ -170,4 +170,4 @@ body[data-live] .hero-art:after{top:-248px;right:38%;height:420px;width:82%;bord
 @media(max-width:1100px){.a-live .a-toolbar{height:auto}}
 @media(max-width:760px){.f-live .welcome h1{font-size:21px}}
 
-@media(max-width:760px){.overview-screen .overview-bottom>.panel{height:auto;min-height:210px}.overview-screen .stat{height:auto;min-height:110px}.overview-screen .overview-right .activity{height:auto;min-height:225px}}
+@media(max-width:760px){.overview-screen .overview-bottom>.panel{height:auto;min-height:210px}.overview-screen .stat{height:auto;min-height:110px;padding-bottom:42px}.overview-screen .overview-right .activity{height:auto;min-height:225px}}
