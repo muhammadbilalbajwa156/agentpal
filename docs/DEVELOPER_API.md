@@ -1,5 +1,9 @@
 # Developer API v1
 
+For agent applications, the [MCP stdio adapter](MCP.md) exposes five scoped agent
+tools over this API. It has no approve, capture, refund or payee-change tool.
+See [DEMO_SCENARIOS.md](DEMO_SCENARIOS.md) for reproducible control demonstrations
+and [STANDARDS.md](STANDARDS.md) for a comparison with AP2, ACP and x402.
 
 ## Bootstrapping the first owner
 

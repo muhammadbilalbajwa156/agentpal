@@ -152,7 +152,7 @@ def signing_root():
 
 def make_trusted_signing_cert(*, hostname="messageverificationcerts.sandbox.paypal.com",
                              expired_intermediate=False, ca=True, signing_usage=True,
-                             not_before=None, not_after=None):
+                             not_before=None, not_after=None, now=NOW):
     from cryptography import x509
     from cryptography.hazmat.primitives import hashes, serialization
     from cryptography.hazmat.primitives.asymmetric import rsa
@@ -162,8 +162,8 @@ def make_trusted_signing_cert(*, hostname="messageverificationcerts.sandbox.payp
     issuer_name = x509.Name([x509.NameAttribute(NameOID.COMMON_NAME, "test intermediate")])
     issuer = (x509.CertificateBuilder().subject_name(issuer_name).issuer_name(root.subject)
         .public_key(issuer_key.public_key()).serial_number(x509.random_serial_number())
-        .not_valid_before(NOW - timedelta(days=100))
-        .not_valid_after(NOW + timedelta(days=-1 if expired_intermediate else 100))
+        .not_valid_before(now - timedelta(days=100))
+        .not_valid_after(now + timedelta(days=-1 if expired_intermediate else 100))
         .add_extension(x509.BasicConstraints(ca=ca, path_length=0 if ca else None), True)
         .add_extension(x509.KeyUsage(False, False, False, False, False, ca, ca, False, False), True)
         .add_extension(x509.SubjectKeyIdentifier.from_public_key(issuer_key.public_key()), False)
@@ -173,8 +173,8 @@ def make_trusted_signing_cert(*, hostname="messageverificationcerts.sandbox.payp
     leaf = (x509.CertificateBuilder().subject_name(x509.Name([
         x509.NameAttribute(NameOID.COMMON_NAME, hostname)])).issuer_name(issuer.subject)
         .public_key(key.public_key()).serial_number(x509.random_serial_number())
-        .not_valid_before(not_before or NOW - timedelta(days=10))
-        .not_valid_after(not_after or NOW + timedelta(days=10))
+        .not_valid_before(not_before or now - timedelta(days=10))
+        .not_valid_after(not_after or now + timedelta(days=10))
         .add_extension(x509.BasicConstraints(ca=False, path_length=None), True)
         .add_extension(x509.KeyUsage(signing_usage, False, True, False, False,
                                      False, False, False, False), True)

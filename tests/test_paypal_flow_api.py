@@ -218,7 +218,7 @@ def test_signature_valid_unknown_order_is_audited_and_retryable(world):
         make_trusted_signing_cert, trust_test_root, capture_event, signed_headers, CERT_URL,
     )
     w, fake = world
-    key, pem = make_trusted_signing_cert()
+    key, pem = make_trusted_signing_cert(now=w[1].risk_service.clock())
     trust_test_root(w[1].provider)
     fake.routes[("GET", httpx.URL(CERT_URL).path)] = lambda r: httpx.Response(200, content=pem)
     raw = capture_event()
@@ -236,7 +236,7 @@ def test_webhook_persistence_failure_is_retryable(world, monkeypatch):
     )
     w, fake = world
     pending(world)
-    key, pem = make_trusted_signing_cert()
+    key, pem = make_trusted_signing_cert(now=w[1].risk_service.clock())
     trust_test_root(w[1].provider)
     fake.routes[("GET", httpx.URL(CERT_URL).path)] = lambda r: httpx.Response(200, content=pem)
     def crash(*args, **kwargs):
@@ -264,7 +264,7 @@ def test_signature_valid_unknown_order_redelivery_settles_once_after_create(worl
         make_trusted_signing_cert, trust_test_root, capture_event, signed_headers, CERT_URL,
     )
     w, fake = world
-    key, pem = make_trusted_signing_cert()
+    key, pem = make_trusted_signing_cert(now=w[1].risk_service.clock())
     trust_test_root(w[1].provider)
     fake.routes[("GET", httpx.URL(CERT_URL).path)] = lambda r: httpx.Response(200, content=pem)
     payload = json.loads(capture_event())

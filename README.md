@@ -38,6 +38,17 @@ https://github.com/user-attachments/assets/4cec97d1-2fa7-4e8b-9192-d449adda2c70
 
 ---
 
+## 🧑‍⚖️ Judges: try it in 60 seconds
+
+1. Open the hosted sandbox dashboard: **https://agentpal-api.onrender.com/app/** (it may take a minute to wake up).
+2. Sign in with the owner token from the Devpost testing instructions, or create your own private workspace with the invite code given there.
+3. Open **Test Lab** → *Ask the AI agent to shop*, then **approve the exact terms**, pay on the PayPal sandbox page with the sandbox buyer from the testing instructions, and click **Capture**. The payment shows **Verified by PayPal read**.
+4. Try a **$30** test request: a spending rule blocks it before any human sees it (the Test Lab agent's limit is $25).
+
+Step-by-step scenarios, including a split purchase being blocked and a changed amount voiding an approval: **[docs/DEMO_SCENARIOS.md](docs/DEMO_SCENARIOS.md)**.
+
+---
+
 ## 💡 Why AgentPal
 
 AI agents are starting to do real work: buying supplies, paying freelancers, renewing software.
@@ -171,6 +182,28 @@ asyncio.run(main())
 More: **[Developer API](docs/DEVELOPER_API.md)** · **[SDK guide](docs/SDK.md)** ·
 **[OpenAPI spec](docs/api/openapi.json)** · **[Postman collection](postman/v1.collection.json)**.
 The dashboard's **Developer Portal** has the same examples, with downloads.
+
+### Use it from any AI assistant (MCP)
+
+AgentPal ships a dependency-free **MCP server**, so Claude, Cursor or any MCP client can use it as a tool:
+`get_wallet`, `request_payment`, `get_payment_request`, `list_my_payment_requests` and
+`execute_approved_payment`. There is deliberately **no approve tool**: an AI assistant can ask to pay,
+but only the human owner can approve, in the dashboard.
+
+```json
+{"mcpServers": {"agentpal": {"command": "python", "args": ["-m", "agentpal.mcp_server"],
+  "env": {"AGENTPAL_BASE_URL": "http://127.0.0.1:8000", "AGENTPAL_AGENT_KEY": "apk_..."}}}}
+```
+
+Setup for Claude Desktop, Claude Code and Cursor: **[docs/MCP.md](docs/MCP.md)**.
+
+### Where AgentPal fits
+
+PayPal's Agent Toolkit lets an agent create PayPal orders; Google AP2, OpenAI/Stripe ACP and Coinbase x402
+define how agents express intent, check out or pay for resources. AgentPal is the **owner's control layer**
+around agent spending: per-agent allowances, deterministic rules, a human co-signer for the exact terms, and
+settlement that counts only when PayPal verifies it. It does not claim to implement those standards; the
+honest comparison and an AP2 concept mapping are in **[docs/STANDARDS.md](docs/STANDARDS.md)**.
 
 ---
 
