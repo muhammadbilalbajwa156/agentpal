@@ -1,6 +1,7 @@
 """Real owner/agent HTTP boundaries; provider calls use counter-offer fixtures."""
 from datetime import datetime, timezone
 
+import httpx
 import pytest
 
 from test_platform_counter_offer import DealMarket, ask as ask_request, counter, deal, paypal_world as configure_paypal, workspace
@@ -80,7 +81,14 @@ def test_cheapest_stored_index_and_no_provider_calls(tmp_path, monkeypatch):
         def forbidden(*a, **kw):
             pytest.fail('Saver called a provider')
         monkeypatch.setattr(d.market_checker, 'check', forbidden)
-        monkeypatch.setattr('httpx.Client.send', forbidden)
+        real_send = httpx.Client.send
+
+        def outbound(client, request, *a, **kw):
+            # The in-process test client also uses httpx; only real hosts are forbidden.
+            if request.url.host != 'testserver':
+                pytest.fail('Saver called a provider: ' + request.url.host)
+            return real_send(client, request, *a, **kw)
+        monkeypatch.setattr('httpx.Client.send', outbound)
         suggestion = run(c, h, saver)['feed'][0]
         assert (suggestion['deal_index'], suggestion['saving']) == (2,'13.49')
 
