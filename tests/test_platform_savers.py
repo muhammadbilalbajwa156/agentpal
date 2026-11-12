@@ -84,8 +84,8 @@ def test_cheapest_stored_index_and_no_provider_calls(tmp_path, monkeypatch):
         real_send = httpx.Client.send
 
         def outbound(client, request, *a, **kw):
-            # The in-process test client also uses httpx; only real hosts are forbidden.
-            if request.url.host != 'testserver':
+            # The in-process test client also uses httpx; every other client is forbidden.
+            if client is not c:
                 pytest.fail('Saver called a provider: ' + request.url.host)
             return real_send(client, request, *a, **kw)
         monkeypatch.setattr('httpx.Client.send', outbound)

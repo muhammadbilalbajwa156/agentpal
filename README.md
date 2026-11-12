@@ -4,6 +4,7 @@
 
 <p align="center">
   <b>The bank account for AI agents, with a human co-signer.</b><br>
+  <sub>(A spending-allowance layer on the PayPal sandbox: AgentPal holds no money and is not a bank.)</sub><br>
   Let AI agents shop. Keep every dollar in your hands.<br><br>
   AI agents ask to pay. Deterministic rules and a human approve the <i>exact</i> terms. PayPal moves the money.<br>
   Only a PayPal-verified result counts as paid.
@@ -76,9 +77,9 @@ outcome.
 | ✅ **Verified outcomes only** | A payment is "paid" only after an authenticated PayPal read or a signature-verified webhook. |
 | 🔎 **Advisory intelligence** | Risk signals, a Channel3 market price check ("too good to be true?") and Kernel cloud-browser page checks. Advice only: it can never approve. |
 | 🧾 **Audit timeline** | Every request has a timeline: who asked, which rule ran, who approved which terms, what PayPal confirmed. |
-| 🔁 **Counter-offer ("Buy this instead")** | Besides approve and reject, the owner can counter: decline the agent's request and send back a replacement (your price, or the cheaper Channel3 deal). The counter approves nothing; the replacement runs every rule again and needs its own exact-terms approval. Savings count only after PayPal verifies the capture. |
-| 🐷 **Saver agents** | Hire a Saver with one manifesto: *"I exist to save you money. If I save you nothing this month, I retire myself."* It runs automatically while the server runs, finds cheaper real Channel3 offers for requests awaiting your approval and suggests a counter. It can never approve or pay. Its monthly scorecard counts only PayPal-verified savings, and a month with none retires it (key revoked, history kept). Deterministic rules, no ML training. [docs/SAVER_AGENTS.md](docs/SAVER_AGENTS.md) |
-| 🚦 **Clear approval screen** | Every request opens with an advisory verdict (Looks fine / Cheaper elsewhere / Check carefully / Blocked by rule), a price comparison against the best real offer, the payment journey from request to PayPal verification, and the exact terms with their fingerprint. |
+| 🔁 **Counter-offer ("Buy this instead")** | Besides approve and reject, the owner can counter: decline the agent's request and send back a replacement (your price, or the cheaper Channel3 deal). The counter approves nothing; the replacement runs every rule again and needs its own exact-terms approval. Savings count only after PayPal verifies the capture (a sandbox payment to AgentPal's test account: no retailer order is placed, and the saving is the difference between the two approved amounts). |
+| 🐷 **Saver agents** | Hire a Saver with one manifesto: *"I exist to save you money. If I save you nothing this month, I retire myself."* It runs automatically while the server runs, scans the real Channel3 offers already recorded for requests awaiting your approval (no new provider calls) and suggests a counter. It can never approve or pay. Its monthly scorecard counts only PayPal-verified savings, and a month with none retires it (key revoked, history kept). Deterministic rules, no ML training. [docs/SAVER_AGENTS.md](docs/SAVER_AGENTS.md) |
+| 🚦 **Clear approval screen** | Every request opens with an advisory verdict (Looks fine / Cheaper elsewhere / Check carefully / Blocked by rule), a price comparison against the best recorded offer when comparable market data exists, the payment journey from request to PayPal verification, and the exact terms with their fingerprint. |
 | 🛑 **Freeze all agent spending** | One owner-only emergency stop freezes every wallet in your workspace, audited. |
 | 🧪 **Test Lab** | Ask a built-in AI shopping agent to buy something, or create a test payment, and walk it through approval, PayPal checkout, capture and refund in the browser. |
 | 🔐 **Bring your own keys** | Add PayPal, Channel3, Kernel, Groq and OpenRouter keys in the dashboard. Each is verified live, encrypted at rest and never shown again. |
@@ -241,7 +242,7 @@ permissions · every financial action is auditable · a model failure never bypa
   Idempotency keys prevent double payments.
 * **Owner dashboard:** served by the API at `/app/` with a strict Content-Security-Policy and no
   third-party scripts; tables and charts use AG Grid and AG Charts (vendored).
-* **Security:** salted-hash owner tokens and agent keys, per-agent capabilities, rate limits, host
+* **Security:** owner tokens stored as salted SHA-256, agent keys as SHA-256 of 256-bit random values (never in plain text), per-agent capabilities, rate limits, host
   allow-list, loopback by default, optional TOTP for approvals, encrypted provider keys (Fernet),
   hash-locked dependencies.
 * **Demo AI agents:** a Shopper agent and two autonomous companies (a marketing agency and a SaaS
