@@ -240,7 +240,7 @@ class Shopper:
                     if payee:
                         body["merchant_paypal_email"] = payee
                     self.event("Selected one catalogue offer for owner review.", amount=amount,
-                               kind="selection",
+                               kind="selection", currency="USD", title=chosen["title"],
                                merchant=chosen["merchant_domain"],
                                justification=body["business_justification"])
                     return self.redact.clean(body)
