@@ -5,7 +5,7 @@ const site=process.env.AGENTPAL_SCREEN_DIR||path.join(__dirname,'site'),nonce='a
 const shots='/tmp/agentpal-shots/ap-shots',today=new Date().toISOString(),hash='123456789abc'+'d'.repeat(52),hostile='<img src=x onerror=alert(1)>',calls=[];
 fs.mkdirSync(shots,{recursive:true});
 let server,browser,origin,fixtureError;
-const market={provider:'channel3',advisory_level:'no_concern',market:{currency:'USD',claimed_vs_median:'1.2'},signals:[],better_deals:[
+const market={provider:'channel3',checked_at:today,advisory_level:'no_concern',market:{currency:'USD',claimed_vs_median:'1.2'},signals:[],better_deals:[
  {retailer:'Wrong currency',price:'1.00',currency:'EUR'},
  {retailer:'Everyday Electronics',price:'18.00',currency:'USD',you_save:'6.00'},
  {retailer:'Hub Store',price:'20.00',currency:'USD',you_save:'4.00'}]};
@@ -24,6 +24,10 @@ const records=new Map([
  make('hostile',{terms:{amount:'24.00',currency:'USD',merchant_name:hostile,merchant_domain:hostile,purpose:hostile},risk_signals:[{code:hostile,kind:'uncertainty',message:hostile}],market_check:{...market,better_deals:[{retailer:hostile,price:'18.00',currency:'USD'}]}}),
  make('changed')
 ].map(r=>[r.request_id,r]));
+for(const mode of ['paypal_sandbox','simulated','unavailable']){
+ const record=make('payee-'+mode,{provider_mode:mode});delete record.terms.merchant_paypal_email;records.set(record.request_id,record);
+}
+records.set('undated',make('undated',{market_check:{...market,checked_at:null}}));
 const json=(res,body,status=200)=>{res.writeHead(status,{'Content-Type':'application/json'});res.end(JSON.stringify(body));};
 async function serve(req,res){
  const url=new URL(req.url,origin||'http://localhost'),p=url.pathname.slice(4);
@@ -73,6 +77,11 @@ async function serve(req,res){
   await open('cheaper',true);
   assert.deepEqual(await states(),['done','done','current','not-reached','not-reached','not-reached']);
   const card=dialog.locator('.f-price-card');assert.equal(await card.locator('.f-price-bar').count(),2);
+  assert.equal(await dialog.locator('.f-exact-terms .f-merchant-domain').innerText(),'supply.example');
+  assert.equal(await dialog.locator('.f-payee-demo-note').count(),0,'Explicit merchant payees have no AgentPal-account note');
+  const recorded='Recorded '+await page.evaluate(at=>AgentPalVisuals.date(at),today);
+  assert.equal(await card.locator('.f-price-recorded').innerText(),recorded);
+  assert.equal(await card.locator('time').getAttribute('datetime'),today);
   assert.match(await card.innerText(),/Everyday Electronics[\s\S]*\$18\.00 USD/);assert.match(await card.innerText(),/\$6\.00 USD \(25\.0%\) less/);
   const bars=await card.locator('.f-price-bar').evaluateAll(list=>list.map(b=>b.getBoundingClientRect().width));assert.ok(Math.abs(bars[1]/bars[0]-.75)<.02);
   assert.deepEqual(await dialog.locator('[data-counter-deal]').evaluateAll(list=>list.map(b=>b.dataset.counterDeal)),['1','2']);
@@ -93,10 +102,21 @@ async function serve(req,res){
    if(id==='verified'){await dialog.locator('.f-journey').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(shots,`verified-${width}.png`)});}
   }
   await open('hostile',true);assert.equal(await dialog.locator('img,script,iframe').count(),0);assert.ok((await dialog.innerText()).includes(hostile));
+  assert.equal(await dialog.locator('.f-exact-terms .f-merchant-domain').innerText(),hostile,'Hostile merchant domain is literal text beside the merchant');
   await dialog.locator('details.f-advisory summary').click();assert.ok((await dialog.locator('details').innerText()).includes(hostile));
   assert.equal(await dialog.evaluate(m=>m.scrollWidth<=m.clientWidth+1),true,'dialog has no horizontal overflow');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
   await open('fine',true);assert.match(await dialog.locator('.f-price-card').innerText(),/Price not compared/);assert.equal(await dialog.locator('.f-price-bar').count(),0);
+  assert.equal(await dialog.locator('.f-price-recorded').count(),0);
   await dialog.locator('[data-copy-fingerprint]').click();assert.equal(await page.evaluate(()=>navigator.clipboard.readText()),hash);
+  for(const mode of ['paypal_sandbox','simulated','unavailable']){
+   await open('payee-'+mode,true);
+   const note=dialog.locator('.f-exact-terms dd .f-payee-demo-note');
+   assert.equal(await note.count(),mode==='unavailable'?0:1);
+   if(mode!=='unavailable')assert.equal(await note.innerText(),"Sandbox demo: payment goes to AgentPal's PayPal sandbox account; no retailer order is placed.");
+  }
+  await open('unknown',true);assert.equal(await dialog.locator('.f-merchant-domain').count(),0,'Absent domains add no placeholder');
+  await open('low',true);assert.equal(await dialog.locator('.f-price-recorded').innerText(),recorded,'Checks without comparable offers still show their recorded time');
+  await open('undated',true);assert.equal(await dialog.locator('.f-price-recorded').count(),0,'No timestamp is invented');
  }
  assert.equal(posts().length,0,'opening details never approves');
  await open('changed',true);records.get('changed').terms_sha256='e'.repeat(64);records.get('changed').terms.amount='25.00';

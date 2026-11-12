@@ -318,9 +318,22 @@ class Shopper:
         return result
 
     def wait(self, request_id: str, *, owner: bool, timeout: float = 3600) -> dict:
+        """Follow at most three owner counters within the original polling deadline."""
         deadline, delay = time.monotonic() + timeout, 2.0
+        visited, counters = {identifier(request_id)}, 0
         while True:
             view = self.read(request_id)
+            if view["status"] == "rejected" and view.get("countered_by"):
+                replacement = identifier(view["countered_by"])
+                if counters >= 3 or replacement in visited:
+                    self.event("Counter chain limit or cycle reached; review this errand "
+                               "in the owner dashboard.")
+                    return view
+                self.event("The owner countered: following replacement " + replacement)
+                visited.add(replacement)
+                counters += 1
+                request_id = replacement
+                continue
             if view["status"] in STOP or (owner and view["status"] not in
                                           {"prepared", "awaiting_approval"}):
                 return view

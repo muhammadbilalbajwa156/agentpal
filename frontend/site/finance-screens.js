@@ -50,7 +50,10 @@ if(window.AgentPalAPI?.live){
   }
   function termsHTML(value,kind){
     const r=row(value,kind),terms=value.terms||{},hash=String(value.terms_sha256||'');
-    return `<section class="f-exact-terms" aria-label="Exact terms"><div class="f-purchase"><div><small>EXACT TERMS</small><h3>${escape(r.purpose)}</h3></div><div class="f-dialog-amount">${displayMoney(r)}</div></div><dl class="f-detail-list">${amountPair(r)}${pair('Pay to',payeeLabel(value,kind))}${pair('Purpose',r.purpose)}${kind==='payment'?pair('Merchant',terms.merchant_name):pair('Note',value.note)}<dt>Fingerprint</dt><dd class="f-fingerprint"><code title="${escape(hash)}">${escape(hash.slice(0,12))}…</code><button type="button" class="link" data-copy-fingerprint="${escape(hash)}" aria-label="Copy full terms fingerprint">Copy</button></dd>${value.policy_block?pair('Blocked by rule',value.policy_block.rule+' · '+value.policy_block.label):''}</dl>${sandbox}${badge(r.status)}${kind==='payment'?'<p class="f-sandbox-note">This sandbox payment does not order the item from the retailer.</p>':''}${kind==='payment'?counterLinkHTML(value):''}${verificationHTML(value.verification)}</section>`;
+    const demoPayee=kind==='payment'&&!r.payee&&['paypal_sandbox','simulated'].includes(value.provider_mode);
+    const payee=`<dt>Pay to</dt><dd>${escape(payeeLabel(value,kind))}${demoPayee?"<small class=\"f-payee-demo-note\">Sandbox demo: payment goes to AgentPal's PayPal sandbox account; no retailer order is placed.</small>":''}</dd>`;
+    const merchant=`<dt>Merchant</dt><dd>${escape(terms.merchant_name)}${terms.merchant_domain?` <span class="f-merchant-domain">${escape(terms.merchant_domain)}</span>`:''}</dd>`;
+    return `<section class="f-exact-terms" aria-label="Exact terms"><div class="f-purchase"><div><small>EXACT TERMS</small><h3>${escape(r.purpose)}</h3></div><div class="f-dialog-amount">${displayMoney(r)}</div></div><dl class="f-detail-list">${amountPair(r)}${payee}${pair('Purpose',r.purpose)}${kind==='payment'?merchant:pair('Note',value.note)}<dt>Fingerprint</dt><dd class="f-fingerprint"><code title="${escape(hash)}">${escape(hash.slice(0,12))}…</code><button type="button" class="link" data-copy-fingerprint="${escape(hash)}" aria-label="Copy full terms fingerprint">Copy</button></dd>${value.policy_block?pair('Blocked by rule',value.policy_block.rule+' · '+value.policy_block.label):''}</dl>${sandbox}${badge(r.status)}${kind==='payment'?'<p class="f-sandbox-note">This sandbox payment does not order the item from the retailer.</p>':''}${kind==='payment'?counterLinkHTML(value):''}${verificationHTML(value.verification)}</section>`;
   }
   // Labels describe recorded evidence, never payment authority. Warnings take priority
   // over a cheaper offer so that a bargain cannot hide a concern.
@@ -74,14 +77,15 @@ if(window.AgentPalAPI?.live){
     .filter(d=>d.currency===value.terms?.currency&&/^\d+(\.\d{1,8})?$/.test(String(d.price))&&Number(d.price)>0&&d.retailer);
   function priceHTML(value){
     if(!value.market_check)return '<section class="f-price-card"><h3>Price not compared</h3><p>No market check recorded.</p></section>';
+    const recorded=value.market_check.checked_at?`<p class="f-price-recorded">Recorded <time datetime="${escape(value.market_check.checked_at)}">${escape(visual.date(value.market_check.checked_at))}</time></p>`:'';
     const deals=comparableDeals(value),best=deals.reduce((a,d)=>!a||Number(d.price)<Number(a.price)?d:a,null);
     const asked=Number(value.terms?.amount);
-    if(!best||!Number.isFinite(asked)||asked<=0)return '<section class="f-price-card"><h3>Price comparison</h3><p>No comparable same-currency Channel3 offer recorded. Price not compared.</p></section>';
+    if(!best||!Number.isFinite(asked)||asked<=0)return `<section class="f-price-card"><h3>Price comparison</h3>${recorded}<p>No comparable same-currency Channel3 offer recorded. Price not compared.</p></section>`;
     const price=Number(best.price),diff=asked-price,pct=Math.abs(diff)/asked*100,max=Math.max(asked,price);
     // Widths are coarse visual guides; exact prices and differences are text. Classes
     // keep dynamic values out of inline styles under the dashboard CSP.
     const bar=(label,amount,tone)=>`<div class="f-price-row"><div><span>${escape(label)}</span><strong>${displayMoney({amount,currency:value.terms.currency})}</strong></div><div class="f-price-track" aria-hidden="true"><div class="f-price-bar ${escape(tone)} f-width-${escape(Math.max(5,Math.round(Number(amount)/max*20)*5))}"></div></div></div>`;
-    return `<section class="f-price-card" aria-label="Price comparison"><h3>Price comparison <small>Channel3 · advisory</small></h3>${bar("Agent's price",value.terms.amount,'f-price-agent')}${bar('Best offer · '+best.retailer,best.price,'f-price-best')}<p class="f-price-difference">${displayMoney({amount:Math.abs(diff).toFixed(2),currency:value.terms.currency})} (${escape(pct.toFixed(1))}%) ${diff>=0?'less':'more'} than the agent's price. Recorded offer; confirm availability.</p></section>`;
+    return `<section class="f-price-card" aria-label="Price comparison"><h3>Price comparison <small>Channel3 · advisory</small></h3>${recorded}${bar("Agent's price",value.terms.amount,'f-price-agent')}${bar('Best offer · '+best.retailer,best.price,'f-price-best')}<p class="f-price-difference">${displayMoney({amount:Math.abs(diff).toFixed(2),currency:value.terms.currency})} (${escape(pct.toFixed(1))}%) ${diff>=0?'less':'more'} than the agent's price. Recorded offer; confirm availability.</p></section>`;
   }
   function journeyHTML(value){
     const status=value.status,blocked=!!value.policy_block||status==='blocked_by_rule';

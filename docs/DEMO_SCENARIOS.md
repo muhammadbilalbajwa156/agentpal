@@ -204,6 +204,8 @@ Provider evidence and configuration: [PAYPAL_SANDBOX.md](PAYPAL_SANDBOX.md),
 
 ## E. Counter-offer: "not that, this"
 
+The bundled Shopper follows up to three `countered_by` links without cycles, shares the original wait timeout, and executes the replacement unchanged only after its own owner approval.
+
 Other tools give the owner two buttons. AgentPal adds a third. Use the Test Lab wallet
 ($25 per payment) so both amounts fit.
 

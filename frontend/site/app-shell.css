@@ -215,3 +215,69 @@ body[data-auth] #phone-nav{display:none!important}
 
 .sidebar-docs{color:#c0ccea;font-size:12px;padding:14px;text-align:left;margin-top:16px}
 .f-live .overview-right .activity{height:auto;min-height:225px}
+
+/* TOUR: one starting point, with evidence rather than click-based progress. */
+.overview-audience>p{margin-bottom:4px}
+.overview-audience>small{display:block;font-size:11px;color:#5d6785;line-height:1.5}
+.overview-tour-wrap{margin:0 0 18px}
+.overview-tour{padding:24px;border:1px solid #cbdcfc;background:linear-gradient(120deg,#f1f6ff,#fff 75%);box-shadow:0 6px 24px #183e8508}
+.tour-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.tour-eyebrow{font-size:10px;letter-spacing:1.4px;font-weight:700;color:#235ac5}
+.tour-heading h2{font-size:24px;line-height:1.25;letter-spacing:-.7px;margin:7px 0 8px;color:#142245}
+.tour-heading p{font-size:13px;color:#536581;line-height:1.5;margin:0}
+.tour-dismiss{display:flex;align-items:center;gap:6px;min-height:36px;padding:8px 10px;border:1px solid #d7e2f5;border-radius:8px;font-size:11px;color:#526684;flex-shrink:0;background:#ffffffa6}
+.tour-dismiss span{font-size:17px;line-height:1}
+.tour-dismiss:hover{background:#e7effe;color:#164eb6}
+.tour-steps{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;padding:0;margin:22px 0 12px}
+.tour-steps li{min-width:0}
+.tour-steps a{height:100%;display:flex;flex-direction:column;align-items:flex-start;padding:15px;border:1px solid #d5e1f6;border-radius:12px;color:#142245;text-decoration:none;background:#fff;transition:border-color .15s,box-shadow .15s}
+.tour-steps a:hover{border-color:#719bf0;box-shadow:0 4px 14px #164eb612}
+.tour-step-top{display:flex;align-items:center;gap:8px;width:100%;margin-bottom:15px}
+.tour-step-number{display:grid;place-items:center;flex-shrink:0;width:29px;height:29px;border-radius:9px;font-size:13px;font-weight:700;color:#1d5ed9;background:#edf3ff}
+.tour-evidence-check{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#e1f6ed;color:#117053;font-size:12px;font-weight:700}
+.tour-step-arrow{margin-left:auto;color:#6d83ab;font-size:18px}
+.tour-steps strong{font-size:14px;line-height:1.45;letter-spacing:-.15px}
+.tour-step-hint{display:block;font-size:11px;line-height:1.6;color:#5d6e89;margin-top:7px}
+.tour-evidence-note{font-size:10px;line-height:1.5;color:#64738c;margin:0}
+.tour-payment{border-top:1px solid #dce6f7;margin-top:18px;padding-top:17px}
+.tour-payment h3{margin:0 0 12px;font-size:12px;color:#334d75}
+.tour-payment-flow{list-style:none;display:flex;align-items:center;flex-wrap:wrap;gap:8px 0;margin:0;padding:0;color:#354c72;font-size:11px;font-weight:600;line-height:1.5}
+.tour-payment-flow li{display:flex;align-items:center;min-width:0}
+.tour-payment-flow li:not(:last-child)::after{content:'→';font-size:15px;color:#8ca2c7;padding:0 12px;font-weight:400}
+.tour-payment-flow li:last-child{color:#117053}
+.tour-payment .tour-payment-detail,.tour-payment .tour-payment-note{font-size:11px;line-height:1.65;color:#596a85;margin:12px 0 0}
+.tour-payment .tour-payment-note{margin-top:5px;color:#6e6170}
+.tour-restore{display:block;padding:8px 0;font-size:12px}
+.overview-tour[hidden],.tour-restore[hidden]{display:none}
+.overview-tour a:focus-visible,.tour-dismiss:focus-visible,.tour-restore:focus-visible{outline:3px solid #346fea;outline-offset:3px}
+.tour-payment h3,#tour-title{scroll-margin-top:20px}
+.tour-lab-hint{padding:12px 14px;border:1px solid #c4d7fb;border-radius:9px;background:#eef4ff;color:#234a88;font-size:12px;line-height:1.6}
+.lab-attacks,#lab-errand-form{scroll-margin-top:20px}
+.protection-impact{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;border-top:1px solid #e2e9f6;padding-top:18px;margin-top:18px}
+.protection-impact article{min-width:0;border-left:3px solid #199778;padding-left:12px}
+.protection-impact strong{display:block;font-size:24px;line-height:1.3;color:#142245;overflow-wrap:anywhere}
+.protection-impact span{display:block;font-size:12px;line-height:1.5;color:#334d75;margin-top:5px;font-weight:600}
+.protection-impact small{display:block;font-size:10px;line-height:1.65;color:#62728c;margin-top:5px;overflow-wrap:anywhere}
+.protection-impact .tour-verified{color:#117053}
+@media(min-width:761px) and (max-width:1150px){.tour-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+ .overview-tour{padding:17px}
+ .tour-heading{gap:8px}
+ .tour-heading h2{font-size:22px;max-width:220px}
+ .tour-eyebrow{font-size:9px;letter-spacing:1px}
+ .tour-heading p{font-size:12px}
+ .tour-dismiss{padding:7px;font-size:10px}
+ .tour-dismiss span{display:none}
+ .tour-steps{grid-template-columns:1fr;gap:9px;margin-top:18px}
+ .tour-steps a{display:grid;grid-template-columns:34px minmax(0,1fr);column-gap:10px;padding:13px}
+ .tour-step-top{grid-row:1/3;display:flex;flex-direction:column;align-self:start;gap:7px;margin:0}
+ .tour-step-arrow{display:none}
+ .tour-steps strong{font-size:13px}
+ .tour-step-hint{margin-top:4px;font-size:11px}
+ .tour-evidence-note{font-size:10px}
+ .tour-payment-flow{font-size:10px;gap:8px 0}
+ .tour-payment-flow li:not(:last-child)::after{padding:0 7px}
+ .protection-impact{grid-template-columns:1fr;gap:16px}
+ .protection-impact strong{font-size:23px}
+}
+@media(prefers-reduced-motion:reduce){.tour-steps a{transition:none}}

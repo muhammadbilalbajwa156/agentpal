@@ -80,6 +80,9 @@ def run_errand(shopper: Shopper, journal: Journal, task: str, budget: str, *,
         state = journal.update(errand_id, lambda state: state.update(request_id=result["request_id"]))
     request_id = state["request_id"]
     view = shopper.wait(request_id, owner=True, timeout=wait_seconds)
+    # Keep the original checkpoint as the chain anchor on resume; execute/report the
+    # request actually returned by wait, which may be an owner's replacement.
+    request_id = view["request_id"]
     if view["status"] == "approved":
         claimed = False
 

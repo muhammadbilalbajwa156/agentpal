@@ -60,6 +60,7 @@ def shop_errand(ctx, task: str, budget: str) -> dict:
     request = ctx.step("request_payment", request_payment, plan, errand_id)
     request_id = request["request_id"]
     decision = ctx.step("wait_for_owner_decision", wait_for_owner_decision, request_id)
+    request_id = decision["request_id"]
     if decision["status"] != "approved":
         return {"errand_id": errand_id, "request_id": request_id, "status": decision["status"]}
     result = ctx.step("execute", execute, request_id)

@@ -597,3 +597,283 @@ def test_groq_key_never_appears_in_events():
     world = GroqWorld()
     run(world)
     assert "dummy_groq_key" not in json.dumps(world.events)
+
+
+# Owner counters use the real HTTP auth, policy, ledger and approval paths.
+@pytest.mark.parametrize("runner", ["journal", "render"])
+def test_shopper_follows_counter_and_executes_only_approved_replacement(
+        tmp_path, monkeypatch, runner):
+    from agentpal.agents.shopper import render_workflow as workflow
+    from test_paypal_refunds import RefundPayPal
+    from test_platform_counter_offer import counter, paypal_world, workspace
+    from test_platform_workspace import world as counter_world
+
+    with counter_world(tmp_path) as (client, deps):
+        backend = RefundPayPal()
+        paypal_world(deps, backend)
+        owner_headers, agent_headers, _, _ = workspace(client, deps)
+        env = {**ENV, "AGENTPAL_AGENT_KEY": agent_headers["Authorization"].removeprefix("Bearer ")}
+        events, agent_calls, submitted, state = [], [], [], {}
+
+        def record(request):
+            if (request.headers.get("Authorization") == agent_headers["Authorization"]
+                    and "X-Test-Probe" not in request.headers):
+                agent_calls.append(request)
+        client.event_hooks["request"].append(record)
+        real_create_order = deps.provider.create_order
+
+        def create_order(terms, **kwargs):
+            submitted.append(terms.model_dump(mode="json"))
+            assert state["approved"]
+            return real_create_order(terms, **kwargs)
+        monkeypatch.setattr(deps.provider, "create_order", create_order)
+
+        def emit(event):
+            events.append(event)
+            if event.get("status") == "awaiting_approval" and "original" not in state:
+                state["original"] = event["request_id"]
+                response = counter(client, owner_headers, state["original"])
+                assert response.status_code == 201, response.text
+                state["replacement"] = response.json()["replacement"]
+
+        def sleep(_):
+            replacement = state["replacement"]
+            path = "/v1/payment-requests/" + replacement["request_id"]
+            probe_headers = {**agent_headers, "X-Test-Probe": "1"}
+            if not state.get("approved"):
+                assert not submitted
+                assert not any(r.url.path.endswith("/execute") for r in agent_calls)
+                assert client.get(path, headers=probe_headers).json()["status"] == "awaiting_approval"
+                assert client.post(path + "/approve", headers=probe_headers,
+                                   json={"terms_sha256": replacement["terms_sha256"]}).status_code == 403
+                with pytest.raises(ShopperError, match="agent_action_refused"):
+                    shopper._http("agentpal", "POST", path + "/approve",
+                                  body={"terms_sha256": replacement["terms_sha256"]})
+                assert client.post(path + "/execute", headers=probe_headers).status_code == 409
+                assert not submitted
+                assert client.post(path + "/approve", headers=owner_headers,
+                                   json={"terms_sha256": replacement["terms_sha256"]}).status_code == 200
+                state["approved"] = True
+            else:
+                backend.approve()
+                assert client.post(path + "/capture", headers=owner_headers).json()["status"] == "provider_confirmed"
+
+        shopper = Shopper(env=env, client=client, emit=emit, sleep=sleep)
+        monkeypatch.setattr(shopper, "plan", lambda *a: {
+            "amount": "24.99", "currency": "USD", "merchant_name": "Unfamiliar Shop",
+            "merchant_domain": "unfamiliar-shop.example", "purpose": "USB-C hub",
+            "request_owner_decision": True})
+        journal = Journal(":memory:")
+
+        class Context:
+            metadata = SimpleNamespace(flow_run_id="counter_errand")
+
+            def __init__(self):
+                self.results = {}
+
+            def step(self, name, fn, *args):
+                if name not in self.results:
+                    self.results[name] = fn(*args)
+                return self.results[name]
+
+        ctx = Context()
+        monkeypatch.setattr(workflow, "Shopper", lambda **kw: shopper)
+        monkeypatch.setattr(workflow, "_with_shopper",
+                            lambda method, *a, **kw: getattr(shopper, method)(*a, **kw))
+
+        def invoke():
+            if runner == "render":
+                return shop_errand(ctx, "USB-C hub", "25")
+            return run_errand(shopper, journal, "USB-C hub", "25", errand_id="counter_errand")
+
+        result = invoke()
+        replacement = state["replacement"]
+        assert result == {"errand_id": "counter_errand", "request_id": replacement["request_id"],
+                          "status": "provider_confirmed"}
+        assert invoke() == result
+        assert submitted == [replacement["terms"]]
+        assert any(e["message"] == "The owner countered: following replacement " +
+                   replacement["request_id"] for e in events)
+        # One initial creation; the owner created the replacement, never the Shopper.
+        assert len([r for r in agent_calls if r.method == "POST" and
+                    r.url.path == "/v1/payment-requests"]) == 1
+        assert [r.url.path for r in agent_calls if r.method == "POST" and
+                r.url.path.endswith("/execute")] == [
+                    "/v1/payment-requests/" + replacement["request_id"] + "/execute"]
+        assert not any(r.url.path.endswith(("/approve", "/capture", "/counter"))
+                       for r in agent_calls if r.method == "POST")
+        assert client.get("/v1/payment-requests/" + state["original"],
+                          headers=agent_headers).json()["status"] == "rejected"
+        journal.close()
+
+
+def test_shopper_counter_wait_timeout_never_executes_unapproved_replacement(tmp_path):
+    from test_platform_counter_offer import ask, counter, workspace
+    from test_platform_workspace import world as counter_world
+
+    with counter_world(tmp_path) as (client, deps):
+        owner_headers, agent_headers, _, _ = workspace(client, deps)
+        original = ask(client, agent_headers)
+        replacement = counter(client, owner_headers, original["request_id"]).json()["replacement"]
+        shopper = Shopper(env={**ENV, "AGENTPAL_AGENT_KEY":
+                               agent_headers["Authorization"].removeprefix("Bearer ")}, client=client)
+        decision = shopper.wait(original["request_id"], owner=True, timeout=0)
+        assert decision["request_id"] == replacement["request_id"]
+        assert decision["status"] == "awaiting_approval"
+        assert shopper.execute(decision["request_id"])["status"] == "awaiting_approval"
+        assert deps.wallet_store.query("SELECT * FROM wallet_owner_decisions")
+        assert deps.risk_service.store.query("SELECT * FROM provider_orders") == []
+
+
+@pytest.mark.parametrize("length", [3, 4])
+def test_shopper_follows_at_most_three_real_counters(tmp_path, length):
+    from test_platform_counter_offer import MANUAL, ask, counter, workspace
+    from test_platform_workspace import world as counter_world
+
+    with counter_world(tmp_path) as (client, deps):
+        owner_headers, agent_headers, _, _ = workspace(client, deps)
+        chain = [ask(client, agent_headers)]
+        for index in range(length):
+            response = counter(client, owner_headers, chain[-1]["request_id"],
+                               {**MANUAL, "amount": str(16 - index) + ".00"})
+            assert response.status_code == 201, response.text
+            chain.append(response.json()["replacement"])
+        last = chain[-1]
+        assert client.post("/v1/payment-requests/" + last["request_id"] + "/approve",
+                           headers=owner_headers, json={"terms_sha256": last["terms_sha256"]}).status_code == 200
+        seen, events = [], []
+        client.event_hooks["request"].append(lambda r: seen.append(r.url.path))
+        shopper = Shopper(env={**ENV, "AGENTPAL_AGENT_KEY":
+                               agent_headers["Authorization"].removeprefix("Bearer ")},
+                          client=client, emit=events.append)
+        result = shopper.wait(chain[0]["request_id"], owner=True, timeout=0)
+        assert result["request_id"] == chain[3]["request_id"]
+        assert result["status"] == ("approved" if length == 3 else "rejected")
+        assert seen == ["/v1/payment-requests/" + p["request_id"] for p in chain[:4]]
+        assert len([e for e in events if e["message"].startswith("The owner countered:")]) == 3
+
+
+def counter_shopper(views, *, sleep=None):
+    """Malformed/cyclic links cannot be produced by the normal owner API."""
+    seen, events = [], []
+
+    def handle(request):
+        assert request.method == "GET"
+        request_id = request.url.path.rsplit("/", 1)[1]
+        seen.append(request_id)
+        return httpx.Response(200, json={"request_id": request_id, **views[request_id]})
+
+    shopper = Shopper(env=ENV, client=httpx.Client(transport=httpx.MockTransport(handle)),
+                      emit=events.append, sleep=sleep or (lambda _: pytest.fail("unexpected wait")))
+    return shopper, seen, events
+
+
+@pytest.mark.parametrize("owner", [True, False])
+@pytest.mark.parametrize("cycle", ["self", "ancestor"])
+def test_shopper_counter_cycles_stop_without_revisiting(owner, cycle):
+    shopper, seen, _ = counter_shopper({
+        "a": {"status": "rejected", "countered_by": "a" if cycle == "self" else "b"},
+        "b": {"status": "rejected", "countered_by": "a"}})
+    result = shopper.wait("a", owner=owner, timeout=0)
+    assert seen == (["a"] if cycle == "self" else ["a", "b"])
+    assert result["status"] == "rejected"
+
+
+@pytest.mark.parametrize("status", ["rejected", "expired", "failed"])
+def test_shopper_stops_on_terminal_replacement(status):
+    shopper, seen, _ = counter_shopper({
+        "a": {"status": "rejected", "countered_by": "b"},
+        "b": {"status": status}})
+    result = shopper.wait("a", owner=True, timeout=0)
+    assert seen == ["a", "b"]
+    assert result["request_id"] == "b" and result["status"] == status
+
+
+def test_shopper_counters_share_original_timeout_and_poll_backoff(monkeypatch):
+    from agentpal.agents.shopper import core
+    clock = SimpleNamespace(now=0.0)
+    sleeps = []
+    views = {"a": {"status": "awaiting_approval"},
+             "b": {"status": "awaiting_approval"}}
+
+    def sleep(delay):
+        sleeps.append(delay)
+        clock.now += delay
+        views["a"].update(status="rejected", countered_by="b")
+    monkeypatch.setattr(core, "time", SimpleNamespace(monotonic=lambda: clock.now))
+    shopper, seen, _ = counter_shopper(views, sleep=sleep)
+    result = shopper.wait("a", owner=True, timeout=5)
+    assert result["request_id"] == "b" and result["status"] == "awaiting_approval"
+    assert sleeps == [2.0, 3.0]
+    assert clock.now == 5.0 and seen == ["a", "a", "b", "b"]
+
+
+@pytest.mark.parametrize("link", ["../approve", "a/execute", "https://other.example/x", 123])
+def test_shopper_counter_link_uses_normal_identifier_guard(link):
+    shopper, seen, _ = counter_shopper({"a": {"status": "rejected", "countered_by": link}})
+    with pytest.raises(ShopperError, match="invalid_identifier"):
+        shopper.wait("a", owner=True, timeout=0)
+    assert seen == ["a"]
+
+
+@pytest.mark.parametrize("status", ["approved", "awaiting_approval", "prepared", "expired", "failed"])
+def test_shopper_follows_counter_link_only_on_rejection(status):
+    shopper, seen, _ = counter_shopper({"a": {"status": status, "countered_by": "b"}})
+    assert shopper.wait("a", owner=True, timeout=0)["request_id"] == "a"
+    assert seen == ["a"]
+
+
+@pytest.mark.parametrize("status", [403, 404])
+def test_shopper_cannot_read_an_inaccessible_counter_replacement(status):
+    seen = []
+
+    def handle(request):
+        assert request.method == "GET"
+        seen.append(request.url.path)
+        if request.url.path.endswith("/a"):
+            return httpx.Response(200, json={"request_id": "a", "status": "rejected",
+                                            "countered_by": "b"})
+        return httpx.Response(status, json={"error": "not_available"})
+    shopper = Shopper(env=ENV, client=httpx.Client(transport=httpx.MockTransport(handle)))
+    with pytest.raises(ShopperError, match="remote_request_refused"):
+        shopper.wait("a", owner=True, timeout=0)
+    assert seen == ["/v1/payment-requests/a", "/v1/payment-requests/b"]
+
+
+def test_shopper_resume_keeps_original_request_as_counter_limit_anchor(tmp_path, monkeypatch):
+    from test_platform_counter_offer import MANUAL, counter, workspace
+    from test_platform_workspace import world as counter_world
+
+    with counter_world(tmp_path) as (client, deps):
+        owner_headers, agent_headers, _, _ = workspace(client, deps)
+        shopper = Shopper(env={**ENV, "AGENTPAL_AGENT_KEY":
+                               agent_headers["Authorization"].removeprefix("Bearer ")}, client=client)
+        monkeypatch.setattr(shopper, "plan", lambda *a: {
+            "amount": "24.99", "currency": "USD", "merchant_name": "Unfamiliar Shop",
+            "merchant_domain": "unfamiliar-shop.example", "purpose": "USB-C hub",
+            "request_owner_decision": True})
+        journal = Journal(":memory:")
+
+        def resume():
+            return run_errand(shopper, journal, "USB-C hub", "25", errand_id="counter_resume",
+                              wait_seconds=0)
+
+        original = resume()
+        current = original
+        for index in range(3):
+            response = counter(client, owner_headers, current["request_id"],
+                               {**MANUAL, "amount": f"{16-index}.00"})
+            assert response.status_code == 201, response.text
+            current = response.json()["replacement"]
+            result = resume()
+            assert result["request_id"] == current["request_id"]
+            assert result["status"] == "awaiting_approval"
+        fourth = counter(client, owner_headers, current["request_id"],
+                         {**MANUAL, "amount": "12.00"}).json()["replacement"]
+        assert client.post("/v1/payment-requests/" + fourth["request_id"] + "/approve",
+                           headers=owner_headers, json={"terms_sha256": fourth["terms_sha256"]}).status_code == 200
+        result = resume()
+        assert result["request_id"] == current["request_id"] and result["status"] == "rejected"
+        assert journal.load("counter_resume")["request_id"] == original["request_id"]
+        assert deps.risk_service.store.query("SELECT * FROM provider_orders") == []
+        journal.close()

@@ -10,6 +10,8 @@ tool confirmation is not the authenticated owner's approval in AgentPal. The hum
 reviews exact terms in the dashboard; the API checks that approval again on execution.
 Neither the MCP server nor its agent key can give human consent.
 
+The bundled Shopper follows owner counters through `countered_by` (at most three, no cycles) within its original wait timeout and executes unchanged replacements only after their own owner approval.
+
 | Tool | Agent API / result |
 |---|---|
 | `get_wallet` | `GET /v1/me/wallet`: this agent's allowance |
@@ -33,7 +35,7 @@ uncertain provider outcome.
 
 ## Install and configure
 
-From the project directory, use the same Python environment as the server:
+From the `agentpal/` project directory, use the same Python environment as the server:
 
 ```sh
 python -m pip install -e .

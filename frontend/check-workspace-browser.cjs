@@ -5,7 +5,7 @@ const shots=process.env.AGENTPAL_TEST_SHOTS;if(shots)fs.mkdirSync(shots,{recursi
 const site=process.env.AGENTPAL_SCREEN_DIR||path.join(__dirname,'site'),nonce='shb-browser-nonce',calls=[],secrets=[],today=new Date().toISOString();
 const token='apo_'+crypto.randomBytes(24).toString('hex'),setupCode=crypto.randomUUID();secrets.push(setupCode);
 const providerIds=['paypal_sandbox','channel3','kernel','groq','openrouter'];
-let setup={mode:'self_hosted',needs_setup:true,signup:'setup_code'},integrationFailure=false,labMode='happy',server,browser,origin;
+let setup={mode:'self_hosted',needs_setup:true,signup:'setup_code'},integrationFailure=false,labMode='happy',labEventMode='complete',server,browser,origin;
 let items=providerIds.map(provider=>({provider,label:provider,purpose:'Fixture',required:false,fields:[],status:'not_configured',source:null,hint:null,verified_at:null,error_code:null}));
 const payments=new Map(),timeline=new Map(),hash='a'.repeat(64);
 const json=(res,body,status=200)=>{res.writeHead(status,{'Content-Type':'application/json'});res.end(JSON.stringify(body));};
@@ -28,7 +28,7 @@ async function serve(req,res){
   if(p==='lab/errands'){
    if(labMode==='missing')return json(res,{error:'integration_required',provider:'groq'},409);
    if(labMode==='rate')return json(res,{error:'rate_limited'},429);
-   return json(res,{task:body.task,status:'awaiting_approval',request_id:null,events:[{at:today,message:'Found a sandbox item <img src=x onerror=alert(1)>'},{at:today,kind:'plan',message:'Plan: search for office supplies within USD 30.00.'},{at:today,kind:'candidate',message:'Candidate offer from Channel3.',title:'Pencil <img src=x onerror=alert(1)>',amount:'2.00',currency:'USD',merchant:'supplies.example',in_stock:true},{at:today,kind:'selection',message:'Selected one catalogue offer for owner review.',justification:'Lowest price for the requested supplies.'},{at:today,kind:'boundary',message:'AI proposes · Rules decide · You approve'}]});
+   return json(res,{task:body.task,status:'awaiting_approval',request_id:null,events:[{at:today,message:'Found a sandbox item <img src=x onerror=alert(1)>'},{at:today,kind:'plan',message:'Plan: search for office supplies within USD 30.00.'},{at:today,kind:'candidate',message:'Candidate offer from Channel3.',title:'Pencil <img src=x onerror=alert(1)>',amount:'2.00',currency:'USD',merchant:'supplies.example',in_stock:true},{at:today,kind:'selection',message:'Selected one catalogue offer for owner review.',title:'Pencil',amount:'2.00',currency:'USD',merchant:'supplies.example',justification:'Lowest price for the requested supplies.'},{at:today,kind:'boundary',message:'AI proposes · Rules decide · You approve'}].filter(e=>labEventMode==='complete'||(labEventMode==='candidates-only'?e.kind!=='selection':labEventMode==='selection-only'?e.kind!=='candidate':!['selection','candidate'].includes(e.kind)))});
   }
   if(p.startsWith('lab/scenarios/')){
    const scenario=p.split('/').at(-1),refused=['changed_terms','payee_swap'].includes(scenario),id='scenario-'+scenario;
@@ -91,6 +91,13 @@ const secret=()=>{const value=crypto.randomUUID();secrets.push(value);return val
   labMode='missing';await page.locator('#lab-task').fill('Find sandbox office supplies');await page.locator('#lab-budget').fill('30.00');await page.locator('#lab-errand-form button').click();await page.locator('#lab-errand-status').getByText(/Connect Groq/).waitFor();
   labMode='rate';await page.locator('#lab-errand-form button').click();await page.locator('#lab-errand-status').getByText(/Too many requests/).waitFor();
   labMode='happy';await page.locator('#lab-errand-form button').click();await page.locator('#lab-errand-events').getByText(/Found a sandbox item/).waitFor();assert.equal(await page.locator('#lab-errand-events img').count(),0);await page.locator('#lab-errand-task').getByText('Original task: Find sandbox office supplies',{exact:true}).waitFor();await page.locator('#lab-errand-events').getByText(/Plan: search for office supplies/).waitFor();assert.match(await page.locator('#lab-errand-events').innerText(),/Pencil.*2.00.*supplies.example.*In stock/);await page.locator('#lab-errand-events').getByText('Why this offer: Lowest price for the requested supplies.',{exact:true}).waitFor();await page.locator('#lab-errand-events').getByText('AI proposes · Rules decide · You approve',{exact:false}).waitFor();
+  const candidateNote='Showing up to 3 candidates; the agent may choose any returned offer.';
+  assert.equal(await page.locator('#lab-errand-events').getByText(candidateNote,{exact:true}).count(),1);
+  assert.match(await page.locator('#lab-errand-events strong').innerText(),/Chosen: Pencil.*2.00.*supplies.example/);
+  for(const mode of ['candidates-only','selection-only','neither','complete']){
+   labEventMode=mode;await page.locator('#lab-errand-form button').click();await page.locator('#lab-errand-status').getByText('Agent status: awaiting approval',{exact:true}).waitFor();
+   assert.equal(await page.locator('#lab-errand-events').getByText(candidateNote,{exact:true}).count(),mode==='complete'?1:0,'Candidate guidance requires both candidates and a selection');
+  }
   const create=async()=>{await page.locator('#lab-amount').fill('10.00');await page.locator('#lab-merchant').fill('Sandbox supplies');await page.locator('#lab-purpose').fill('Judge demo');await page.locator('#lab-payment-form button').click();await page.locator('#lab-result .lab-steps:not([hidden]), #lab-result .lab-shield-card').waitFor();};
   await create();await page.locator('[data-lab-action=approve]').click();await page.locator('#f-live-confirm').waitFor();assert.match(await page.locator('dialog').innerText(),/Any change to amount, payee or purpose voids this approval/);await page.locator('#f-live-confirm').click();await page.locator('[data-lab-action=execute]:enabled').waitFor();
   await page.locator('[data-lab-action=execute]').click();const link=page.getByRole('link',{name:'Open PayPal sandbox approval',exact:true});await link.waitFor();assert.equal(await link.getAttribute('rel'),'noopener noreferrer');assert.equal(new URL(await link.getAttribute('href')).hostname,'www.sandbox.paypal.com');

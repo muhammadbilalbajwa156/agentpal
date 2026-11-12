@@ -33,7 +33,9 @@
 
 ## 🎬 Demo video
 
-https://github.com/user-attachments/assets/4cec97d1-2fa7-4e8b-9192-d449adda2c70
+[![AgentPal demo video: the bank account for AI agents, with a human co-signer](https://img.youtube.com/vi/NzxWO_GyRYg/maxresdefault.jpg)](https://youtu.be/NzxWO_GyRYg)
+
+**Watch on YouTube:** https://youtu.be/NzxWO_GyRYg
 
 
 
@@ -43,7 +45,7 @@ https://github.com/user-attachments/assets/4cec97d1-2fa7-4e8b-9192-d449adda2c70
 
 1. Open the hosted sandbox dashboard: **https://agentpal-api.onrender.com/app/** (it may take a minute to wake up).
 2. Sign in with the owner token from the Devpost testing instructions, or create your own private workspace with the invite code given there.
-3. Open **Test Lab** → *Ask the AI agent to shop*, then **approve the exact terms**, pay on the PayPal sandbox page with the sandbox buyer from the testing instructions, and click **Capture**. The payment shows **Verified by PayPal read**.
+3. The Overview opens with a **Start here: 3-minute tour**. Or go straight to **Test Lab** → *Ask the AI agent to shop*, then **approve the exact terms**, pay on the PayPal sandbox page with the sandbox buyer from the testing instructions, and click **Capture**. The payment shows **Verified by PayPal read**.
 4. Try a **$30** test request: a spending rule blocks it before any human sees it (the Test Lab agent's limit is $25).
 5. In **Test Lab**, press the **Try an attack** buttons (over-limit, split purchase, changed terms, payee swap): each one is stopped by a rule, or by the exact-terms fingerprint, before any money can move.
 6. Open any request: the approval screen shows a verdict, a price comparison and the payment journey. On a request awaiting approval, press **Counter** (or **Counter with this deal** when Channel3 found a cheaper offer): the agent's request is declined, and a replacement with your terms goes through every rule again and waits for your own approval.
@@ -77,7 +79,7 @@ outcome.
 | ✅ **Verified outcomes only** | A payment is "paid" only after an authenticated PayPal read or a signature-verified webhook. |
 | 🔎 **Advisory intelligence** | Risk signals, a Channel3 market price check ("too good to be true?") and Kernel cloud-browser page checks. Advice only: it can never approve. |
 | 🧾 **Audit timeline** | Every request has a timeline: who asked, which rule ran, who approved which terms, what PayPal confirmed. |
-| 🔁 **Counter-offer ("Buy this instead")** | Besides approve and reject, the owner can counter: decline the agent's request and send back a replacement (your price, or the cheaper Channel3 deal). The counter approves nothing; the replacement runs every rule again and needs its own exact-terms approval. Savings count only after PayPal verifies the capture (a sandbox payment to AgentPal's test account: no retailer order is placed, and the saving is the difference between the two approved amounts). |
+| 🔁 **Counter-offer ("Buy this instead")** | Besides approve and reject, the owner can counter: decline the agent's request and send back a replacement (your price, or the cheaper Channel3 deal). The counter approves nothing; the replacement runs every rule again and needs its own exact-terms approval. The bundled AI shopper follows a counter by itself: it waits for your approval of the replacement and pays it unchanged. Savings count only after PayPal verifies the capture (a sandbox payment to AgentPal's test account: no retailer order is placed, and the saving is the difference between the two approved amounts). |
 | 🐷 **Saver agents** | Hire a Saver with one manifesto: *"I exist to save you money. If I save you nothing this month, I retire myself."* It runs automatically while the server runs, scans the real Channel3 offers already recorded for requests awaiting your approval (no new provider calls) and suggests a counter. It can never approve or pay. Its monthly scorecard counts only PayPal-verified savings, and a month with none retires it (key revoked, history kept). Deterministic rules, no ML training. [docs/SAVER_AGENTS.md](docs/SAVER_AGENTS.md) |
 | 🚦 **Clear approval screen** | Every request opens with an advisory verdict (Looks fine / Cheaper elsewhere / Check carefully / Blocked by rule), a price comparison against the best recorded offer when comparable market data exists, the payment journey from request to PayPal verification, and the exact terms with their fingerprint. |
 | 🛑 **Freeze all agent spending** | One owner-only emergency stop freezes every wallet in your workspace, audited. |
