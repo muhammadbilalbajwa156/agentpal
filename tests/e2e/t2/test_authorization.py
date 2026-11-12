@@ -48,11 +48,13 @@ def body_for(path):
         return {"url": "https://127.0.0.1/"}
     if path.endswith("/refunds"):
         return {"amount": "0.01"}
+    if path.startswith("/v1/savers"):
+        return {}
     return {}
 
 
 def absent_path(path):
-    return path.replace("{agent_id}", "agt_" + "0" * 32).replace(
+    return path.replace("{saver_id}", "sav_" + "0" * 32).replace("{agent_id}", "agt_" + "0" * 32).replace(
         "{wallet_id}", "wal_" + "0" * 32).replace(
         "{request_id}", "pay_" + "0" * 32).replace("{key_id}", "0" * 16)
 

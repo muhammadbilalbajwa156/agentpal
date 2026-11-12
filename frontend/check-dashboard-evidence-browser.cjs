@@ -16,7 +16,7 @@ function serve(req,res){
  if(url.pathname.startsWith('/v1/')){
   calls.push({method:req.method,path:url.pathname});assert.equal(req.method,'GET','Browser checks never write');
   const p=url.pathname.slice(4);
-  const lists={'setup/status':{mode:'hosted',needs_setup:false,signup:'disabled'},integrations:{integrations:[]},agents:{agents},wallets:{wallets},'payment-requests':{payment_requests:payments},'payout-requests':{payout_requests:payouts},approvals:{approvals:payments.filter(p=>p.status==='awaiting_approval')},health:{status:'ok',payment_environment:'sandbox',is_real_money:false},disputes:{disputes:[]}};
+  const lists={savers:{savers:[]},'setup/status':{mode:'hosted',needs_setup:false,signup:'disabled'},integrations:{integrations:[]},agents:{agents},wallets:{wallets},'payment-requests':{payment_requests:payments},'payout-requests':{payout_requests:payouts},approvals:{approvals:payments.filter(p=>p.status==='awaiting_approval')},health:{status:'ok',payment_environment:'sandbox',is_real_money:false},disputes:{disputes:[]}};
   if(lists[p])return json(res,lists[p]);
   if(p==='paypal/reconciliation'&&slowReport){slowReport=false;return setTimeout(()=>json(res,{start:today,end:today,rows:[]}),1500);}
   if(p==='paypal/reconciliation')return json(res,{start:new Date(Date.now()-86400000).toISOString(),end:today,rows:[{result:'matched',reason:'verified_order_and_search'},{result:'matched',reason:'not_submitted'},{result:'pending',reason:'refund_extension_required'},{result:'mismatch',reason:'amount_mismatch'}]});

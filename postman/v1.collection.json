@@ -2037,6 +2037,193 @@
           "response": []
         },
         {
+          "id": "c127358b-6e7e-5c92-819f-6f0d679379fd",
+          "name": "GET /v1/savers",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "List Savers",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "savers"
+              ],
+              "raw": "{{base_url}}/v1/savers"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "4427ddd1-a16c-52b6-9408-5ba347da5e17",
+          "name": "POST /v1/savers",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Hire Saver",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "savers"
+              ],
+              "raw": "{{base_url}}/v1/savers"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "79d22d74-ef0e-50b8-9001-edd8edba3e63",
+          "name": "GET /v1/savers/{saver_id}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Get Saver",
+            "header": [],
+            "method": "GET",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "savers",
+                "{{saver_id}}"
+              ],
+              "raw": "{{base_url}}/v1/savers/{{saver_id}}"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "1d8bf502-08aa-52bc-a383-5542381a9445",
+          "name": "POST /v1/savers/{saver_id}/evaluate",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Evaluate only closed calendar months (UTC). Never retire in an open month.",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "savers",
+                "{{saver_id}}",
+                "evaluate"
+              ],
+              "raw": "{{base_url}}/v1/savers/{{saver_id}}/evaluate"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "a41dbf1e-02ef-51f6-91f4-49a4c43d71e2",
+          "name": "POST /v1/savers/{saver_id}/retire",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Retire Saver",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "savers",
+                "{{saver_id}}",
+                "retire"
+              ],
+              "raw": "{{base_url}}/v1/savers/{{saver_id}}/retire"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "03b6cb42-3bce-5a47-9914-3158b0b2aee3",
+          "name": "POST /v1/savers/{saver_id}/run",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Run Saver",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "savers",
+                "{{saver_id}}",
+                "run"
+              ],
+              "raw": "{{base_url}}/v1/savers/{{saver_id}}/run"
+            }
+          },
+          "response": []
+        },
+        {
           "id": "386250b0-7c73-5350-980a-da00fbf0d4eb",
           "name": "POST /v1/setup/owner",
           "request": {

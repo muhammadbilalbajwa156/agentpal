@@ -27,6 +27,8 @@ from .models import (
     IDEMPOTENCY_KEY_PATTERN,
     KEY_ID_PATTERN,
     WALLET_ID_PATTERN,
+    SaverList,
+    SaverOut,
     AgentCreate,
     AgentList,
     AgentOut,
@@ -140,6 +142,38 @@ def build_router() -> APIRouter:
            openapi_extra={"security": []})
     def v1_health() -> V1Health:
         return V1Health(version=__version__)
+
+    # Savers are owner-only advisory policies, never agent payment actors.
+    @r.post("/savers", response_model=SaverOut, status_code=201,
+            operation_id="hireSaver", tags=["savers"], responses=_E409)
+    def hire_saver(owner: Owner, request: Request):
+        return _platform(request).savers.hire(owner)
+
+    @r.get("/savers", response_model=SaverList,
+           operation_id="listSavers", tags=["savers"], responses=_E)
+    def list_savers(owner: Owner, request: Request):
+        return {"savers": _platform(request).savers.list(owner.owner_id)}
+
+    @r.get("/savers/{saver_id}", response_model=SaverOut,
+           operation_id="getSaver", tags=["savers"], responses=_E)
+    def get_saver(saver_id: str, owner: Owner, request: Request):
+        return _platform(request).savers.get(owner.owner_id, saver_id)
+
+    @r.post("/savers/{saver_id}/run", response_model=SaverOut,
+            operation_id="runSaver", tags=["savers"], responses=_E409)
+    def run_saver(saver_id: str, owner: Owner, request: Request):
+        return _platform(request).savers.run(owner.owner_id, saver_id)
+
+    @r.post("/savers/{saver_id}/evaluate", response_model=SaverOut,
+            operation_id="evaluateSaver", tags=["savers"], responses=_E409)
+    def evaluate_saver(saver_id: str, owner: Owner, request: Request):
+        """Evaluate only closed calendar months (UTC). Never retire in an open month."""
+        return _platform(request).savers.evaluate(owner.owner_id, saver_id)
+
+    @r.post("/savers/{saver_id}/retire", response_model=SaverOut,
+            operation_id="retireSaver", tags=["savers"], responses=_E409)
+    def retire_saver(saver_id: str, owner: Owner, request: Request):
+        return _platform(request).savers.retire(owner.owner_id, saver_id)
 
     # ------------------------------------------------------------ agents
     @r.post("/agents", response_model=AgentRegistered, status_code=201,

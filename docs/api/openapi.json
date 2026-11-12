@@ -1771,6 +1771,17 @@
             "title": "Risk Signals",
             "type": "array"
           },
+          "saver_suggestion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SaverSuggestionOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Owner reads only; advisory stored offer. Null for agent credentials."
+          },
           "status": {
             "anyOf": [
               {
@@ -3415,6 +3426,17 @@
             "title": "Risk Signals",
             "type": "array"
           },
+          "saver_suggestion": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SaverSuggestionOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Owner reads only; advisory stored offer. Null for agent credentials."
+          },
           "status": {
             "anyOf": [
               {
@@ -4533,6 +4555,236 @@
         ],
         "title": "Role",
         "type": "string"
+      },
+      "SaverList": {
+        "additionalProperties": false,
+        "properties": {
+          "savers": {
+            "items": {
+              "$ref": "#/components/schemas/SaverOut"
+            },
+            "title": "Savers",
+            "type": "array"
+          }
+        },
+        "required": [
+          "savers"
+        ],
+        "title": "SaverList",
+        "type": "object"
+      },
+      "SaverOut": {
+        "additionalProperties": false,
+        "properties": {
+          "agent_id": {
+            "title": "Agent Id",
+            "type": "string"
+          },
+          "automatic_interval_seconds": {
+            "title": "Automatic Interval Seconds",
+            "type": "integer"
+          },
+          "automatic_runs": {
+            "title": "Automatic Runs",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "current_period": {
+            "$ref": "#/components/schemas/SaverPeriodOut"
+          },
+          "days_left": {
+            "title": "Days Left",
+            "type": "integer"
+          },
+          "feed": {
+            "items": {
+              "$ref": "#/components/schemas/SaverSuggestionOut"
+            },
+            "title": "Feed",
+            "type": "array"
+          },
+          "manifesto": {
+            "title": "Manifesto",
+            "type": "string"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "note_source": {
+            "enum": [
+              "ai",
+              "template"
+            ],
+            "title": "Note Source",
+            "type": "string"
+          },
+          "owner_id": {
+            "title": "Owner Id",
+            "type": "string"
+          },
+          "periods": {
+            "items": {
+              "$ref": "#/components/schemas/SaverPeriodOut"
+            },
+            "title": "Periods",
+            "type": "array"
+          },
+          "retired_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retired At"
+          },
+          "retirement_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retirement Reason"
+          },
+          "saver_id": {
+            "title": "Saver Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "retired"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "owner_id",
+          "saver_id",
+          "agent_id",
+          "status",
+          "manifesto",
+          "created_at",
+          "note",
+          "note_source",
+          "current_period",
+          "periods",
+          "feed",
+          "days_left",
+          "automatic_runs",
+          "automatic_interval_seconds"
+        ],
+        "title": "SaverOut",
+        "type": "object"
+      },
+      "SaverPeriodOut": {
+        "additionalProperties": false,
+        "properties": {
+          "period": {
+            "title": "Period",
+            "type": "string"
+          },
+          "report": {
+            "title": "Report",
+            "type": "string"
+          },
+          "suggestions_made": {
+            "title": "Suggestions Made",
+            "type": "integer"
+          },
+          "suggestions_used": {
+            "title": "Suggestions Used",
+            "type": "integer"
+          },
+          "unverified_potential": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Unverified Potential",
+            "type": "object"
+          },
+          "verified_savings": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Verified Savings",
+            "type": "object"
+          }
+        },
+        "required": [
+          "period",
+          "suggestions_made",
+          "suggestions_used",
+          "verified_savings",
+          "unverified_potential",
+          "report"
+        ],
+        "title": "SaverPeriodOut",
+        "type": "object"
+      },
+      "SaverSuggestionOut": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "title": "Created At",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "deal_index": {
+            "title": "Deal Index",
+            "type": "integer"
+          },
+          "price": {
+            "title": "Price",
+            "type": "string"
+          },
+          "request_id": {
+            "title": "Request Id",
+            "type": "string"
+          },
+          "retailer": {
+            "title": "Retailer",
+            "type": "string"
+          },
+          "saver_id": {
+            "title": "Saver Id",
+            "type": "string"
+          },
+          "saving": {
+            "title": "Saving",
+            "type": "string"
+          },
+          "suggestion_id": {
+            "title": "Suggestion Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "suggestion_id",
+          "saver_id",
+          "request_id",
+          "deal_index",
+          "retailer",
+          "price",
+          "currency",
+          "saving",
+          "created_at"
+        ],
+        "title": "SaverSuggestionOut",
+        "type": "object"
       },
       "SetupOwner": {
         "additionalProperties": false,
@@ -13217,6 +13469,827 @@
         "summary": "Browse Url",
         "tags": [
           "research"
+        ]
+      }
+    },
+    "/v1/savers": {
+      "get": {
+        "operationId": "listSavers",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaverList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Invalid request or forbidden Host header"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "missing or invalid credential",
+            "headers": {
+              "WWW-Authenticate": {
+                "description": "Bearer authentication challenge",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "wrong credential type or not permitted"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "unknown, or not yours"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Request body exceeds the configured byte limit"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V1ValidationEnvelope"
+                }
+              }
+            },
+            "description": "invalid request (`{\"error\": \"invalid_request\", ...}`)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "rate limited",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until a request may be attempted again",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Internal error (no input reflected)"
+          }
+        },
+        "security": [
+          {
+            "OwnerToken": []
+          }
+        ],
+        "summary": "List Savers",
+        "tags": [
+          "savers"
+        ]
+      },
+      "post": {
+        "operationId": "hireSaver",
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaverOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Invalid request or forbidden Host header"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "missing or invalid credential",
+            "headers": {
+              "WWW-Authenticate": {
+                "description": "Bearer authentication challenge",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "wrong credential type or not permitted"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "unknown, or not yours"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "conflict with current state"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Request body exceeds the configured byte limit"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V1ValidationEnvelope"
+                }
+              }
+            },
+            "description": "invalid request (`{\"error\": \"invalid_request\", ...}`)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "rate limited",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until a request may be attempted again",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Internal error (no input reflected)"
+          }
+        },
+        "security": [
+          {
+            "OwnerToken": []
+          }
+        ],
+        "summary": "Hire Saver",
+        "tags": [
+          "savers"
+        ]
+      }
+    },
+    "/v1/savers/{saver_id}": {
+      "get": {
+        "operationId": "getSaver",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "saver_id",
+            "required": true,
+            "schema": {
+              "title": "Saver Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaverOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Invalid request or forbidden Host header"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "missing or invalid credential",
+            "headers": {
+              "WWW-Authenticate": {
+                "description": "Bearer authentication challenge",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "wrong credential type or not permitted"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "unknown, or not yours"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Request body exceeds the configured byte limit"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V1ValidationEnvelope"
+                }
+              }
+            },
+            "description": "invalid request (`{\"error\": \"invalid_request\", ...}`)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "rate limited",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until a request may be attempted again",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Internal error (no input reflected)"
+          }
+        },
+        "security": [
+          {
+            "OwnerToken": []
+          }
+        ],
+        "summary": "Get Saver",
+        "tags": [
+          "savers"
+        ]
+      }
+    },
+    "/v1/savers/{saver_id}/evaluate": {
+      "post": {
+        "description": "Evaluate only closed calendar months (UTC). Never retire in an open month.",
+        "operationId": "evaluateSaver",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "saver_id",
+            "required": true,
+            "schema": {
+              "title": "Saver Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaverOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Invalid request or forbidden Host header"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "missing or invalid credential",
+            "headers": {
+              "WWW-Authenticate": {
+                "description": "Bearer authentication challenge",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "wrong credential type or not permitted"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "unknown, or not yours"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "conflict with current state"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Request body exceeds the configured byte limit"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V1ValidationEnvelope"
+                }
+              }
+            },
+            "description": "invalid request (`{\"error\": \"invalid_request\", ...}`)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "rate limited",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until a request may be attempted again",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Internal error (no input reflected)"
+          }
+        },
+        "security": [
+          {
+            "OwnerToken": []
+          }
+        ],
+        "summary": "Evaluate Saver",
+        "tags": [
+          "savers"
+        ]
+      }
+    },
+    "/v1/savers/{saver_id}/retire": {
+      "post": {
+        "operationId": "retireSaver",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "saver_id",
+            "required": true,
+            "schema": {
+              "title": "Saver Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaverOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Invalid request or forbidden Host header"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "missing or invalid credential",
+            "headers": {
+              "WWW-Authenticate": {
+                "description": "Bearer authentication challenge",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "wrong credential type or not permitted"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "unknown, or not yours"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "conflict with current state"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Request body exceeds the configured byte limit"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V1ValidationEnvelope"
+                }
+              }
+            },
+            "description": "invalid request (`{\"error\": \"invalid_request\", ...}`)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "rate limited",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until a request may be attempted again",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Internal error (no input reflected)"
+          }
+        },
+        "security": [
+          {
+            "OwnerToken": []
+          }
+        ],
+        "summary": "Retire Saver",
+        "tags": [
+          "savers"
+        ]
+      }
+    },
+    "/v1/savers/{saver_id}/run": {
+      "post": {
+        "operationId": "runSaver",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "saver_id",
+            "required": true,
+            "schema": {
+              "title": "Saver Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SaverOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Invalid request or forbidden Host header"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "missing or invalid credential",
+            "headers": {
+              "WWW-Authenticate": {
+                "description": "Bearer authentication challenge",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "wrong credential type or not permitted"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "unknown, or not yours"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "conflict with current state"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Request body exceeds the configured byte limit"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V1ValidationEnvelope"
+                }
+              }
+            },
+            "description": "invalid request (`{\"error\": \"invalid_request\", ...}`)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "rate limited",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until a request may be attempted again",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Internal error (no input reflected)"
+          }
+        },
+        "security": [
+          {
+            "OwnerToken": []
+          }
+        ],
+        "summary": "Run Saver",
+        "tags": [
+          "savers"
         ]
       }
     },

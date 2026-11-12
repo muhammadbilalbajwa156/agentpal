@@ -39,7 +39,7 @@ async function serve(req,res){
   if(p==='setup/status')return json(res,{mode:'hosted',needs_setup:false,signup:'disabled'});
   assert.equal(req.headers.authorization,'Bearer apo_'+'f'.repeat(32));
   const all=[...records.values()];
-  const lists={agents:{agents:[agent]},wallets:{wallets:[wallet]},'payment-requests':{payment_requests:all},'payout-requests':{payout_requests:[]},
+  const lists={savers:{savers:[]},agents:{agents:[agent]},wallets:{wallets:[wallet]},'payment-requests':{payment_requests:all},'payout-requests':{payout_requests:[]},
    approvals:{payment_requests:all.filter(r=>r.status==='awaiting_approval')},health:{status:'ok',payment_environment:'sandbox',is_real_money:false},disputes:{disputes:[]},integrations:{integrations}};
   if(req.method==='GET'&&lists[p])return json(res,lists[p]);
   if(p==='lab/agent')return json(res,{agent_id:'agent',wallet_id:'wallet'});

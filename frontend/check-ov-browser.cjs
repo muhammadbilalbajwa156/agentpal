@@ -87,7 +87,7 @@ function serve(req,res){
   assert.match(await page.locator('.stats').innerText(),/Confirmed payments \+ payouts/);
   assert.equal(await page.locator('#phone-nav').isVisible(),false);
   assert.equal(await page.locator('body>aside').isVisible(),true);
-  const shots=process.env.AGENTPAL_TEST_SHOTS||'/tmp/win/ov-shots';fs.mkdirSync(shots,{recursive:true});
+  const shots=process.env.AGENTPAL_TEST_SHOTS||'/tmp/agentpal-shots/ov-shots';fs.mkdirSync(shots,{recursive:true});
   payments[0].policy_block.label="The request exceeds this wallet's per-transaction limit.";
   await page.evaluate(()=>AgentPalAPI.refresh());
   const activityFits=async()=>{

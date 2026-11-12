@@ -10,9 +10,9 @@ from test_platform_workspace import bearer, owner, world
 
 SCENARIOS = {
     "over_limit": ("blocked", "AMOUNT_ABOVE_HARD_LIMIT", 1, "0.00"),
-    "split_purchase": ("blocked", "SPLIT_TRANSACTION_EXCEEDS_HARD_LIMIT", 2, "15.00"),
-    "changed_terms": ("refused", "terms_mismatch", 2, "3.00"),
-    "payee_swap": ("refused", "terms_mismatch", 2, "2.00"),
+    "split_purchase": ("blocked", "SPLIT_TRANSACTION_EXCEEDS_HARD_LIMIT", 2, "0.00"),
+    "changed_terms": ("refused", "terms_mismatch", 2, "0.00"),
+    "payee_swap": ("refused", "terms_mismatch", 2, "0.00"),
 }
 
 
@@ -68,7 +68,11 @@ def test_scenario_real_control_and_only_expected_reservations(tmp_path, name, mo
         assert result["timeline_url_hint"] == f"/v1/payment-requests/{rid}/timeline"
         views = [c.get("/v1/payment-requests/" + r, headers=h).json() for r in result["request_ids"]]
         assert all(v["status"] not in {"approved", "provider_pending", "provider_confirmed"} for v in views)
-        assert all(v["owner_decision"] is None for v in views)
+        # Demonstration parts that reached the queue were declined (never approved),
+        # so nothing is left awaiting a decision and no allowance stays reserved.
+        assert all(v["status"] != "awaiting_approval" for v in views)
+        assert all(v["owner_decision"] is None or v["owner_decision"]["decision"] == "rejected" for v in views)
+        assert not any(r in str(c.get("/v1/approvals", headers=h).json()) for r in result["request_ids"])
         if outcome == "blocked":
             assert approvals == []
             assert views[-1]["recommendation"] == "block"
@@ -76,7 +80,7 @@ def test_scenario_real_control_and_only_expected_reservations(tmp_path, name, mo
             assert rid not in str(c.get("/v1/approvals", headers=h).json())
         else:
             assert approvals == [(rid, views[0]["terms_sha256"])]
-            assert all(v["status"] == "awaiting_approval" for v in views)
+            assert all(v["status"] == "rejected" and v["owner_decision"]["decision"] == "rejected" for v in views)
             assert views[0]["terms_sha256"] != views[1]["terms_sha256"]
             assert any(a["status"] == "rejected:v1_terms_mismatch" for a in d.risk_service.store.audit_records(rid))
         if name == "payee_swap":

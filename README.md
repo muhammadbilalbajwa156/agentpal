@@ -45,7 +45,8 @@ https://github.com/user-attachments/assets/4cec97d1-2fa7-4e8b-9192-d449adda2c70
 3. Open **Test Lab** → *Ask the AI agent to shop*, then **approve the exact terms**, pay on the PayPal sandbox page with the sandbox buyer from the testing instructions, and click **Capture**. The payment shows **Verified by PayPal read**.
 4. Try a **$30** test request: a spending rule blocks it before any human sees it (the Test Lab agent's limit is $25).
 5. In **Test Lab**, press the **Try an attack** buttons (over-limit, split purchase, changed terms, payee swap): each one is stopped by a rule, or by the exact-terms fingerprint, before any money can move.
-6. On a request awaiting approval, press **Counter** (or **Counter with this deal** when Channel3 found a cheaper offer): the agent's request is declined, and a replacement with your terms goes through every rule again and waits for your own approval.
+6. Open any request: the approval screen shows a verdict, a price comparison and the payment journey. On a request awaiting approval, press **Counter** (or **Counter with this deal** when Channel3 found a cheaper offer): the agent's request is declined, and a replacement with your terms goes through every rule again and waits for your own approval.
+7. In **AI Agents**, see the **Saver agent**: its suggestions feed and this month's scorecard (only PayPal-verified savings count).
 
 Step-by-step scenarios, including a split purchase being blocked and a changed amount voiding an approval: **[docs/DEMO_SCENARIOS.md](docs/DEMO_SCENARIOS.md)**.
 
@@ -76,6 +77,8 @@ outcome.
 | 🔎 **Advisory intelligence** | Risk signals, a Channel3 market price check ("too good to be true?") and Kernel cloud-browser page checks. Advice only: it can never approve. |
 | 🧾 **Audit timeline** | Every request has a timeline: who asked, which rule ran, who approved which terms, what PayPal confirmed. |
 | 🔁 **Counter-offer ("Buy this instead")** | Besides approve and reject, the owner can counter: decline the agent's request and send back a replacement (your price, or the cheaper Channel3 deal). The counter approves nothing; the replacement runs every rule again and needs its own exact-terms approval. Savings count only after PayPal verifies the capture. |
+| 🐷 **Saver agents** | Hire a Saver with one manifesto: *"I exist to save you money. If I save you nothing this month, I retire myself."* It runs automatically while the server runs, finds cheaper real Channel3 offers for requests awaiting your approval and suggests a counter. It can never approve or pay. Its monthly scorecard counts only PayPal-verified savings, and a month with none retires it (key revoked, history kept). Deterministic rules, no ML training. [docs/SAVER_AGENTS.md](docs/SAVER_AGENTS.md) |
+| 🚦 **Clear approval screen** | Every request opens with an advisory verdict (Looks fine / Cheaper elsewhere / Check carefully / Blocked by rule), a price comparison against the best real offer, the payment journey from request to PayPal verification, and the exact terms with their fingerprint. |
 | 🛑 **Freeze all agent spending** | One owner-only emergency stop freezes every wallet in your workspace, audited. |
 | 🧪 **Test Lab** | Ask a built-in AI shopping agent to buy something, or create a test payment, and walk it through approval, PayPal checkout, capture and refund in the browser. |
 | 🔐 **Bring your own keys** | Add PayPal, Channel3, Kernel, Groq and OpenRouter keys in the dashboard. Each is verified live, encrypted at rest and never shown again. |

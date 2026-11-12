@@ -6,6 +6,13 @@ from agentpal.platform.openapi import DEFAULT_PATH, build_document, render
 
 
 OPERATIONS = {
+    "POST /v1/savers": "hireSaver",
+    "GET /v1/savers": "listSavers",
+    "GET /v1/savers/{saver_id}": "getSaver",
+    "POST /v1/savers/{saver_id}/run": "runSaver",
+    "POST /v1/savers/{saver_id}/evaluate": "evaluateSaver",
+    "POST /v1/savers/{saver_id}/retire": "retireSaver",
+
     "POST /v1/wallets/freeze-all": "freezeAllWallets",
     "GET /v1/paypal/reconciliation": "reconcileWithPaypal",
     "POST /v1/payout-requests": "createPayoutRequest",

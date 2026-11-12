@@ -642,7 +642,15 @@ def create_app(service: RiskService | None = None, settings: Settings | None = N
             # decision 7: verify (and stage) every model before serving, so integrity work
             # never runs inside a request's model timeout
             log.info("model_warm_up", extra={"backends": app.state.service.warm_up()})
-        yield
+        if v1 is not None:
+            from .platform.savers import SaverTicker
+            app.state.saver_ticker = SaverTicker(v1.savers, SaverTicker.interval())
+            await app.state.saver_ticker.start()
+        try:
+            yield
+        finally:
+            if v1 is not None:
+                await app.state.saver_ticker.close()
 
     docs = {} if settings.environment == "development" else {
         "docs_url": None, "redoc_url": None, "openapi_url": None}

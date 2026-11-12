@@ -31,9 +31,9 @@ execution, PayPal orders or captures in these scenarios.
 | Button | Scenario | Judge sees | Virtual reservation in a fresh default wallet |
 | --- | --- | --- | --- |
 | Over the $25 limit | `over_limit` | $30 blocked by `AMOUNT_ABOVE_HARD_LIMIT` before owner review | $0 |
-| Split a purchase | `split_purchase` | Second $15 request to the same merchant blocked by `SPLIT_TRANSACTION_EXCEEDS_HARD_LIMIT` in the existing rolling window | $15 for the first request |
-| Change the terms | `changed_terms` | $1 original and $2 replacement; the original fingerprint is refused for the replacement with `terms_mismatch` | $3 |
-| Swap the payee | `payee_swap` | Two $1 requests with different merchant PayPal emails; exact-term binding refuses the original fingerprint for the replacement | $2 |
+| Split a purchase | `split_purchase` | Second $15 request to the same merchant blocked by `SPLIT_TRANSACTION_EXCEEDS_HARD_LIMIT` in the existing rolling window | $0 (the first part is declined afterwards) |
+| Change the terms | `changed_terms` | $1 original and $2 replacement; the original fingerprint is refused for the replacement with `terms_mismatch` | $0 (both declined afterwards) |
+| Swap the payee | `payee_swap` | Two $1 requests with different merchant PayPal emails; exact-term binding refuses the original fingerprint for the replacement | $0 (both declined afterwards) |
 
 The shield card replaces the disabled walkthrough steps, shows the actual rule or
 refusal code, reason, amount and merchant, and offers **View timeline**. The terms
@@ -41,6 +41,9 @@ card says **Approval refused: the terms changed after the fingerprint was taken*
 Payee swap demonstrates exact-term binding; it does not claim a page-content
 classifier or automatic domain-mismatch blocking. Requests are immutable: both
 fingerprint examples create a replacement, and neither request is approved.
+Afterwards, any demonstration request still awaiting a decision is declined through
+the ordinary owner reject path, so attacks leave nothing in Approvals and no allowance
+reserved.
 
 Each click uses a fresh synthetic merchant to isolate demonstrations; split parts
 within the same click share that merchant. Reservations accumulate under the
@@ -232,3 +235,22 @@ POST /v1/payment-requests/{request_id}/counter
 
 The sandbox payee stands in for the merchant, as in every scenario: no real retailer is
 paid and no item is ordered.
+
+## F. Saver agent: suggest, verify savings, survive or retire
+
+PayPal Sandbox only; deterministic policy, no model training. Start with scenario E's
+request awaiting approval and its stored cheaper Channel3 offer. In **AI Agents**, click
+**Hire Saver**, then **Run now**. The card shows one suggestion and unverified potential,
+with $0 verified savings. **Review** opens the existing request dialog; the Saver's line
+names the stored retailer and price. The owner clicks **Counter with this deal** and
+approves the replacement's own fingerprint. Complete the sandbox buyer and capture flow
+from scenario D. Only the PayPal-verified capture increases the Saver's verified savings;
+execution or an unverified capture cannot.
+
+The ticker runs at startup and every 900 seconds while the server runs (0 disables it).
+Closed UTC months are evaluated once. The injectable-clock offline test shows a Saver
+with verified savings surviving and reporting “This month I saved you $Z”; a zero month
+produces “Retired: saved $0 in YYYY-MM”, revokes the key, and preserves the entire feed
+and audit. `/v1/savers/{saver_id}/evaluate` cannot advance time or retire in an open month.
+For a quick UI demonstration, **Retire Saver** preserves history and enables hiring a
+new one. See [SAVER_AGENTS.md](SAVER_AGENTS.md) for API, accounting and limitations.

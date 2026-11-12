@@ -134,6 +134,11 @@ class RequestHistory:
                 'Verified by authenticated PayPal read.' if proof['verified_by'] == 'paypal_read'
                 else 'Verified by signed PayPal webhook.', proof['verified_by'])
         if not payout:
+            for row in self.wallet_store.query(
+                    'SELECT created_at FROM platform_saver_suggestions WHERE request_id=? AND agent_id=?',
+                    (self.ids[1], self.ids[0])):
+                add(row['created_at'], 'agent', 'saver_suggestion',
+                    'Saver agent suggested a counter-offer')
             for table, kind, label in (
                 ('platform_page_checks', 'page_check', 'An advisory page check was recorded.'),
                 ('platform_market_checks', 'market_check', 'An advisory market check was recorded.'),

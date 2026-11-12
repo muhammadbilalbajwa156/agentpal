@@ -62,6 +62,8 @@ class Platform:
         self.wallets = WalletBook(deps.wallet_store, deps.limits, self.clock, deps.resources)
         self.payments = PaymentDesk(self.registry, self.checker, self.wallets, deps,
                                     risk_getter, self.clock)
+        from .savers import SaverService
+        self.savers = SaverService(self)
         from .lab import TestLab
         self.lab = TestLab(self) if deps.integrations is not None else None
 

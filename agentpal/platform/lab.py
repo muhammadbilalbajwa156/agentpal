@@ -127,17 +127,22 @@ class TestLab:
                     views[-1]["agent_id"], [{"loc": ["request"], "type": "terms_mismatch"}])
             else:
                 raise PlatformError(409, "scenario_not_refused")
-            return self._scenario_result(name, "refused", ["terms_mismatch"], reason, views)
+            return self._scenario_result(owner, name, "refused", ["terms_mismatch"], reason, views)
 
         signals = [s for s in views[-1].get("risk_signals", []) if s["kind"] == "hard_violation"]
         codes = [s["code"] for s in signals]
         if views[-1]["recommendation"] != "block" or expected not in codes:
             raise PlatformError(409, "scenario_not_blocked")
         reason = next(s["message"] for s in signals if s["code"] == expected)
-        return self._scenario_result(name, "blocked", codes, reason, views)
+        return self._scenario_result(owner, name, "blocked", codes, reason, views)
 
-    @staticmethod
-    def _scenario_result(name, outcome, codes, reason, views):
+    def _scenario_result(self, owner, name, outcome, codes, reason, views):
+        # A demonstration must not leave work behind: any part still awaiting a decision
+        # is declined through the ordinary owner reject path (it is never approved), so
+        # its reservation is released and the Approvals queue stays clean.
+        for view in views:
+            if self.p.payments.get_for_owner(owner, view["request_id"])["status"] == "awaiting_approval":
+                self.p.payments.reject(owner, view["request_id"])
         return {"scenario": name, "outcome": outcome, "rule_codes": codes,
                 "plain_reason": reason, "request_ids": [v["request_id"] for v in views],
                 "timeline_url_hint": "/v1/payment-requests/" + views[-1]["request_id"] + "/timeline"}

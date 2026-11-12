@@ -703,3 +703,43 @@ def test_sdk_owner_counter_and_agent_client_has_no_counter_method():
                     await fake.counter_payment_request(new["request_id"], amount="1.00",
                                                        merchant_name="X")
     asyncio.run(run())
+
+
+def test_a_competing_counter_cannot_overwrite_an_unfinished_claim(tmp_path, monkeypatch):
+    """J2 finding: counter B passed its status check while counter A was in flight. A
+    declined the original and created its replacement, then died before linking it. B must
+    not rewrite A's pending claim, or A could never be resumed and its replacement would
+    stay unlinked."""
+    with world(tmp_path) as (c, d):
+        h, ah, _, _ = workspace(c, d)
+        p = ask(c, ah)
+        rid = p["request_id"]
+        desk = c.app.state.platform.payments
+        real_create, real_preflight = desk.create, desk._counter_preflight
+        state = {"ran_a": False}
+
+        def create_then_die(*a, **kw):
+            real_create(*a, **kw)
+            raise RuntimeError("synthetic crash before the replacement link committed")
+
+        def preflight_b(*a, **kw):
+            ctx = real_preflight(*a, **kw)
+            if not state["ran_a"]:          # B is past its status check: A runs now
+                state["ran_a"] = True
+                monkeypatch.setattr(desk, "create", create_then_die)
+                with pytest.raises(RuntimeError):
+                    counter(c, h, rid)      # A: claim, decline, create, crash
+                monkeypatch.setattr(desk, "create", real_create)
+            return ctx
+        monkeypatch.setattr(desk, "_counter_preflight", preflight_b)
+        b = counter(c, h, rid, {**MANUAL, "amount": "12.00"})
+        monkeypatch.setattr(desk, "_counter_preflight", real_preflight)
+        assert b.status_code == 409 and b.json()["error"] == "already_countered"
+        # A's claim is intact, so repeating A finishes it and links the replacement.
+        a = counter(c, h, rid)
+        assert a.status_code in (200, 201), a.text
+        new = a.json()["replacement"]
+        assert new["terms"]["amount"] == "16.49" and new["counter_of"] == rid
+        assert a.json()["original"]["countered_by"] == new["request_id"]
+        assert len(links(d)) == 1 and links(d)[0]["replacement_request_id"] == new["request_id"]
+        assert len(c.get("/v1/payment-requests", headers=h).json()["payment_requests"]) == 2

@@ -142,10 +142,17 @@ class AgentDirectory:
                 "capabilities": sorted(c.value for c in self.grants(agent.agent_id)),
                 "ceiling": sorted(c.value for c in ROLE_CAPABILITY_CEILING[agent.role])}
 
+    def _refuse_retired_saver(self, agent_id: str) -> None:
+        if self.store.query("SELECT 1 FROM platform_savers WHERE agent_id=? AND status='retired'",
+                            (agent_id,)):
+            raise PlatformError(409, "saver_retired")
+
     def set_status(self, owner: AuthenticatedOwner, agent_id: str,
                    status: AgentStatus) -> dict:
         self.owned(owner, agent_id)
-        self.registry.set_status(owner, agent_id, status)
+        with self.store.tx():
+            self._refuse_retired_saver(agent_id)
+            self.registry.set_status(owner, agent_id, status)
         return self.view(self.registry.get_agent(agent_id))
 
     def rotate(self, owner: AuthenticatedOwner, agent_id: str,
@@ -153,8 +160,10 @@ class AgentDirectory:
         self.owned(owner, agent_id)
         if overlap_seconds > self.limits.max_overlap_seconds:
             raise PlatformError(400, "overlap_too_long")
-        return self.credentials.rotate(agent_id, owner.owner_id,
-                                       owner_actor(owner).decided_by, overlap_seconds)
+        with self.store.tx():
+            self._refuse_retired_saver(agent_id)
+            return self.credentials.rotate(agent_id, owner.owner_id,
+                                           owner_actor(owner).decided_by, overlap_seconds)
 
     def revoke(self, owner: AuthenticatedOwner, agent_id: str, key_id: str) -> None:
         self.owned(owner, agent_id)

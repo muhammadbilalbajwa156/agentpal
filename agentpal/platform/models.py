@@ -605,7 +605,53 @@ class TimelineOut(_Out):
     events: list[TimelineEventOut]
 
 
+class SaverSuggestionOut(_Out):
+    suggestion_id: str
+    saver_id: str
+    request_id: str
+    deal_index: int
+    retailer: str
+    price: str
+    currency: str
+    saving: str
+    created_at: str
+
+
+class SaverPeriodOut(_Out):
+    period: str
+    suggestions_made: int
+    suggestions_used: int
+    verified_savings: dict[str, str]
+    unverified_potential: dict[str, str]
+    report: str
+
+
+class SaverOut(_Out):
+    owner_id: str
+    saver_id: str
+    agent_id: str
+    status: Literal["active", "retired"]
+    manifesto: str
+    created_at: str
+    retired_at: str | None = None
+    retirement_reason: str | None = None
+    note: str
+    note_source: Literal["ai", "template"]
+    current_period: SaverPeriodOut
+    periods: list[SaverPeriodOut]
+    feed: list[SaverSuggestionOut]
+    days_left: int
+    automatic_runs: str
+    automatic_interval_seconds: int
+
+
+class SaverList(_Out):
+    savers: list[SaverOut]
+
+
 class PaymentOut(_Out):
+    saver_suggestion: SaverSuggestionOut | None = Field(default=None,
+        description="Owner reads only; advisory stored offer. Null for agent credentials.")
     provider_mode: Literal["simulated", "paypal_sandbox"] | None = Field(default=None,
         description="Resolved sandbox provider; simulator is explicit. No production payments.")
     owner_decision: OwnerDecisionOut | None = Field(default=None, description="Owner reads only; null for agents.")

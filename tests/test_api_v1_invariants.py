@@ -11,6 +11,13 @@ from test_invariants_api import EXPECTED_ROUTES
 from test_platform_fixtures import ALL_PAY, OWNER_A, build_world
 
 V1_ROUTES = {
+    ("/v1/savers", "POST"),
+    ("/v1/savers", "GET"),
+    ("/v1/savers/{saver_id}", "GET"),
+    ("/v1/savers/{saver_id}/run", "POST"),
+    ("/v1/savers/{saver_id}/evaluate", "POST"),
+    ("/v1/savers/{saver_id}/retire", "POST"),
+
     ("/v1/wallets/freeze-all", "POST"),
     ("/v1/paypal/reconciliation", "GET"),
     ("/v1/payout-requests", "POST"), ("/v1/payout-requests", "GET"),

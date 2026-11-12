@@ -41,7 +41,7 @@ async function serve(req,res){
    const value={request_id:id,agent_id:'lab-agent',wallet_id:'lab-wallet',terms:{...body},status:blocked?'rejected':'awaiting_approval',created_at:today,terms_sha256:hash,decision_requested:true,...(blocked?{policy_block:{rule:'PER_TRANSACTION_LIMIT',label:'Amount exceeds the sandbox agent limit'}}:{})};
    payments.set(id,value);timeline.set(id,[{at:today,actor:'agent',label:'Request created',detail:blocked?'Blocked by rule':'Awaiting exact-term owner approval'}]);return json(res,value,201);
   }
-  const lists={agents:{agents:[]},wallets:{wallets:[]},'payment-requests':{payment_requests:[...payments.values()]},'payout-requests':{payout_requests:[]},approvals:{approvals:[...payments.values()].filter(p=>p.status==='awaiting_approval')},health:{status:'ok',payment_environment:'sandbox',is_real_money:false},disputes:{disputes:[]}};
+  const lists={savers:{savers:[]},agents:{agents:[]},wallets:{wallets:[]},'payment-requests':{payment_requests:[...payments.values()]},'payout-requests':{payout_requests:[]},approvals:{approvals:[...payments.values()].filter(p=>p.status==='awaiting_approval')},health:{status:'ok',payment_environment:'sandbox',is_real_money:false},disputes:{disputes:[]}};
   if(lists[p])return json(res,lists[p]);
   const id=p.split('/')[p.startsWith('lab/')?2:1],value=payments.get(id);
   if(value){

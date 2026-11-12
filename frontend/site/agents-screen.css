@@ -4,3 +4,13 @@
 
 /* Live identities use the existing panel/table design without illustrative charts. */
 .a-live-note{padding:12px 16px;border-radius:10px;background:#eef4ff;color:#174790}.a-live .a-table td{vertical-align:top;overflow-wrap:anywhere}.a-live .a-table small{display:block;margin-top:5px}.a-live .a-tags{flex-wrap:wrap}.agents-screen #a-once-key{white-space:pre-wrap;overflow-wrap:anywhere;padding:14px;background:#eef4ff}
+
+/* Advisory Saver cards; all values are owner-scoped API data. */
+.saver-agents{padding:24px;margin:20px 0;overflow-wrap:anywhere}
+.saver-agents h2{font-size:21px;margin:0 0 12px}.saver-agents p{line-height:1.6;margin:10px 0;color:#657086}
+.saver-agents .saver-manifesto{color:#172740;font-weight:600}.saver-card{border-top:1px solid #e5eaf1;margin-top:22px;padding-top:20px}
+.saver-heading,.saver-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.saver-heading h3{margin:0}
+.saver-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin:20px 0}.saver-metrics dt{font-size:12px;color:#657086}.saver-metrics dd{font-size:20px;font-weight:600;margin:6px 0}
+.saver-feed{padding:0;list-style:none}.saver-feed li{display:flex;gap:16px;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid #e5eaf1}.saver-feed li div{min-width:0}.saver-feed small{display:block;color:#657086;margin-top:6px}.saver-feed button{flex-shrink:0}
+.saver-suggestion{padding:12px;border:1px solid #c9e6da;border-radius:8px;background:#f2fbf6;overflow-wrap:anywhere}.saver-agents .saver-error{color:#b42318}
+@media(max-width:600px){.saver-agents{padding:16px}.saver-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.saver-feed li{align-items:flex-start;flex-direction:column}}

@@ -673,8 +673,15 @@ class PaymentDesk:
                 "business_justification": ctx_rows[0]["business_justification"] if ctx_rows else "",
                 "product_query": ctx_rows[0]["product_query"] if ctx_rows else None,
                 "product_url": url_rows[0]["product_url"] if url_rows else None}
+        view["saver_suggestion"] = self.saver_suggestion(request_id, meta["owner_id"])
         view.update(self._counter_owner_fields(view))
         return view
+
+    def saver_suggestion(self, request_id: str, owner_id: str) -> dict | None:
+        rows = self.store.query("SELECT suggestion_id,saver_id,request_id,deal_index,retailer,"
+                                "price,currency,saving,created_at FROM platform_saver_suggestions "
+                                "WHERE request_id=? AND owner_id=?", (request_id, owner_id))
+        return rows[0] if rows else None
 
     def get_for_owner(self, owner: AuthenticatedOwner, request_id: str) -> dict:
         self._owned_meta(owner, request_id)
@@ -968,23 +975,29 @@ class PaymentDesk:
         with self.store.tx() as c:
             c.execute("INSERT INTO platform_counter_offers (original_request_id, "
                       "replacement_request_id, owner_id, agent_id, original_amount, "
-                      "replacement_amount, currency, source, body_sha256, created_at) "
-                      "VALUES (?,NULL,?,?,?,?,?,?,?,?) ON CONFLICT(original_request_id) DO "
-                      "UPDATE SET replacement_amount=excluded.replacement_amount, "
-                      "source=excluded.source, body_sha256=excluded.body_sha256 "
-                      "WHERE replacement_request_id IS NULL",
+                      "replacement_amount, currency, source, body_sha256, created_at, deal_index) "
+                      "VALUES (?,NULL,?,?,?,?,?,?,?,?,?) ON CONFLICT(original_request_id) DO "
+                      "NOTHING",
                       (request_id, owner.owner_id, agent_id, str(original_amount),
-                       str(new.amount), new.currency, source, digest, _iso(self.clock())))
+                       str(new.amount), new.currency, source, digest, _iso(self.clock()), body.deal_index))
+            # The first claim is immutable: a competing counter with other terms can
+            # never rewrite it (that would strand an in-flight counter's replacement).
+            claim = c.execute("SELECT replacement_request_id, body_sha256 FROM "
+                              "platform_counter_offers WHERE original_request_id=?",
+                              (request_id,)).fetchone()
+        if (claim is None or claim["replacement_request_id"] is not None
+                or not hmac.compare_digest(claim["body_sha256"], digest)):
+            raise PlatformError(409, "already_countered")
         if awaiting:
             try:
                 gateway.decline(owner, request_id)   # the existing reject path
             except PermissionError:
-                self._drop_pending_counter(request_id)
+                self._drop_pending_counter(request_id, digest)
                 raise PlatformError(403, "decision_refused", audit="decision_refused") from None
             except (ValueError, LookupError, RuntimeError):
                 if self.status(request_id, agent_id) != PaymentLifecycle.rejected:
                     # a concurrent approval won: nothing was countered
-                    self._drop_pending_counter(request_id)
+                    self._drop_pending_counter(request_id, digest)
                     raise PlatformError(409, "not_awaiting_decision") from None
                 # A concurrent counter of the same request declined it first. Continue:
                 # the fixed idempotency key admits exactly one replacement per original.
@@ -999,15 +1012,16 @@ class PaymentDesk:
         with self.store.tx() as c:
             c.execute("INSERT INTO platform_counter_offers (original_request_id, "
                       "replacement_request_id, owner_id, agent_id, original_amount, "
-                      "replacement_amount, currency, source, body_sha256, created_at) "
-                      "VALUES (?,?,?,?,?,?,?,?,?,?) ON CONFLICT(original_request_id) DO "
+                      "replacement_amount, currency, source, body_sha256, created_at, deal_index) "
+                      "VALUES (?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(original_request_id) DO "
                       "UPDATE SET replacement_request_id=excluded.replacement_request_id, "
                       "replacement_amount=excluded.replacement_amount, "
-                      "source=excluded.source, body_sha256=excluded.body_sha256 "
-                      "WHERE replacement_request_id IS NULL",
+                      "source=excluded.source, body_sha256=excluded.body_sha256, deal_index=excluded.deal_index "
+                      "WHERE replacement_request_id IS NULL "
+                      "AND body_sha256=excluded.body_sha256",
                       (request_id, view["request_id"], owner.owner_id, agent_id,
                        str(original_amount), str(new.amount), new.currency, source, digest,
-                       _iso(self.clock())))
+                       _iso(self.clock()), body.deal_index))
         link = self._counter_row(original=request_id)
         if link is None or link["replacement_request_id"] != view["request_id"]:
             raise PlatformError(409, "already_countered")
@@ -1019,10 +1033,12 @@ class PaymentDesk:
         except PlatformError:
             return None, None
 
-    def _drop_pending_counter(self, request_id: str) -> None:
+    def _drop_pending_counter(self, request_id: str, digest: str) -> None:
+        """Release only this counter's own unfinished claim."""
         with self.store.tx() as c:
             c.execute("DELETE FROM platform_counter_offers WHERE original_request_id=? "
-                      "AND replacement_request_id IS NULL", (request_id,))
+                      "AND replacement_request_id IS NULL AND body_sha256=?",
+                      (request_id, digest))
 
     def _counter_preflight(self, owner: AuthenticatedOwner, agent_id: str,
                            new: PaymentCreate, key: str, digest: str) -> AgentContext:

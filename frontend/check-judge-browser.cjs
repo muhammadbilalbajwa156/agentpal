@@ -18,7 +18,7 @@ async function serve(req,res){
   if(p==='integrations')return json(res,{integrations});
   if(p==='lab/agent')return json(res,{agent_id:'agent',wallet_id:'wallet'});
   if(p==='lab/payment-requests'){record=payment();refunded='0.00';return json(res,record,201);}
-  const lists={agents:{agents:[agent]},wallets:{wallets:[wallet]},'payment-requests':{payment_requests:record?[record]:[]},'payout-requests':{payout_requests:[]},approvals:{approvals:[]},health:{status:'ok',payment_environment:'sandbox',is_real_money:false},disputes:{disputes:[]}};
+  const lists={savers:{savers:[]},agents:{agents:[agent]},wallets:{wallets:[wallet]},'payment-requests':{payment_requests:record?[record]:[]},'payout-requests':{payout_requests:[]},approvals:{approvals:[]},health:{status:'ok',payment_environment:'sandbox',is_real_money:false},disputes:{disputes:[]}};
   if(lists[p])return json(res,lists[p]);
   if(p.endsWith('/transactions'))return json(res,{transactions:[]});
   if(p.endsWith('/timeline'))return json(res,{events:[{at:today,actor:'paypal',label:'Authenticated provider read',verified_by:'paypal_read'}]});

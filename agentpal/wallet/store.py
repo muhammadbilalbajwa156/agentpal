@@ -83,6 +83,9 @@ class WalletStore:
                 raise WalletStoreError(f"{self.path} has newer wallet schema v{row[0]}")
             for stmt in _SCHEMA:
                 c.execute(stmt)
+            counter_columns = {r[1] for r in c.execute("PRAGMA table_info(platform_counter_offers)")}
+            if "deal_index" not in counter_columns:
+                c.execute("ALTER TABLE platform_counter_offers ADD COLUMN deal_index INTEGER")
             # Additive column (E2E-T1-004): why a refund definitively failed, for the owner.
             columns = {r[1] for r in c.execute("PRAGMA table_info(platform_paypal_refunds)")}
             if "failure_reason" not in columns:
@@ -284,4 +287,25 @@ _SCHEMA = [
         body_sha256 TEXT NOT NULL CHECK (length(body_sha256) = 64),
         created_at TEXT NOT NULL)""",
 
+    """CREATE TABLE IF NOT EXISTS platform_savers (
+        saver_id TEXT PRIMARY KEY, owner_id TEXT NOT NULL,
+        agent_id TEXT NOT NULL UNIQUE REFERENCES wallet_agents(agent_id),
+        status TEXT NOT NULL CHECK(status IN ('active','retired')),
+        created_at TEXT NOT NULL, retired_at TEXT, retirement_reason TEXT,
+        note TEXT NOT NULL, note_source TEXT NOT NULL)""",
+    """CREATE UNIQUE INDEX IF NOT EXISTS platform_saver_one_active
+        ON platform_savers(owner_id) WHERE status='active'""",
+    """CREATE TABLE IF NOT EXISTS platform_saver_suggestions (
+        suggestion_id TEXT PRIMARY KEY, saver_id TEXT NOT NULL REFERENCES platform_savers(saver_id),
+        owner_id TEXT NOT NULL, request_id TEXT NOT NULL UNIQUE,
+        agent_id TEXT NOT NULL, deal_index INTEGER NOT NULL,
+        retailer TEXT NOT NULL, price TEXT NOT NULL, currency TEXT NOT NULL, saving TEXT NOT NULL,
+        body_sha256 TEXT NOT NULL, created_at TEXT NOT NULL)""",
+    """CREATE TABLE IF NOT EXISTS platform_saver_periods (
+        saver_id TEXT NOT NULL REFERENCES platform_savers(saver_id), period TEXT NOT NULL,
+        report_json TEXT NOT NULL, evaluated_at TEXT NOT NULL,
+        PRIMARY KEY(saver_id,period))""",
+    """CREATE TABLE IF NOT EXISTS platform_saver_events (
+        id INTEGER PRIMARY KEY AUTOINCREMENT, saver_id TEXT NOT NULL,
+        action TEXT NOT NULL, at TEXT NOT NULL)""",
 ]
