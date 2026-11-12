@@ -70,7 +70,7 @@ async function serve(req,res){
  const posts=()=>calls.filter(c=>c.method==='POST');
  for(const width of [1440,393]){
   await page.setViewportSize({width,height:width===393?852:1000});
-  for(const [id,label,tone] of [['fine','Looks fine','fine'],['cheaper','Cheaper elsewhere','cheaper'],['risk','Check carefully','careful'],['page','Check carefully','careful'],['low','Check carefully','careful'],['unknown','Check carefully','careful'],['blocked','Blocked by rule','blocked']]){
+  for(const [id,label,tone] of [['fine','No warnings found','fine'],['cheaper','Cheaper elsewhere','cheaper'],['risk','Check carefully','careful'],['page','Check carefully','careful'],['low','Check carefully','careful'],['unknown','Check carefully','careful'],['blocked','Blocked by rule','blocked']]){
    await open(id,true);assert.equal(await dialog.locator('.f-verdict strong').innerText(),label);assert.equal(await dialog.locator('.f-verdict').getAttribute('data-verdict'),tone);
    assert.match(await dialog.locator('.f-verdict').innerText(),/advisory: rules and your approval decide/);
   }

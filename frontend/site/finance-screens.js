@@ -63,7 +63,7 @@ if(window.AgentPalAPI?.live){
       ...(market?.signals||[]).filter(s=>['warning','high'].includes(s.severity)),
       ...(page?.signals||[]).filter(s=>['warning','high'].includes(s.severity))];
     const ratio=market?.market?.claimed_vs_median;
-    let tone='fine',label='Looks fine',reason='No advisory warnings reported; '+(!market&&!page?'price and page not checked.':'review the recorded checks below.');
+    let tone='fine',label=(!market&&!page)?'No warnings found':'Looks fine',reason='No advisory warnings reported; '+(!market&&!page?'price and page not checked.':'review the recorded checks below.');
     if(value.policy_block||value.status==='blocked_by_rule'){
       tone='blocked';label='Blocked by rule';reason=value.policy_block?.label||'The request status is blocked by rule.';
     }else if(warnings.length||(ratio!=null&&Number(ratio)<=0.5)||[market,page].some(c=>['review_recommended','high_risk'].includes(c?.advisory_level))||!value.terms?.merchant_name||/^unknown\b/i.test(value.terms.merchant_name)){

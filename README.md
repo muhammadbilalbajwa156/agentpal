@@ -59,8 +59,9 @@ Step-by-step scenarios, including a split purchase being blocked and a changed a
 
 AI agents are starting to do real work: buying supplies, paying freelancers, renewing software.
 Today you either hand an agent your card and hope it never gets tricked by a fake shop or splits a
-purchase to dodge a limit, or you approve every payment yourself and the agent is no longer
-autonomous.
+purchase to dodge a limit, or you do all the buying yourself. With AgentPal the agent does the
+searching and preparing; hard rules filter every request; you review one clear screen, approve
+the exact terms or counter with a better deal; and PayPal confirms the result.
 
 **AgentPal is the missing middle layer.** Every agent gets its own identity, key and spending
 allowance. It can find a product and ask to pay, but money only moves after deterministic rules
@@ -79,7 +80,7 @@ outcome.
 | ✅ **Verified outcomes only** | A payment is "paid" only after an authenticated PayPal read or a signature-verified webhook. |
 | 🔎 **Advisory intelligence** | Risk signals, a Channel3 market price check ("too good to be true?") and Kernel cloud-browser page checks. Advice only: it can never approve. |
 | 🧾 **Audit timeline** | Every request has a timeline: who asked, which rule ran, who approved which terms, what PayPal confirmed. |
-| 🔁 **Counter-offer ("Buy this instead")** | Besides approve and reject, the owner can counter: decline the agent's request and send back a replacement (your price, or the cheaper Channel3 deal). The counter approves nothing; the replacement runs every rule again and needs its own exact-terms approval. The bundled AI shopper follows a counter by itself: it waits for your approval of the replacement and pays it unchanged. Savings count only after PayPal verifies the capture (a sandbox payment to AgentPal's test account: no retailer order is placed, and the saving is the difference between the two approved amounts). |
+| 🔁 **Counter-offer ("Buy this instead")** | Besides approve and reject, the owner can counter: decline the agent's request and send back a replacement (your price, or the cheaper Channel3 deal). The counter approves nothing; the replacement runs every rule again and needs its own exact-terms approval. The bundled AI shopper follows a counter by itself: it waits for your approval of the replacement and pays it unchanged. Savings count only after PayPal verifies the capture (a sandbox payment to AgentPal's test account: no retailer order is placed, and the difference is between the agent's original proposed amount and the approved replacement amount). |
 | 🐷 **Saver agents** | Hire a Saver with one manifesto: *"I exist to save you money. If I save you nothing this month, I retire myself."* It runs automatically while the server runs, scans the real Channel3 offers already recorded for requests awaiting your approval (no new provider calls) and suggests a counter. It can never approve or pay. Its monthly scorecard counts only PayPal-verified savings, and a month with none retires it (key revoked, history kept). Deterministic rules, no ML training. [docs/SAVER_AGENTS.md](docs/SAVER_AGENTS.md) |
 | 🚦 **Clear approval screen** | Every request opens with an advisory verdict (Looks fine / Cheaper elsewhere / Check carefully / Blocked by rule), a price comparison against the best recorded offer when comparable market data exists, the payment journey from request to PayPal verification, and the exact terms with their fingerprint. |
 | 🛑 **Freeze all agent spending** | One owner-only emergency stop freezes every wallet in your workspace, audited. |
@@ -248,8 +249,8 @@ permissions · every financial action is auditable · a model failure never bypa
   allow-list, loopback by default, optional TOTP for approvals, encrypted provider keys (Fernet),
   hash-locked dependencies.
 * **Demo AI agents:** a Shopper agent and two autonomous companies (a marketing agency and a SaaS
-  company) that plan with open-weight models on Groq and run as Render Workflows and Astropods
-  agents. See [Shopper](docs/SHOPPER_AGENT.md) and [autonomous companies](docs/AUTONOMOUS_COMPANIES.md).
+  company) that plan with open-weight models on Groq. Render Workflows and Astropods adapters are
+  included in the repo; the hosted demo runs the agents through the Test Lab and API. See [Shopper](docs/SHOPPER_AGENT.md) and [autonomous companies](docs/AUTONOMOUS_COMPANIES.md).
 
 Deep dive: **[technical overview](docs/TECHNICAL_OVERVIEW.md)** · [architecture](docs/ARCHITECTURE.md) ·
 [trust and ledger](docs/TRUST_AND_LEDGER.md) · [wallets](docs/WALLET_ARCHITECTURE.md) ·
