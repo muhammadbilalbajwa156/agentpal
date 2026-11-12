@@ -641,10 +641,73 @@ class PaymentOut(_Out):
     agent_context: AgentContextOut | None = Field(
         default=None, description="Owner reads only: the agent's own justification and "
                                   "product reference, as supplied (advisory, unverified).")
+    countered_by: str | None = Field(
+        default=None, description="On an original the owner countered: the replacement "
+                                  "request id. The only counter-offer field agents receive: "
+                                  "read that request and execute it unchanged if you accept.")
+    counter_of: str | None = Field(
+        default=None, description="Owner reads only. On a replacement: the request it "
+                                  "replaced.")
+    counter_source: Literal["manual", "channel3_deal"] | None = Field(
+        default=None, description="Owner reads only. How the owner authored the counter.")
+    counter_saving: str | None = Field(
+        default=None, description="Owner reads only. On a replacement: the agent's "
+                                  "requested amount minus this amount, same currency; may "
+                                  "be negative. A difference in asked terms, not proof.")
+    counter_saving_verified: bool = Field(
+        default=False, description="Owner reads only. True only when this replacement is "
+                                   "provider_confirmed AND its outcome was verified by "
+                                   "PayPal (`verification` present).")
 
 
 class PaymentList(_Out):
     payment_requests: list[PaymentOut]
+
+
+class CounterOffer(_In):
+    """Owner counter-offer: "not that, this". It approves nothing. The original is declined
+    and a replacement is created for the same agent and wallet through the normal request
+    path, so every deterministic rule, quota and hosted ceiling runs again; the replacement
+    then needs its own exact-terms approval of its own `terms_sha256`.
+
+    Currency and purpose are always copied from the original. Either give `deal_index`
+    (the server copies price and retailer from the STORED Channel3 market check; the
+    browser never supplies a deal's price) or give `amount` and `merchant_name`."""
+    amount: Amount | None = None
+    merchant_name: str | None = Field(default=None, min_length=1, max_length=200)
+    merchant_domain: str | None = Field(default=None, max_length=253)
+    merchant_paypal_email: str | None = Field(default=None, max_length=127)
+    deal_index: int | None = Field(
+        default=None, ge=0, le=99,
+        description="Index into the original's stored market_check.better_deals. When "
+                    "given, amount, merchant_name and merchant_domain are ignored.")
+
+    @field_validator("merchant_paypal_email")
+    @classmethod
+    def _paypal_email(cls, value: str | None) -> str | None:
+        from ..spending import ApprovalTerms
+        return ApprovalTerms.paypal_email(value)
+
+    @model_validator(mode="after")
+    def _terms_or_deal(self):
+        if self.deal_index is None and (self.amount is None or self.merchant_name is None):
+            raise ValueError("give deal_index, or amount and merchant_name")
+        if self.deal_index is None and self.amount is not None and self.amount <= 0:
+            raise ValueError("amount must be greater than 0")
+        return self
+
+    model_config = ConfigDict(extra="forbid", json_schema_extra={"examples": [
+        {"deal_index": 0},
+        {"amount": "16.49", "merchant_name": "Known Retailer",
+         "merchant_domain": "known-retailer.example"}]})
+
+
+class CounterOut(_Out):
+    original: PaymentOut = Field(description="The agent's request, now rejected, with "
+                                             "`countered_by` set.")
+    replacement: PaymentOut = Field(description="The owner's replacement. It is NOT "
+                                                "approved: approve its own terms_sha256.")
+    approves_nothing: Literal[True] = True
 
 
 class ApprovalDecision(_In):

@@ -34,6 +34,8 @@ from .models import (
     ApprovalDecision,
     BrowseIn,
     BrowseOut,
+    CounterOffer,
+    CounterOut,
     PageCheckIn,
     PageCheckOut,
     CredentialIssued,
@@ -233,6 +235,13 @@ def build_router() -> APIRouter:
         return WalletList(wallets=[_wallet_out(p, w)
                                    for w in p.wallets.list_owned(owner.owner_id)])
 
+    @r.post("/wallets/freeze-all", response_model=WalletList,
+            operation_id="freezeAllWallets", tags=["wallets"], responses=_E)
+    def freeze_all_wallets(owner: Owner, request: Request):
+        p = _platform(request)
+        return WalletList(wallets=[_wallet_out(p, w)
+                                   for w in p.wallets.freeze_all(owner.owner_id, _actor(owner))])
+
     @r.get("/wallets/{wallet_id}", response_model=WalletOut, operation_id="getWallet",
            tags=["wallets"], responses=_E)
     def get_wallet(wallet_id: WalletId, owner: Owner, request: Request):
@@ -382,6 +391,27 @@ def build_router() -> APIRouter:
             operation_id="rejectPaymentRequest", tags=["approvals"], responses=_E503)
     def reject_payment(request_id: RequestId, owner: Owner, request: Request):
         return DecisionOut(**_platform(request).payments.reject(owner, request_id))
+
+    @r.post("/payment-requests/{request_id}/counter", response_model=CounterOut,
+            status_code=201, operation_id="counterPaymentRequest", tags=["approvals"],
+            responses={**_E503, 200: {"model": CounterOut,
+                                      "description": "idempotent replay of the same "
+                                                     "counter; header Idempotent-Replayed"}})
+    def counter_payment(request_id: RequestId, body: CounterOffer, owner: Owner,
+                        request: Request, response: Response):
+        """Owner-only counter-offer ("Buy this instead"). Approves nothing: the original is
+        declined and a replacement with the owner's terms is created for the same agent
+        through the normal request path (all rules, quotas and ceilings run again). The
+        replacement awaits its own exact-terms approval of its own `terms_sha256`; the
+        agent can then execute it unchanged, or not at all. Errors: 409
+        `not_awaiting_decision`, 409 `already_countered`, 422 `counter_same_terms`, 422
+        `invalid_deal`."""
+        out, replayed = _platform(request).payments.counter(owner, request_id, body)
+        if replayed:
+            response.status_code = 200
+            response.headers["Idempotent-Replayed"] = "true"
+        return CounterOut(original=PaymentOut(**out["original"]),
+                          replacement=PaymentOut(**out["replacement"]))
 
     @r.post("/payment-requests/{request_id}/execute", response_model=ExecutionOut,
             operation_id="executePaymentRequest", tags=["payments"],

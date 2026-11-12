@@ -270,5 +270,18 @@ _SCHEMA = [
     """CREATE TABLE IF NOT EXISTS platform_paypal_refund_audit (
         id INTEGER PRIMARY KEY AUTOINCREMENT, refund_id TEXT NOT NULL,
         action TEXT NOT NULL, actor TEXT NOT NULL, at TEXT NOT NULL)""",
+    # Owner counter-offer ("Buy this instead"). One counter per original is a database
+    # fact (primary key). A row is written BEFORE the original is declined, with a NULL
+    # replacement, so an interrupted counter can only be resumed with the same terms; the
+    # link is shown only once `replacement_request_id` is set. No existing table changes.
+    """CREATE TABLE IF NOT EXISTS platform_counter_offers (
+        original_request_id TEXT PRIMARY KEY,
+        replacement_request_id TEXT UNIQUE,
+        owner_id TEXT NOT NULL, agent_id TEXT NOT NULL,
+        original_amount TEXT NOT NULL, replacement_amount TEXT NOT NULL,
+        currency TEXT NOT NULL,
+        source TEXT NOT NULL CHECK (source IN ('manual','channel3_deal')),
+        body_sha256 TEXT NOT NULL CHECK (length(body_sha256) = 64),
+        created_at TEXT NOT NULL)""",
 
 ]

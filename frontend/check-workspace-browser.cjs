@@ -28,7 +28,13 @@ async function serve(req,res){
   if(p==='lab/errands'){
    if(labMode==='missing')return json(res,{error:'integration_required',provider:'groq'},409);
    if(labMode==='rate')return json(res,{error:'rate_limited'},429);
-   return json(res,{status:'awaiting_approval',request_id:null,events:[{at:today,message:'Found a sandbox item <img src=x onerror=alert(1)>'}]});
+   return json(res,{task:body.task,status:'awaiting_approval',request_id:null,events:[{at:today,message:'Found a sandbox item <img src=x onerror=alert(1)>'},{at:today,kind:'plan',message:'Plan: search for office supplies within USD 30.00.'},{at:today,kind:'candidate',message:'Candidate offer from Channel3.',title:'Pencil <img src=x onerror=alert(1)>',amount:'2.00',currency:'USD',merchant:'supplies.example',in_stock:true},{at:today,kind:'selection',message:'Selected one catalogue offer for owner review.',justification:'Lowest price for the requested supplies.'},{at:today,kind:'boundary',message:'AI proposes · Rules decide · You approve'}]});
+  }
+  if(p.startsWith('lab/scenarios/')){
+   const scenario=p.split('/').at(-1),refused=['changed_terms','payee_swap'].includes(scenario),id='scenario-'+scenario;
+   const value={request_id:id,terms:{amount:scenario==='over_limit'?'30.00':'15.00',currency:'USD',merchant_name:'Scenario <img src=x onerror=alert(1)>'},status:refused?'awaiting_approval':'rejected',policy_block:refused?null:{rule:'AMOUNT_ABOVE_HARD_LIMIT',label:'Amount above limit'}};
+   payments.set(id,value);timeline.set(id,[{at:today,actor:'policy',label:'Scenario control recorded'}]);
+   return json(res,{scenario,outcome:refused?'refused':'blocked',rule_codes:[refused?'terms_mismatch':'AMOUNT_ABOVE_HARD_LIMIT'],plain_reason:scenario==='changed_terms'?'Approval refused: the terms changed after the fingerprint was taken':refused?'Approval refused: the payee changed':'Amount exceeds the per-payment limit.',request_ids:[id],timeline_url_hint:'/v1/payment-requests/'+id+'/timeline'});
   }
   if(p==='lab/payment-requests'){
    const id='lab-'+(payments.size+1),blocked=labMode==='blocked';
@@ -84,12 +90,27 @@ const secret=()=>{const value=crypto.randomUUID();secrets.push(value);return val
   await page.evaluate(()=>App.navigate('lab'));await page.getByRole('heading',{name:'Test Lab',exact:true}).waitFor();await bounds();
   labMode='missing';await page.locator('#lab-task').fill('Find sandbox office supplies');await page.locator('#lab-budget').fill('30.00');await page.locator('#lab-errand-form button').click();await page.locator('#lab-errand-status').getByText(/Connect Groq/).waitFor();
   labMode='rate';await page.locator('#lab-errand-form button').click();await page.locator('#lab-errand-status').getByText(/Too many requests/).waitFor();
-  labMode='happy';await page.locator('#lab-errand-form button').click();await page.locator('#lab-errand-events').getByText(/Found a sandbox item/).waitFor();assert.equal(await page.locator('#lab-errand-events img').count(),0);
-  const create=async()=>{await page.locator('#lab-amount').fill('10.00');await page.locator('#lab-merchant').fill('Sandbox supplies');await page.locator('#lab-purpose').fill('Judge demo');await page.locator('#lab-payment-form button').click();await page.locator('#lab-result .lab-steps').waitFor();};
+  labMode='happy';await page.locator('#lab-errand-form button').click();await page.locator('#lab-errand-events').getByText(/Found a sandbox item/).waitFor();assert.equal(await page.locator('#lab-errand-events img').count(),0);await page.locator('#lab-errand-task').getByText('Original task: Find sandbox office supplies',{exact:true}).waitFor();await page.locator('#lab-errand-events').getByText(/Plan: search for office supplies/).waitFor();assert.match(await page.locator('#lab-errand-events').innerText(),/Pencil.*2.00.*supplies.example.*In stock/);await page.locator('#lab-errand-events').getByText('Why this offer: Lowest price for the requested supplies.',{exact:true}).waitFor();await page.locator('#lab-errand-events').getByText('AI proposes · Rules decide · You approve',{exact:false}).waitFor();
+  const create=async()=>{await page.locator('#lab-amount').fill('10.00');await page.locator('#lab-merchant').fill('Sandbox supplies');await page.locator('#lab-purpose').fill('Judge demo');await page.locator('#lab-payment-form button').click();await page.locator('#lab-result .lab-steps:not([hidden]), #lab-result .lab-shield-card').waitFor();};
   await create();await page.locator('[data-lab-action=approve]').click();await page.locator('#f-live-confirm').waitFor();assert.match(await page.locator('dialog').innerText(),/Any change to amount, payee or purpose voids this approval/);await page.locator('#f-live-confirm').click();await page.locator('[data-lab-action=execute]:enabled').waitFor();
   await page.locator('[data-lab-action=execute]').click();const link=page.getByRole('link',{name:'Open PayPal sandbox approval',exact:true});await link.waitFor();assert.equal(await link.getAttribute('rel'),'noopener noreferrer');assert.equal(new URL(await link.getAttribute('href')).hostname,'www.sandbox.paypal.com');
   await page.locator('[data-lab-action=capture]').click();await page.locator('[data-lab-action=refund]:enabled').waitFor();await page.locator('[data-lab-action=refund]').click();await page.locator('#lab-result').getByText('reversed',{exact:false}).first().waitFor();assert.match(await page.locator('#lab-result').innerText(),/PayPal sandbox refund verified/);await bounds();if(shots)await page.screenshot({path:path.join(shots,'lab-happy-393.png'),fullPage:true});
   labMode='blocked';await create();await page.locator('#lab-result').getByText(/Blocked by rule/).first().waitFor();assert.equal(await page.locator('[data-lab-action=execute]:enabled').count(),0);assert.equal(await page.locator('[data-lab-action=approve]:enabled').count(),0);if(shots)await page.screenshot({path:path.join(shots,'lab-blocked-393.png'),fullPage:true});const blockedId=[...payments.keys()].at(-1);assert.ok(!calls.some(c=>c.path===`lab/payment-requests/${blockedId}/execute`));
+  assert.equal(await page.locator('#lab-result .lab-steps:visible').count(),0,'Blocked requests hide all walkthrough steps');
+  await page.getByRole('heading',{name:'Blocked before any human was asked',exact:true}).waitFor();
+  for(const name of ['over_limit','split_purchase','changed_terms','payee_swap']){
+   await page.locator('[data-lab-scenario='+name+']').click();
+   await page.locator('#lab-scenario-status').getByText(/Scenario finished/).waitFor();
+   assert.equal(await page.locator('#lab-result .lab-steps:visible').count(),0);
+   assert.equal(await page.locator('#lab-result [data-lab-action=approve]').count(),0);
+   assert.equal(await page.locator('#lab-result img').count(),0,'Merchant data is escaped');
+   assert.match(await page.locator('#lab-result').innerText(),/terms_mismatch|AMOUNT_ABOVE_HARD_LIMIT/);
+   if(name==='changed_terms')await page.getByRole('heading',{name:'Approval refused: the terms changed after the fingerprint was taken',exact:true}).waitFor();
+   await page.getByRole('button',{name:'View timeline',exact:true}).click();
+   await page.locator('dialog').getByText('Scenario control recorded').waitFor();
+   await page.locator('#close-modal').click();await bounds();
+  }
+  assert.ok(!calls.some(c=>c.method==='POST'&&/scenario-.*\/(approve|execute|capture)$/.test(c.path)));
   labMode='unsafe';await create();await page.locator('[data-lab-action=approve]').click();await page.locator('#f-live-confirm').click();await page.locator('[data-lab-action=execute]:enabled').waitFor();await page.locator('[data-lab-action=execute]').click();await page.locator('#lab-result').getByText(/approval link was not a PayPal sandbox URL/).waitFor();assert.equal(await page.getByRole('link',{name:'Open PayPal sandbox approval',exact:true}).count(),0);
   await page.evaluate(()=>App.navigate('overview'));await page.evaluate(()=>App.navigate('lab'));await page.locator('#lab-result .lab-steps').waitFor();
  }

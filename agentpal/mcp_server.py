@@ -50,7 +50,7 @@ TOOLS = [
     _tool("get_wallet", "Read this agent's virtual allowance; it holds no real money."),
     _tool("request_payment", "Request a sandbox payment for human review. Creating a request does not pay.",
           _PAYMENT_PROPERTIES, ("amount", "currency", "merchant_name", "purpose")),
-    _tool("get_payment_request", "Read this agent's request status, exact terms and verification; includes a payer link only if the API supplies it.",
+    _tool("get_payment_request", "Read this agent's request status, exact terms and verification; includes a payer link only if the API supplies it. If `countered_by` is set, the human owner declined this request and replaced it with that request: read it, and after the owner's approval execute it unchanged if you accept. Agents cannot counter or approve.",
           _REQUEST_ID, ("request_id",)),
     _tool("list_my_payment_requests", "List only this agent's payment requests."),
     _tool("execute_approved_payment", "Submit only an already owner-approved request to the sandbox provider. The API enforces exact-term approval. Submission is not verified settlement; do not blindly retry uncertain execution.",

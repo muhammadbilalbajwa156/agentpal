@@ -44,6 +44,8 @@ https://github.com/user-attachments/assets/4cec97d1-2fa7-4e8b-9192-d449adda2c70
 2. Sign in with the owner token from the Devpost testing instructions, or create your own private workspace with the invite code given there.
 3. Open **Test Lab** → *Ask the AI agent to shop*, then **approve the exact terms**, pay on the PayPal sandbox page with the sandbox buyer from the testing instructions, and click **Capture**. The payment shows **Verified by PayPal read**.
 4. Try a **$30** test request: a spending rule blocks it before any human sees it (the Test Lab agent's limit is $25).
+5. In **Test Lab**, press the **Try an attack** buttons (over-limit, split purchase, changed terms, payee swap): each one is stopped by a rule, or by the exact-terms fingerprint, before any money can move.
+6. On a request awaiting approval, press **Counter** (or **Counter with this deal** when Channel3 found a cheaper offer): the agent's request is declined, and a replacement with your terms goes through every rule again and waits for your own approval.
 
 Step-by-step scenarios, including a split purchase being blocked and a changed amount voiding an approval: **[docs/DEMO_SCENARIOS.md](docs/DEMO_SCENARIOS.md)**.
 
@@ -73,6 +75,8 @@ outcome.
 | ✅ **Verified outcomes only** | A payment is "paid" only after an authenticated PayPal read or a signature-verified webhook. |
 | 🔎 **Advisory intelligence** | Risk signals, a Channel3 market price check ("too good to be true?") and Kernel cloud-browser page checks. Advice only: it can never approve. |
 | 🧾 **Audit timeline** | Every request has a timeline: who asked, which rule ran, who approved which terms, what PayPal confirmed. |
+| 🔁 **Counter-offer ("Buy this instead")** | Besides approve and reject, the owner can counter: decline the agent's request and send back a replacement (your price, or the cheaper Channel3 deal). The counter approves nothing; the replacement runs every rule again and needs its own exact-terms approval. Savings count only after PayPal verifies the capture. |
+| 🛑 **Freeze all agent spending** | One owner-only emergency stop freezes every wallet in your workspace, audited. |
 | 🧪 **Test Lab** | Ask a built-in AI shopping agent to buy something, or create a test payment, and walk it through approval, PayPal checkout, capture and refund in the browser. |
 | 🔐 **Bring your own keys** | Add PayPal, Channel3, Kernel, Groq and OpenRouter keys in the dashboard. Each is verified live, encrypted at rest and never shown again. |
 

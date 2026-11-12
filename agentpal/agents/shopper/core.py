@@ -164,6 +164,11 @@ class Shopper:
                                    "amount": amount, "currency": "USD", "merchant_name": domain,
                                    "merchant_domain": domain,
                                    "product_url": display_url(offer["url"]), "product_query": query})
+                    # Display only accepted catalogue facts, never invented alternatives.
+                    if len(offers) <= 3:
+                        self.event("Candidate offer from Channel3.", kind="candidate",
+                                   **({"title": title} if product.get("title") else {}),
+                                   amount=amount, currency="USD", merchant=domain, in_stock=True)
                 except (KeyError, TypeError, AttributeError, ShopperError):
                     continue
                 if len(offers) >= 12:
@@ -212,6 +217,10 @@ class Shopper:
                 call = {"id": text(call["id"], 128), "type": "function", "function": {
                     "name": name, "arguments": json.dumps(args)}}
                 if name == "search_products" and set(args) == {"query", "max_price"}:
+                    self.event("Plan: search the catalogue for " + text(args["query"]) +
+                               " within USD " + money(args["max_price"], Decimal(budget)) + ".",
+                               kind="plan", query=text(args["query"]),
+                               max_price=money(args["max_price"], Decimal(budget)))
                     found = self.search_products(args["query"], args["max_price"], budget)
                     # Each result replaces the selection pool; no hallucinated offer IDs.
                     offers = {o["offer_id"]: o for o in found}
@@ -231,6 +240,7 @@ class Shopper:
                     if payee:
                         body["merchant_paypal_email"] = payee
                     self.event("Selected one catalogue offer for owner review.", amount=amount,
+                               kind="selection",
                                merchant=chosen["merchant_domain"],
                                justification=body["business_justification"])
                     return self.redact.clean(body)

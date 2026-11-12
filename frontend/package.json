@@ -7,7 +7,7 @@
     "dev": "node preview.cjs",
     "start": "node preview.cjs",
     "test": "node check-finance.cjs && node check-shell.cjs && node check-live-finance.cjs && node check-live-admin.cjs && node check-live-visuals.cjs && node check-live-design.cjs && node check-workspace.cjs",
-    "test:browser": "node check-dashboard-evidence-browser.cjs && node check-workspace-browser.cjs && node check-judge-browser.cjs"
+    "test:browser": "node check-dashboard-evidence-browser.cjs && node check-workspace-browser.cjs && node check-judge-browser.cjs && node check-ov-browser.cjs && node check-counter-browser.cjs"
   },
   "engines": {
     "node": ">=18"

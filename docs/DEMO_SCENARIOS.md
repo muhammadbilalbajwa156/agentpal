@@ -21,12 +21,56 @@ curl --fail-with-body -sS -X POST "$BASE_URL/v1/lab/agent" \
   -H "Authorization: Bearer $AGENTPAL_OWNER_TOKEN"
 ```
 
+## Try an attack: one-click controls in Test Lab
+
+Open **Test Lab → Try an attack**. Four buttons call the owner-only
+`POST /v1/lab/scenarios/{name}` endpoint, using the ordinary Lab agent, create
+path, rules and owner approval path. There are no matching-hash approvals,
+execution, PayPal orders or captures in these scenarios.
+
+| Button | Scenario | Judge sees | Virtual reservation in a fresh default wallet |
+| --- | --- | --- | --- |
+| Over the $25 limit | `over_limit` | $30 blocked by `AMOUNT_ABOVE_HARD_LIMIT` before owner review | $0 |
+| Split a purchase | `split_purchase` | Second $15 request to the same merchant blocked by `SPLIT_TRANSACTION_EXCEEDS_HARD_LIMIT` in the existing rolling window | $15 for the first request |
+| Change the terms | `changed_terms` | $1 original and $2 replacement; the original fingerprint is refused for the replacement with `terms_mismatch` | $3 |
+| Swap the payee | `payee_swap` | Two $1 requests with different merchant PayPal emails; exact-term binding refuses the original fingerprint for the replacement | $2 |
+
+The shield card replaces the disabled walkthrough steps, shows the actual rule or
+refusal code, reason, amount and merchant, and offers **View timeline**. The terms
+card says **Approval refused: the terms changed after the fingerprint was taken**.
+Payee swap demonstrates exact-term binding; it does not claim a page-content
+classifier or automatic domain-mismatch blocking. Requests are immutable: both
+fingerprint examples create a replacement, and neither request is approved.
+
+Each click uses a fresh synthetic merchant to isolate demonstrations; split parts
+within the same click share that merchant. Reservations accumulate under the
+ordinary budget rules. Pending example requests can be rejected in Approvals to
+release their holds. Existing lower hosted/operator limits, frozen wallets,
+revoked Lab credentials, rate limits and shared daily Lab quotas still apply.
+The endpoint returns `scenario`, `outcome`, `rule_codes`, `plain_reason`,
+`request_ids`, and an owner-authenticated `timeline_url_hint`.
+
+```sh
+curl --fail-with-body -sS -X POST "$BASE_URL/v1/lab/scenarios/over_limit" \
+  -H "Authorization: Bearer $AGENTPAL_OWNER_TOKEN"
+```
+
+The AI shopping errand now preserves **Original task** separately and shows its
+model-selected search plan, up to three accepted Channel3 candidate offers and
+the model's stated selection justification. Only returned facts are shown; one
+offer yields one candidate, and an unavailable title is omitted. Candidates and
+selection reasons remain advisory: **AI proposes · Rules decide · You approve**.
+
+Offline proofs: `tests/test_platform_lab_scenarios.py`,
+`tests/test_platform_lab_reasoning.py`, and the frontend workspace browser suite.
+
 ## A. Over-limit request: $30 blocked before a human decision
 
 1. Open **Test Lab → Create a test payment request**.
 2. Enter `30.00`, merchant `Limit Demo`, purpose `Printer paper`; create the request.
-3. Judge sees **Blocked by rule**, `AMOUNT_ABOVE_HARD_LIMIT`, and disabled approval
-   and execution steps. The request remains visible for audit but never enters the
+3. Judge sees **Blocked before any human was asked**, `AMOUNT_ABOVE_HARD_LIMIT`,
+   and a shield card with the reason, amount, merchant and **View timeline**.
+   The request remains visible for audit but never enters the
    pending approvals queue. No provider order is created.
 
 API equivalent:
@@ -154,3 +198,37 @@ The policy, split and stale-digest examples are automated offline proofs against
 platform services. This runbook does not claim a new live PayPal/dashboard run.
 Provider evidence and configuration: [PAYPAL_SANDBOX.md](PAYPAL_SANDBOX.md),
 [SELF_HOSTING.md](SELF_HOSTING.md), [PAYPAL_REFUNDS.md](PAYPAL_REFUNDS.md).
+
+## E. Counter-offer: "not that, this"
+
+Other tools give the owner two buttons. AgentPal adds a third. Use the Test Lab wallet
+($25 per payment) so both amounts fit.
+
+1. In Test Lab, create a request: amount `24.99`, merchant `Unfamiliar Shop`, purpose
+   `USB-C hub`, and a product query Channel3 can match (for example `Anker USB-C hub`).
+   Without Channel3, skip the product query and use the manual form in step 3.
+2. Open it from Approvals (or "Approve exact terms" in the walkthrough). The dialog shows
+   the agent's terms and fingerprint, then "Not this? Buy this instead" with each
+   same-currency Channel3 offer.
+3. Click **Counter with this deal**, or **Counter** to type an amount and merchant.
+   Expected: the original is declined ("Countered by owner", with a link), and the dialog
+   reopens on the replacement with the new amount, the new merchant and a **different**
+   fingerprint. Nothing is approved yet; the amount difference is labelled
+   "not a saving until PayPal verifies the payment".
+4. Confirm the approval of the replacement. In Test Lab click **Continue with the
+   replacement**, then **Execute as lab agent**. The agent can only execute these exact
+   terms. A counter above $25 is blocked by the same rule as scenario A.
+5. Approve as the sandbox buyer on PayPal and capture, as in scenario D. Expected after
+   the authenticated PayPal read: "Saved $8.50 against the agent's request · verified by
+   PayPal" on the request and the same figure in the Overview tile **Verified savings**.
+   With the local simulator no saving is ever shown as verified.
+
+API equivalent of step 3 (owner token):
+
+```
+POST /v1/payment-requests/{request_id}/counter
+{"deal_index": 0}
+```
+
+The sandbox payee stands in for the merchant, as in every scenario: no real retailer is
+paid and no item is ordered.

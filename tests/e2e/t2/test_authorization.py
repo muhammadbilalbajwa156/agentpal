@@ -42,6 +42,8 @@ def body_for(path):
         return {"fields": {"api_key": "synthetic-matrix-value"}}
     if path.endswith("/approve"):
         return {"terms_sha256": "0" * 64}
+    if path.endswith("/counter"):
+        return {"amount": "1.00", "merchant_name": "Matrix counter"}
     if path.endswith("/browse") or path.endswith("/page-check"):
         return {"url": "https://127.0.0.1/"}
     if path.endswith("/refunds"):
@@ -70,6 +72,13 @@ def test_all_v1_routes_credential_matrix(world):
             response = world.call(method, target, actor, json=body_for(path),
                                   headers={"Idempotency-Key": "matrix-" + uuid4().hex})
             status = response.status_code
+            if operation == "freezeAllWallets" and status == 200:
+                # The matrix uses a session-scoped world. Restore its wallets so
+                # this intentional emergency stop cannot poison later scenarios.
+                for wallet in response.json()["wallets"]:
+                    restored = world.call("POST", f"/v1/wallets/{wallet['wallet_id']}/unfreeze",
+                                          actor)
+                    assert restored.status_code == 200
             evidence.append({"method": method, "path": path, "actor": actor,
                              "status": status, "error": response.json().get("error")})
             if path.endswith("/health"):
@@ -103,12 +112,15 @@ def test_cross_tenant_payment_routes_are_indistinguishable_404(world, actor):
     payment = world.payment().json()
     request_id = payment["request_id"]
     paths = [("GET", ""), ("POST", "/execute"), ("POST", "/approve"),
-             ("POST", "/reject"), ("POST", "/capture"), ("GET", "/reconciliation"),
+             ("POST", "/reject"), ("POST", "/counter"), ("POST", "/capture"),
+             ("GET", "/reconciliation"),
              ("POST", "/reconciliation"), ("POST", "/market-check"),
              ("POST", "/page-check"), ("GET", "/refunds"), ("POST", "/refunds"),
              ("POST", "/refunds/reconciliation"), ("POST", "/request-decision")]
     for method, suffix in paths:
         args = {"terms_sha256": payment["terms_sha256"]} if suffix == "/approve" else {}
+        if suffix == "/counter":
+            args = {"amount": "1.00", "merchant_name": "Cross-tenant counter"}
         known = world.call(method, "/v1/payment-requests/" + request_id + suffix, actor,
                            json=args, headers={"Idempotency-Key": "t2-isolation-key"})
         absent = world.call(method, "/v1/payment-requests/pay_" + "0" * 32 + suffix,

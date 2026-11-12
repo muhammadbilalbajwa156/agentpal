@@ -81,12 +81,31 @@ class LabErrand(_In):
     budget: Amount = Field(default="30.00", gt=0, le=50)
 
 
+class LabScenarioOut(BaseModel):
+    scenario: Literal["over_limit", "split_purchase", "changed_terms", "payee_swap"]
+    outcome: Literal["blocked", "refused"]
+    rule_codes: list[str]
+    plain_reason: str
+    request_ids: list[str]
+    timeline_url_hint: str
+
+
 class LabEvent(BaseModel):
     at: str
     message: str
+    kind: Literal["plan", "candidate", "selection", "boundary"] | None = None
+    query: str | None = None
+    max_price: str | None = None
+    title: str | None = None
+    amount: str | None = None
+    currency: str | None = None
+    merchant: str | None = None
+    in_stock: bool | None = None
+    justification: str | None = None
 
 
 class LabErrandOut(BaseModel):
+    task: str
     status: str
     request_id: str | None
     events: list[LabEvent]

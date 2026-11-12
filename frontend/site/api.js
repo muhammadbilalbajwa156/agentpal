@@ -166,6 +166,11 @@
     return data.refunds[requestId];
   }
 
+  // Owner counter-offer: approves nothing. The server declines the original and creates a
+  // replacement that needs its own exact-terms approval. A deal's price is never sent.
+  const counterRequest = (requestId, body) =>
+    post('payment-requests/' + encodeURIComponent(requestId) + '/counter', body);
+
   async function signIn(candidate) {
     const value = String(candidate || '').trim();
     if (!TOKEN_RE.test(value)) throw new ApiError(0, 'token_format');
@@ -215,7 +220,7 @@
   };
 
   window.AgentPalAPI = Object.freeze({
-    live, data, get, post, patch, put, delete: del, refresh, walletTransactions, refunds, signIn, signOut,
+    live, data, get, post, patch, put, delete: del, refresh, walletTransactions, refunds, counterRequest, signIn, signOut,
     on, message, money, newKey, ApiError, setupStatus, createOwner,
     get signedIn() { return !!token; },
   });

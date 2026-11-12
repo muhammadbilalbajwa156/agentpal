@@ -49,7 +49,10 @@ async function serve(req,res){
  await page.goto(origin+'/app/');await page.locator('#signin-token').fill('apo_'+'f'.repeat(32));await page.locator('.auth-submit').click();await page.waitForFunction(()=>window.App?.ready);
  assert.equal(await page.getByRole('button',{name:'Try Test Lab',exact:true}).count(),1,'Overview primary journey');
  for(const route of ['overview','agents','wallets','transactions','approvals','integrations','lab','analytics','api','security','settings']){
-  const box=await page.locator(`body>aside nav [data-route="${route}"]`).boundingBox();assert.ok(box&&box.x>=0&&box.x+box.width<=393,route+' is visible without swiping');
+  const primary=['overview','approvals','lab','transactions'].includes(route);
+  if(!primary)await page.locator('#phone-more').click();
+  const box=await page.locator(`${primary?'#phone-nav':'.phone-more-menu'} [data-route="${route}"]`).boundingBox();assert.ok(box&&box.x>=0&&box.x+box.width<=393,route+' is visible without swiping');
+  if(!primary)await page.locator('#close-modal').click();
  }
  await page.evaluate(()=>App.navigate('lab'));await page.getByText('Services ready',{exact:false}).waitFor();assert.doesNotMatch(await page.locator('.lab-screen').innerText(),/Connect Channel3 and Groq or OpenRouter first/);
  const create=async mode=>{scenario=mode;await page.locator('#lab-amount').fill('10.00');await page.locator('#lab-merchant').fill('Catalogue store');await page.locator('#lab-purpose').fill('Office mouse');await page.locator('#lab-payment-form button').click();await page.waitForFunction(id=>document.querySelector('#lab-result')?.textContent.includes(id),'judge-'+mode);await page.waitForTimeout(100);};

@@ -141,6 +141,19 @@ class RequestHistory:
                 for row in self.wallet_store.query(f'SELECT updated_at FROM {table} '
                         'WHERE request_id=? AND payload_json IS NOT NULL', (self.ids[1],)):
                     add(row['updated_at'], 'system', kind, label)
+            # Owner counter-offer: an explicit, recorded owner action on both requests.
+            for row in self.wallet_store.query(
+                    'SELECT * FROM platform_counter_offers WHERE replacement_request_id IS NOT NULL '
+                    'AND agent_id=? AND (original_request_id=? OR replacement_request_id=?)',
+                    (self.ids[0], self.ids[1], self.ids[1])):
+                if row['original_request_id'] == self.ids[1]:
+                    add(row['created_at'], 'owner', 'counter_offer',
+                        'The owner countered with different terms.',
+                        'Replaced by ' + row['replacement_request_id'] + '. The replacement needs its own approval.')
+                else:
+                    add(self.row['created_at'], 'owner', 'counter_offer',
+                        "Created from the owner's counter-offer.",
+                        'Replaces ' + row['original_request_id'] + '. The owner wrote these terms; the agent did not.')
             for row in self.wallet_store.query(
                 'SELECT a.at,a.action FROM platform_paypal_refund_audit a '
                 'JOIN platform_paypal_refunds r USING(refund_id) '
@@ -149,7 +162,30 @@ class RequestHistory:
                     add(row['at'], 'owner', 'refund', 'The owner requested a sandbox refund.')
                 elif row['action'] in {'verified_completed', 'verified_pending', 'verified_failed', 'verified_cancelled'}:
                     add(row['at'], 'paypal', 'refund', 'A verified PayPal refund outcome was recorded.')
-        return {'request_id': self.ids[1], 'events': sorted(events, key=lambda e: e['at'])}
+        # Equal timestamps are common (one transaction writes several sources).
+        # Use a semantic tie-break, never database retrieval order. Identical
+        # records are interchangeable; this ordering is also stable across reads.
+        priority = {'created': 0, 'policy_decision': 1, 'policy_block': 2,
+                    'owner_decision': 3, 'payment_attempt': 4, 'execution': 5,
+                    'order_created': 6, 'capture': 7, 'buyer_approval': 8,
+                    'provider_observation': 9, 'provider_verification': 10}
+        events.sort(key=lambda e: (datetime.fromisoformat(e['at']),
+                                  priority.get(e['kind'], 11), e['kind'], e['actor'],
+                                  e['label'], e['detail'] or '', e['verified_by'] or ''))
+        # Presentation only: keep the existing event schema and all persisted
+        # evidence. A verification or another intervening event ends a group.
+        grouped = []
+        for event in events:
+            if (grouped and event['kind'] == 'provider_observation'
+                    and all(event[k] == grouped[-1][0][k]
+                            for k in ('actor', 'kind', 'label', 'detail', 'verified_by'))):
+                grouped[-1][1] += 1
+            else:
+                grouped.append([event.copy(), 1])
+        for event, count in grouped:
+            if count > 1:
+                event['label'] += f' ×{count}'
+        return {'request_id': self.ids[1], 'events': [event for event, _ in grouped]}
 
 
 def utc(value):

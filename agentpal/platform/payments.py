@@ -23,6 +23,7 @@ import hashlib
 import hmac
 import json
 import logging
+import re
 import threading
 from collections.abc import Callable
 from datetime import datetime, timedelta, timezone
@@ -45,7 +46,10 @@ from ..wallet.permissions import DenyCode, PermissionChecker
 from ..wallet.registry import AgentRegistry
 from .deps import CaptureGateway, PlatformDeps, ProviderReferenceReader
 from .errors import PlatformError, not_configured, not_found
-from .models import BrowseOut, PageCheckOut, PaymentCreate, PaymentOut, contains_credential
+from .models import (
+    AMOUNT_PATTERN, BrowseOut, CounterOffer, PageCheckOut, PaymentCreate, PaymentOut,
+    contains_credential,
+)
 from .wallets import WalletBook
 from .timeline import RequestHistory
 
@@ -54,6 +58,9 @@ log = logging.getLogger("agentpal.platform")
 _pending_request_id: contextvars.ContextVar[str] = contextvars.ContextVar(
     "agentpal_pending_request_id")
 _NONE = "-none-"
+# Reserved idempotency namespace for owner counter-offers. ':' is outside
+# IDEMPOTENCY_KEY_PATTERN, so no agent (and no Test Lab caller) can claim or squat it.
+COUNTER_KEY_PREFIX = "owner-counter:"
 _HIDDEN = (DenyCode.OTHER_AGENT, DenyCode.CROSS_OWNER)
 
 
@@ -435,6 +442,7 @@ class PaymentDesk:
                 "recommendation": row["recommendation"], "risk_score": row["risk_score"],
                 "status": self.status(request_id, meta["agent_id"]),
                 "decision_requested": bool(meta["decision_requested"]),
+                "countered_by": self._countered_by(request_id),
                 "created_at": row["created_at"]}
 
     # -------------------------------------------------------------- create
@@ -665,6 +673,7 @@ class PaymentDesk:
                 "business_justification": ctx_rows[0]["business_justification"] if ctx_rows else "",
                 "product_query": ctx_rows[0]["product_query"] if ctx_rows else None,
                 "product_url": url_rows[0]["product_url"] if url_rows else None}
+        view.update(self._counter_owner_fields(view))
         return view
 
     def get_for_owner(self, owner: AuthenticatedOwner, request_id: str) -> dict:
@@ -824,6 +833,226 @@ class PaymentDesk:
             raise PlatformError(409, "decision_refused") from None
         return {"request_id": request_id, "decision": "rejected",
                 "status": self.status(request_id, meta["agent_id"])}
+
+    # ------------------------------------------- owner counter-offer ("Buy this instead")
+    def _counter_row(self, *, original: str | None = None,
+                     replacement: str | None = None) -> dict | None:
+        if original is not None:
+            rows = self.store.query("SELECT * FROM platform_counter_offers WHERE "
+                                    "original_request_id=?", (original,))
+        else:
+            rows = self.store.query("SELECT * FROM platform_counter_offers WHERE "
+                                    "replacement_request_id=?", (replacement,))
+        return rows[0] if rows else None
+
+    def _countered_by(self, request_id: str) -> str | None:
+        """The one counter-offer fact an agent receives: where its request went. A pending
+        (interrupted) counter has no replacement yet and is never shown."""
+        row = self._counter_row(original=request_id)
+        return row["replacement_request_id"] if row else None
+
+    def _counter_owner_fields(self, view: dict) -> dict:
+        """Owner reads only. The saving is the difference between two recorded amounts in
+        one currency; it is 'verified' only when THIS replacement is provider_confirmed
+        and its outcome was verified by PayPal. Nothing is estimated or converted."""
+        row = self._counter_row(replacement=view["request_id"])
+        if row is None or row["currency"] != view["terms"]["currency"]:
+            return {}
+        paid = Decimal(str(view["terms"]["amount"]))
+        if paid != Decimal(row["replacement_amount"]):
+            return {"counter_of": row["original_request_id"], "counter_source": row["source"]}
+        return {"counter_of": row["original_request_id"], "counter_source": row["source"],
+                "counter_saving": str(Decimal(row["original_amount"]) - paid),
+                "counter_saving_verified": (
+                    view["status"] == PaymentLifecycle.provider_confirmed
+                    and view["verification"] is not None)}
+
+    def _counter_body(self, request_id: str, agent_id: str, terms: dict,
+                      body: CounterOffer) -> tuple[PaymentCreate, str]:
+        """The replacement's create body: the owner's amount, merchant and payee (or the
+        STORED Channel3 deal's price and retailer); currency and purpose from the original.
+        Fully validated here, before anything is declined."""
+        from ..schemas import PaymentRequest
+        source = "manual"
+        amount, name, domain = body.amount, body.merchant_name, body.merchant_domain
+        email = body.merchant_paypal_email
+        if body.deal_index is not None:
+            source = "channel3_deal"
+            deals = (self.market_check(request_id) or {}).get("better_deals") or []
+            if body.deal_index >= len(deals):
+                raise PlatformError(422, "invalid_deal")
+            deal = deals[body.deal_index]
+            price, retailer = deal.get("price"), deal.get("retailer")
+            # Never convert or guess: the stored deal must be a plain positive price in
+            # the original's currency at a named retailer.
+            if (not isinstance(price, str) or not re.fullmatch(AMOUNT_PATTERN, price)
+                    or Decimal(price) <= 0 or deal.get("currency") != terms["currency"]
+                    or not isinstance(retailer, str) or not retailer.strip()):
+                raise PlatformError(422, "invalid_deal")
+            amount, name, domain, email = Decimal(price), retailer, retailer, None
+        ctx_rows = self.store.query("SELECT product_query FROM platform_agent_context WHERE "
+                                    "request_id=?", (request_id,))
+        try:
+            new = PaymentCreate(
+                amount=amount, currency=terms["currency"], merchant_name=name,
+                merchant_domain=domain, merchant_paypal_email=email, purpose=terms["purpose"],
+                business_justification="Owner counter-offer replacing " + request_id,
+                request_owner_decision=True,
+                product_query=ctx_rows[0]["product_query"] if ctx_rows else None)
+            probe = PaymentRequest.model_validate({
+                "request_id": request_id, "agent_id": agent_id, "amount": str(new.amount),
+                "currency": new.currency, "merchant_name": new.merchant_name,
+                "merchant_domain": new.merchant_domain, "purpose": new.purpose})
+        except (ValidationError, KeyError):
+            raise PlatformError(422, "invalid_deal" if source == "channel3_deal"
+                                else "invalid_request") from None
+        if probe.amount <= 0:
+            raise PlatformError(422, "invalid_request")
+        if (probe.amount == Decimal(str(terms["amount"]))
+                and probe.merchant_name == terms["merchant_name"]
+                and probe.merchant_domain == terms.get("merchant_domain")
+                and new.merchant_paypal_email == terms.get("merchant_paypal_email")):
+            raise PlatformError(422, "counter_same_terms")
+        return new, source
+
+    def counter(self, owner: AuthenticatedOwner, request_id: str, body: CounterOffer
+                ) -> tuple[dict, bool]:
+        """Owner counter-offer. Returns ({original, replacement}, is_replay).
+
+        This method approves nothing and moves no ledger entry itself. It only calls two
+        existing paths: `ApprovalGateway.decline` (exactly as `reject` does) and
+        `create` (exactly as an agent request), so every deterministic rule, quota and
+        hosted ceiling runs again and the replacement starts unapproved with its own
+        `terms_sha256`. Approval, execution and capture are untouched."""
+        gateway = self.deps.approvals
+        if gateway is None or self.deps.lifecycle is None:
+            raise not_configured()
+        meta = self._owned_meta(owner, request_id)   # unknown and not-yours are both 404
+        row = self._prepared_row(request_id)
+        if row is None:
+            raise not_found()
+        terms = json.loads(row["terms_json"])
+        agent_id = meta["agent_id"]
+        key = COUNTER_KEY_PREFIX + request_id
+        link = self._counter_row(original=request_id)
+        if link is not None and link["replacement_request_id"]:
+            # Completed counter: the same call replays the same replacement; anything
+            # else (different terms, or a body that no longer validates) is refused.
+            new, _ = self._counter_body_or_none(request_id, agent_id, terms, body)
+            if new is None or not hmac.compare_digest(link["body_sha256"], body_digest(new)):
+                raise PlatformError(409, "already_countered")
+            return self._counter_out(request_id, link["replacement_request_id"]), True
+        new, source = self._counter_body(request_id, agent_id, terms, body)
+        digest = body_digest(new)
+        if self.risk().store.query("SELECT 1 FROM requests WHERE agent_id=? AND request_id=? "
+                                   "AND recurring=1", (agent_id, request_id)):
+            # The replacement is always a one-off payment; a subscription is never
+            # silently turned into one.
+            raise PlatformError(409, "counter_recurring_unsupported")
+        status = self.status(request_id, agent_id)
+        awaiting = (status == PaymentLifecycle.awaiting_approval
+                    and bool(meta["decision_requested"]))
+        # An interrupted counter (the decline committed, the replacement did not) may be
+        # resumed, but only by repeating the same counter. A plain rejection never can.
+        resuming = (link is not None and status == PaymentLifecycle.rejected
+                    and hmac.compare_digest(link["body_sha256"], digest))
+        if not (awaiting or resuming):
+            raise PlatformError(409, "not_awaiting_decision")
+        ctx = self._counter_preflight(owner, agent_id, new, key, digest)
+        original_amount = Decimal(str(terms["amount"]))
+        parent = self._counter_row(replacement=request_id)
+        if parent is not None and parent["currency"] == terms["currency"]:
+            # Re-countering the owner's own counter: keep measuring against what the
+            # agent originally asked for.
+            original_amount = Decimal(parent["original_amount"])
+        with self.store.tx() as c:
+            c.execute("INSERT INTO platform_counter_offers (original_request_id, "
+                      "replacement_request_id, owner_id, agent_id, original_amount, "
+                      "replacement_amount, currency, source, body_sha256, created_at) "
+                      "VALUES (?,NULL,?,?,?,?,?,?,?,?) ON CONFLICT(original_request_id) DO "
+                      "UPDATE SET replacement_amount=excluded.replacement_amount, "
+                      "source=excluded.source, body_sha256=excluded.body_sha256 "
+                      "WHERE replacement_request_id IS NULL",
+                      (request_id, owner.owner_id, agent_id, str(original_amount),
+                       str(new.amount), new.currency, source, digest, _iso(self.clock())))
+        if awaiting:
+            try:
+                gateway.decline(owner, request_id)   # the existing reject path
+            except PermissionError:
+                self._drop_pending_counter(request_id)
+                raise PlatformError(403, "decision_refused", audit="decision_refused") from None
+            except (ValueError, LookupError, RuntimeError):
+                if self.status(request_id, agent_id) != PaymentLifecycle.rejected:
+                    # a concurrent approval won: nothing was countered
+                    self._drop_pending_counter(request_id)
+                    raise PlatformError(409, "not_awaiting_decision") from None
+                # A concurrent counter of the same request declined it first. Continue:
+                # the fixed idempotency key admits exactly one replacement per original.
+        try:
+            view, _ = self.create(ctx, new, key)     # the existing agent create path
+        except PlatformError as exc:
+            if exc.code == "idempotency_key_reused":  # a different counter already won
+                raise PlatformError(409, "already_countered") from None
+            raise
+        # Record what `create` actually made. The key is fixed per original, so there is
+        # at most one replacement; a completed link is never overwritten.
+        with self.store.tx() as c:
+            c.execute("INSERT INTO platform_counter_offers (original_request_id, "
+                      "replacement_request_id, owner_id, agent_id, original_amount, "
+                      "replacement_amount, currency, source, body_sha256, created_at) "
+                      "VALUES (?,?,?,?,?,?,?,?,?,?) ON CONFLICT(original_request_id) DO "
+                      "UPDATE SET replacement_request_id=excluded.replacement_request_id, "
+                      "replacement_amount=excluded.replacement_amount, "
+                      "source=excluded.source, body_sha256=excluded.body_sha256 "
+                      "WHERE replacement_request_id IS NULL",
+                      (request_id, view["request_id"], owner.owner_id, agent_id,
+                       str(original_amount), str(new.amount), new.currency, source, digest,
+                       _iso(self.clock())))
+        link = self._counter_row(original=request_id)
+        if link is None or link["replacement_request_id"] != view["request_id"]:
+            raise PlatformError(409, "already_countered")
+        return self._counter_out(request_id, view["request_id"]), False
+
+    def _counter_body_or_none(self, request_id, agent_id, terms, body):
+        try:
+            return self._counter_body(request_id, agent_id, terms, body)
+        except PlatformError:
+            return None, None
+
+    def _drop_pending_counter(self, request_id: str) -> None:
+        with self.store.tx() as c:
+            c.execute("DELETE FROM platform_counter_offers WHERE original_request_id=? "
+                      "AND replacement_request_id IS NULL", (request_id,))
+
+    def _counter_preflight(self, owner: AuthenticatedOwner, agent_id: str,
+                           new: PaymentCreate, key: str, digest: str) -> AgentContext:
+        """Everything `create` would refuse without assessing, checked BEFORE the original
+        is declined, with the agent's CURRENT registry state (a suspended agent, a removed
+        permission or a frozen wallet cannot receive a counter). `create` checks it all
+        again; this only keeps a doomed counter from costing the owner the original."""
+        agent = self.registry.get_agent(agent_id)
+        if agent is None:
+            raise not_found()
+        ctx = AgentContext(agent_id=agent.agent_id, owner_id=owner.owner_id,
+                           role=agent.role.value)
+        for cap in (Capability.payment_prepare, Capability.owner_request_decision):
+            self._require(ctx, cap, "v1.payment.counter", resource_agent_id=agent_id)
+        if self.deps.resources:
+            self.deps.resources.check_amount(owner.owner_id, new.amount)
+        wallets = self.wallets.for_agent(agent_id, new.currency)
+        if not wallets:
+            raise PlatformError(409, "no_wallet_for_currency")
+        if wallets[0]["status"] != "active":
+            raise PlatformError(409, "wallet_frozen")
+        claim = self.store.query("SELECT body_sha256 FROM platform_idempotency WHERE "
+                                 "agent_id=? AND idem_key=?", (agent_id, key))
+        if claim and not hmac.compare_digest(claim[0]["body_sha256"], digest):
+            raise PlatformError(409, "already_countered")
+        return ctx
+
+    def _counter_out(self, original_id: str, replacement_id: str) -> dict:
+        return {"original": self.owner_view(original_id),
+                "replacement": self.owner_view(replacement_id)}
 
     def reconciliation(self, owner: AuthenticatedOwner, request_id: str) -> dict:
         lifecycle = self.deps.lifecycle

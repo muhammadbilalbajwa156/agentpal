@@ -707,6 +707,115 @@
         "title": "Capability",
         "type": "string"
       },
+      "CounterOffer": {
+        "additionalProperties": false,
+        "description": "Owner counter-offer: \"not that, this\". It approves nothing. The original is declined\nand a replacement is created for the same agent and wallet through the normal request\npath, so every deterministic rule, quota and hosted ceiling runs again; the replacement\nthen needs its own exact-terms approval of its own `terms_sha256`.\n\nCurrency and purpose are always copied from the original. Either give `deal_index`\n(the server copies price and retailer from the STORED Channel3 market check; the\nbrowser never supplies a deal's price) or give `amount` and `merchant_name`.",
+        "examples": [
+          {
+            "deal_index": 0
+          },
+          {
+            "amount": "16.49",
+            "merchant_domain": "known-retailer.example",
+            "merchant_name": "Known Retailer"
+          }
+        ],
+        "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "examples": [
+                  "49.99"
+                ],
+                "pattern": "^[0-9]{1,10}(\\.[0-9]{1,8})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "deal_index": {
+            "anyOf": [
+              {
+                "maximum": 99.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Index into the original's stored market_check.better_deals. When given, amount, merchant_name and merchant_domain are ignored.",
+            "title": "Deal Index"
+          },
+          "merchant_domain": {
+            "anyOf": [
+              {
+                "maxLength": 253,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Merchant Domain"
+          },
+          "merchant_name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Merchant Name"
+          },
+          "merchant_paypal_email": {
+            "anyOf": [
+              {
+                "maxLength": 127,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Merchant Paypal Email"
+          }
+        },
+        "title": "CounterOffer",
+        "type": "object"
+      },
+      "CounterOut": {
+        "additionalProperties": false,
+        "properties": {
+          "approves_nothing": {
+            "const": true,
+            "default": true,
+            "title": "Approves Nothing",
+            "type": "boolean"
+          },
+          "original": {
+            "$ref": "#/components/schemas/PaymentOut",
+            "description": "The agent's request, now rejected, with `countered_by` set."
+          },
+          "replacement": {
+            "$ref": "#/components/schemas/PaymentOut",
+            "description": "The owner's replacement. It is NOT approved: approve its own terms_sha256."
+          }
+        },
+        "required": [
+          "original",
+          "replacement"
+        ],
+        "title": "CounterOut",
+        "type": "object"
+      },
       "CredentialIssued": {
         "additionalProperties": false,
         "properties": {
@@ -1316,9 +1425,14 @@
           "status": {
             "title": "Status",
             "type": "string"
+          },
+          "task": {
+            "title": "Task",
+            "type": "string"
           }
         },
         "required": [
+          "task",
           "status",
           "request_id",
           "events"
@@ -1328,13 +1442,118 @@
       },
       "LabEvent": {
         "properties": {
+          "amount": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
           "at": {
             "title": "At",
             "type": "string"
           },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "in_stock": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "In Stock"
+          },
+          "justification": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Justification"
+          },
+          "kind": {
+            "anyOf": [
+              {
+                "enum": [
+                  "plan",
+                  "candidate",
+                  "selection",
+                  "boundary"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kind"
+          },
+          "max_price": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Price"
+          },
+          "merchant": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Merchant"
+          },
           "message": {
             "title": "Message",
             "type": "string"
+          },
+          "query": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Query"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
           }
         },
         "required": [
@@ -1361,6 +1580,64 @@
           "agent_id": {
             "title": "Agent Id",
             "type": "string"
+          },
+          "counter_of": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Owner reads only. On a replacement: the request it replaced.",
+            "title": "Counter Of"
+          },
+          "counter_saving": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Owner reads only. On a replacement: the agent's requested amount minus this amount, same currency; may be negative. A difference in asked terms, not proof.",
+            "title": "Counter Saving"
+          },
+          "counter_saving_verified": {
+            "default": false,
+            "description": "Owner reads only. True only when this replacement is provider_confirmed AND its outcome was verified by PayPal (`verification` present).",
+            "title": "Counter Saving Verified",
+            "type": "boolean"
+          },
+          "counter_source": {
+            "anyOf": [
+              {
+                "enum": [
+                  "manual",
+                  "channel3_deal"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Owner reads only. How the owner authored the counter.",
+            "title": "Counter Source"
+          },
+          "countered_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "On an original the owner countered: the replacement request id. The only counter-offer field agents receive: read that request and execute it unchanged if you accept.",
+            "title": "Countered By"
           },
           "created_at": {
             "title": "Created At",
@@ -1679,6 +1956,60 @@
           "purpose"
         ],
         "title": "LabPaymentCreate",
+        "type": "object"
+      },
+      "LabScenarioOut": {
+        "properties": {
+          "outcome": {
+            "enum": [
+              "blocked",
+              "refused"
+            ],
+            "title": "Outcome",
+            "type": "string"
+          },
+          "plain_reason": {
+            "title": "Plain Reason",
+            "type": "string"
+          },
+          "request_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Request Ids",
+            "type": "array"
+          },
+          "rule_codes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rule Codes",
+            "type": "array"
+          },
+          "scenario": {
+            "enum": [
+              "over_limit",
+              "split_purchase",
+              "changed_terms",
+              "payee_swap"
+            ],
+            "title": "Scenario",
+            "type": "string"
+          },
+          "timeline_url_hint": {
+            "title": "Timeline Url Hint",
+            "type": "string"
+          }
+        },
+        "required": [
+          "scenario",
+          "outcome",
+          "rule_codes",
+          "plain_reason",
+          "request_ids",
+          "timeline_url_hint"
+        ],
+        "title": "LabScenarioOut",
         "type": "object"
       },
       "LedgerEventOut": {
@@ -2896,6 +3227,64 @@
           "agent_id": {
             "title": "Agent Id",
             "type": "string"
+          },
+          "counter_of": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Owner reads only. On a replacement: the request it replaced.",
+            "title": "Counter Of"
+          },
+          "counter_saving": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Owner reads only. On a replacement: the agent's requested amount minus this amount, same currency; may be negative. A difference in asked terms, not proof.",
+            "title": "Counter Saving"
+          },
+          "counter_saving_verified": {
+            "default": false,
+            "description": "Owner reads only. True only when this replacement is provider_confirmed AND its outcome was verified by PayPal (`verification` present).",
+            "title": "Counter Saving Verified",
+            "type": "boolean"
+          },
+          "counter_source": {
+            "anyOf": [
+              {
+                "enum": [
+                  "manual",
+                  "channel3_deal"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Owner reads only. How the owner authored the counter.",
+            "title": "Counter Source"
+          },
+          "countered_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "On an original the owner countered: the replacement request id. The only counter-offer field agents receive: read that request and execute it unchanged if you accept.",
+            "title": "Countered By"
           },
           "created_at": {
             "title": "Created At",
@@ -7939,6 +8328,150 @@
         ]
       }
     },
+    "/v1/lab/scenarios/{name}": {
+      "post": {
+        "operationId": "runLabScenario",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "required": true,
+            "schema": {
+              "title": "Name",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabScenarioOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Invalid request or forbidden Host header"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "missing or invalid credential",
+            "headers": {
+              "WWW-Authenticate": {
+                "description": "Bearer authentication challenge",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "wrong credential type or not permitted"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "unknown, or not yours"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "conflict with current state"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Request body exceeds the configured byte limit"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V1ValidationEnvelope"
+                }
+              }
+            },
+            "description": "invalid request (`{\"error\": \"invalid_request\", ...}`)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "conflict with current state",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until a request may be attempted again",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Internal error (no input reflected)"
+          }
+        },
+        "security": [
+          {
+            "OwnerToken": []
+          }
+        ],
+        "summary": "Lab Scenario",
+        "tags": [
+          "lab"
+        ]
+      }
+    },
     "/v1/me": {
       "get": {
         "operationId": "getMe",
@@ -9064,6 +9597,182 @@
         "summary": "Capture Payment",
         "tags": [
           "payments"
+        ]
+      }
+    },
+    "/v1/payment-requests/{request_id}/counter": {
+      "post": {
+        "description": "Owner-only counter-offer (\"Buy this instead\"). Approves nothing: the original is\ndeclined and a replacement with the owner's terms is created for the same agent\nthrough the normal request path (all rules, quotas and ceilings run again). The\nreplacement awaits its own exact-terms approval of its own `terms_sha256`; the\nagent can then execute it unchanged, or not at all. Errors: 409\n`not_awaiting_decision`, 409 `already_countered`, 422 `counter_same_terms`, 422\n`invalid_deal`.",
+        "operationId": "counterPaymentRequest",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "request_id",
+            "required": true,
+            "schema": {
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9_\\-:.]{2,127}$",
+              "title": "Request Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CounterOffer"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CounterOut"
+                }
+              }
+            },
+            "description": "idempotent replay of the same counter; header Idempotent-Replayed"
+          },
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CounterOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Invalid request or forbidden Host header"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "missing or invalid credential",
+            "headers": {
+              "WWW-Authenticate": {
+                "description": "Bearer authentication challenge",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "wrong credential type or not permitted"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "unknown, or not yours"
+          },
+          "409": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "conflict with current state"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Request body exceeds the configured byte limit"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V1ValidationEnvelope"
+                }
+              }
+            },
+            "description": "invalid request (`{\"error\": \"invalid_request\", ...}`)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "rate limited",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until a request may be attempted again",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Internal error (no input reflected)"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "dependency not configured"
+          }
+        },
+        "security": [
+          {
+            "OwnerToken": []
+          }
+        ],
+        "summary": "Counter Payment",
+        "tags": [
+          "approvals"
         ]
       }
     },
@@ -12982,6 +13691,129 @@
           }
         ],
         "summary": "Create Wallet",
+        "tags": [
+          "wallets"
+        ]
+      }
+    },
+    "/v1/wallets/freeze-all": {
+      "post": {
+        "operationId": "freezeAllWallets",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WalletList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Invalid request or forbidden Host header"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "missing or invalid credential",
+            "headers": {
+              "WWW-Authenticate": {
+                "description": "Bearer authentication challenge",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "wrong credential type or not permitted"
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "unknown, or not yours"
+          },
+          "413": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Request body exceeds the configured byte limit"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/V1ValidationEnvelope"
+                }
+              }
+            },
+            "description": "invalid request (`{\"error\": \"invalid_request\", ...}`)"
+          },
+          "429": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "rate limited",
+            "headers": {
+              "Retry-After": {
+                "description": "Seconds until a request may be attempted again",
+                "schema": {
+                  "minimum": 1,
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "500": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorOut"
+                }
+              }
+            },
+            "description": "Internal error (no input reflected)"
+          }
+        },
+        "security": [
+          {
+            "OwnerToken": []
+          }
+        ],
+        "summary": "Freeze All Wallets",
         "tags": [
           "wallets"
         ]

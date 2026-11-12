@@ -864,6 +864,38 @@
           "response": []
         },
         {
+          "id": "33efb104-a26b-59b2-8290-77f001d62812",
+          "name": "POST /v1/lab/scenarios/{name}",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Lab Scenario",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "lab",
+                "scenarios",
+                "{{name}}"
+              ],
+              "raw": "{{base_url}}/v1/lab/scenarios/{{name}}"
+            }
+          },
+          "response": []
+        },
+        {
           "id": "5c24db28-3099-5f30-a356-fba6db705bd3",
           "name": "GET /v1/me",
           "request": {
@@ -1139,6 +1171,52 @@
                 "capture"
               ],
               "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/capture"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "94b69a73-b71b-5802-a356-e95c434cc738",
+          "name": "POST /v1/payment-requests/{request_id}/counter",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "body": {
+              "mode": "raw",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              },
+              "raw": "{\n  \"deal_index\": 0\n}\n"
+            },
+            "description": "Owner-only counter-offer (\"Buy this instead\"). Approves nothing: the original is\ndeclined and a replacement with the owner's terms is created for the same agent\nthrough the normal request path (all rules, quotas and ceilings run again). The\nreplacement awaits its own exact-terms approval of its own `terms_sha256`; the\nagent can then execute it unchanged, or not at all. Errors: 409\n`not_awaiting_decision`, 409 `already_countered`, 422 `counter_same_terms`, 422\n`invalid_deal`.",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "payment-requests",
+                "{{request_id}}",
+                "counter"
+              ],
+              "raw": "{{base_url}}/v1/payment-requests/{{request_id}}/counter"
             }
           },
           "response": []
@@ -2090,6 +2168,37 @@
                 "wallets"
               ],
               "raw": "{{base_url}}/v1/wallets"
+            }
+          },
+          "response": []
+        },
+        {
+          "id": "afdbbde7-bcd5-5981-8cbb-9c101a9c1f5a",
+          "name": "POST /v1/wallets/freeze-all",
+          "request": {
+            "auth": {
+              "bearer": [
+                {
+                  "key": "token",
+                  "type": "string",
+                  "value": "{{owner_key}}"
+                }
+              ],
+              "type": "bearer"
+            },
+            "description": "Freeze All Wallets",
+            "header": [],
+            "method": "POST",
+            "url": {
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "v1",
+                "wallets",
+                "freeze-all"
+              ],
+              "raw": "{{base_url}}/v1/wallets/freeze-all"
             }
           },
           "response": []

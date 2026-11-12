@@ -1,4 +1,5 @@
 /* Owner setup, workspace service cards and Test Lab use the existing dashboard palette. */
+.lab-attacks {margin-bottom:24px}.lab-shield-card {display:flex;align-items:flex-start;gap:18px;padding:24px;border:1px solid #bad9cf;border-radius:14px;background:#f0faf6;color:#173f34}.lab-shield-card h2 {margin:0 0 12px}.lab-shield-icon {flex-shrink:0;padding:12px;border-radius:50%;background:#d9eee5}.lab-shield-icon svg {width:28px;height:28px}.lab-shield-card>div {min-width:0}.lab-original-task {overflow-wrap:anywhere}.lab-events li {margin-bottom:14px}.lab-events li p {margin:6px 0}
 .auth-card #setup-form>input,.auth-card textarea {width:100%;box-sizing:border-box;border:1px solid #dce3ee;border-radius:10px;padding:12px;font:inherit;margin:8px 0 16px;background:white;color:#162443}
 .auth-card textarea {min-height:100px;overflow-wrap:anywhere;resize:vertical}
 .ws-services {margin:24px 0}.ws-services h2 {font-size:22px;margin:0 0 8px}.ws-services p,.lab-screen p {line-height:1.6}

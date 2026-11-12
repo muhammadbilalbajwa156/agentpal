@@ -141,6 +141,17 @@ class WalletBook:
                         _snapshot(new), now)
         return new
 
+    def freeze_all(self, owner_id: str, actor: str) -> list[dict]:
+        """One atomic owner-scoped emergency stop, using the normal audited freeze.
+
+        Already-frozen wallets retain their timestamp and audit history on replay.
+        The write transaction also serializes wallet creation/status changes.
+        """
+        with self.store.tx():
+            return [self.set_status(owner_id, actor, row['wallet_id'], 'frozen')
+                    if row['status'] != 'frozen' else row
+                    for row in self.list_owned(owner_id)]
+
     def set_status(self, owner_id: str, actor: str, wallet_id: str, status: str) -> dict:
         row = self.get_owned(owner_id, wallet_id, actor)
         now = _iso(self.clock())

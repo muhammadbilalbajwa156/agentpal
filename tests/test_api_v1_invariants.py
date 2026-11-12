@@ -11,6 +11,7 @@ from test_invariants_api import EXPECTED_ROUTES
 from test_platform_fixtures import ALL_PAY, OWNER_A, build_world
 
 V1_ROUTES = {
+    ("/v1/wallets/freeze-all", "POST"),
     ("/v1/paypal/reconciliation", "GET"),
     ("/v1/payout-requests", "POST"), ("/v1/payout-requests", "GET"),
     ("/v1/payout-requests/{request_id}", "GET"),
@@ -22,6 +23,7 @@ V1_ROUTES = {
     ("/v1/integrations/{provider}", "DELETE"),
     ("/v1/integrations/{provider}/verify", "POST"),
     ("/v1/lab/agent", "POST"),
+    ("/v1/lab/scenarios/{name}", "POST"),
     ("/v1/lab/payment-requests", "POST"),
     ("/v1/lab/payment-requests/{request_id}/execute", "POST"),
     ("/v1/lab/errands", "POST"),
@@ -46,6 +48,7 @@ V1_ROUTES = {
     ("/v1/approvals", "GET"),
     ("/v1/payment-requests/{request_id}/approve", "POST"),
     ("/v1/payment-requests/{request_id}/reject", "POST"),
+    ("/v1/payment-requests/{request_id}/counter", "POST"),  # owner counter-offer
     ("/v1/payment-requests/{request_id}/execute", "POST"),
     ("/v1/payment-requests/{request_id}/capture", "POST"),
     ("/v1/payment-requests/{request_id}/reconciliation", "POST"),

@@ -8,7 +8,7 @@ from .lab import IntegrationRequired
 from .models import IDEMPOTENCY_KEY_PATTERN, contains_credential
 from .router import Owner, RequestId, _platform, _E, _E409
 from .workspace_models import (IntegrationInput, IntegrationItem, IntegrationList, LabAgent,
-    LabErrand, LabErrandOut, LabPayment, LabPaymentCreate, SetupOwner, SetupOwnerOut,
+    LabErrand, LabErrandOut, LabPayment, LabPaymentCreate, LabScenarioOut, SetupOwner, SetupOwnerOut,
     SetupStatus, VerificationError)
 
 
@@ -71,6 +71,10 @@ def build_workspace_router():
     @r.post("/lab/agent", response_model=LabAgent, operation_id="createLabAgent", tags=["lab"], responses=_E409)
     def lab_agent(owner: Owner, request: Request):
         return lab(request).agent(owner)
+
+    @r.post("/lab/scenarios/{name}", response_model=LabScenarioOut, operation_id="runLabScenario", tags=["lab"], responses={**_E409, 429: _E409[409]})
+    def lab_scenario(name: str, owner: Owner, request: Request):
+        return lab(request).scenario(owner, name)
 
     @r.post("/lab/payment-requests", response_model=LabPayment, status_code=201, operation_id="createLabPayment", tags=["lab"], responses=_E409)
     def lab_payment(body: LabPaymentCreate, owner: Owner, request: Request):

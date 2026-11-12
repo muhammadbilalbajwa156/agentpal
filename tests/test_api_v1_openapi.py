@@ -6,6 +6,7 @@ from agentpal.platform.openapi import DEFAULT_PATH, build_document, render
 
 
 OPERATIONS = {
+    "POST /v1/wallets/freeze-all": "freezeAllWallets",
     "GET /v1/paypal/reconciliation": "reconcileWithPaypal",
     "POST /v1/payout-requests": "createPayoutRequest",
     "GET /v1/payout-requests": "listPayoutRequests",
@@ -19,6 +20,7 @@ OPERATIONS = {
     "POST /v1/integrations/{provider}/verify": "verifyIntegration",
     "POST /v1/lab/agent": "createLabAgent",
     "POST /v1/lab/payment-requests": "createLabPayment",
+    "POST /v1/lab/scenarios/{name}": "runLabScenario",
     "POST /v1/lab/payment-requests/{request_id}/execute": "executeLabPayment",
     "POST /v1/lab/errands": "createLabErrand",
     "POST /v1/payout-requests/{request_id}/approve": "approvePayoutRequest",
@@ -53,6 +55,7 @@ OPERATIONS = {
     "GET /v1/approvals": "listApprovals",
     "POST /v1/payment-requests/{request_id}/approve": "approvePaymentRequest",
     "POST /v1/payment-requests/{request_id}/reject": "rejectPaymentRequest",
+    "POST /v1/payment-requests/{request_id}/counter": "counterPaymentRequest",
     "POST /v1/payment-requests/{request_id}/execute": "executePaymentRequest",
     "POST /v1/payment-requests/{request_id}/capture": "capturePaymentRequest",
     "POST /v1/payment-requests/{request_id}/reconciliation": "reconcilePaymentRequest",

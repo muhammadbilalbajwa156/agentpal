@@ -119,11 +119,56 @@ All paths below are prefixed with `/v1`. `owner / agent` means either credential
 | `GET /approvals` | owner | Own pending decisions |
 | `POST /payment-requests/{request_id}/approve` | owner | Approve exact `terms_sha256` |
 | `POST /payment-requests/{request_id}/reject` | owner | Decline request |
+| `POST /payment-requests/{request_id}/counter` | owner | Counter-offer: decline and create a replacement with the owner's terms; approves nothing |
 | `POST /payment-requests/{request_id}/execute` | agent | Submit approved request through sandbox lifecycle |
 | `GET /payment-requests/{request_id}/reconciliation` | owner | Read lifecycle state and available provider references |
 | `POST /providers/paypal/webhooks` | provider signature | Verify event before forwarding to the event sink |
 
 `GET /me/wallet` and transaction reads require `wallet.read`. Preparation needs `payment.prepare`; requesting a decision also needs `owner.request_decision`. Set `request_owner_decision: false` to prepare first and ask later through `/request-decision`.
+
+## Owner counter-offer ("Buy this instead")
+
+`POST /v1/payment-requests/{request_id}/counter` gives the owner a third answer besides
+approve and reject. It needs an owner credential: an agent key gets 403, and another
+owner's request gets the same 404 as an unknown one. Body: either `{"deal_index": 0}`
+(the server copies price and retailer from the request's **stored** Channel3
+`market_check.better_deals`; the client never sends a deal's price) or `amount` and
+`merchant_name`, with optional `merchant_domain` and `merchant_paypal_email`. Currency
+and purpose are always copied from the original; unknown fields are refused.
+
+What the call does, in order:
+
+1. Validates the new terms and the agent's current state (permissions, suspension, active
+   wallet, hosted amount ceiling) before anything changes.
+2. Declines the original through the same path as `/reject`, which releases its reservation.
+3. Creates the replacement for the same agent and wallet through the same path as
+   `POST /payment-requests`, so every deterministic rule, quota and ceiling runs again. A
+   rule can block the replacement; it is then returned with its `policy_block`.
+
+It approves nothing. The response is `{original, replacement, approves_nothing: true}`
+(201; a repeat of the same counter returns 200 with `Idempotent-Replayed: true` and the
+same replacement). The replacement is `awaiting_approval` with its own `terms_sha256`,
+which the owner approves through the unchanged `/approve`. The agent can then execute the
+replacement unchanged, or not at all; different terms are a new request.
+
+| Error | Meaning |
+|---|---|
+| 409 `not_awaiting_decision` | Only a request awaiting the owner's decision can be countered |
+| 409 `already_countered` | The request already has a different counter-offer |
+| 409 `counter_recurring_unsupported` | A recurring request is never turned into a one-off |
+| 422 `counter_same_terms` | Nothing differs from the agent's terms |
+| 422 `invalid_deal` | No such stored deal, or it is not a plain price in the request's currency |
+
+Fields on payment reads: agents receive only `countered_by` (on the original: the
+replacement's id). Owner reads add `counter_of`, `counter_source` (`manual` or
+`channel3_deal`), `counter_saving` (the agent's requested amount minus the replacement
+amount, same currency, may be negative) and `counter_saving_verified`, which is true only
+when the replacement is `provider_confirmed` and its `verification` is present. A
+difference is not a saving until PayPal verifies the payment. Both timelines record a
+`counter_offer` event with actor `owner`. One honest point: the replacement is written by
+the owner in the agent's name; the timeline says so and the agent still chooses whether
+to execute. If the call is interrupted after the decline, the worst outcome is a plain
+rejection, and repeating the same counter resumes it.
 
 ## Amounts, limits and idempotency
 

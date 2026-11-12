@@ -180,6 +180,30 @@ class OwnerClient(_Client):
     async def reject_payment_request(self, request_id: str) -> dict:
         return await self._request("POST", f"payment-requests/{_id(request_id)}/reject")
 
+    async def counter_payment_request(self, request_id: str, *, deal_index: int | None = None,
+                                      amount: Amount | None = None,
+                                      merchant_name: str | None = None,
+                                      merchant_domain: str | None = None,
+                                      merchant_paypal_email: str | None = None) -> dict:
+        """Owner counter-offer ("buy this instead"). Approves nothing: the request is
+        declined and a replacement with these terms is created for the same agent through
+        the normal request path. Returns `{original, replacement}`; approve the
+        replacement's own `terms_sha256` with `approve_payment_request`. Give `deal_index`
+        (a stored Channel3 better deal; the server supplies its price and retailer) or
+        `amount` and `merchant_name`."""
+        body: dict[str, Any] = {}
+        if deal_index is not None:
+            body["deal_index"] = deal_index
+        if amount is not None:
+            body["amount"] = _amount(amount)
+        for name, value in (("merchant_name", merchant_name),
+                            ("merchant_domain", merchant_domain),
+                            ("merchant_paypal_email", merchant_paypal_email)):
+            if value is not None:
+                body[name] = value
+        return await self._request("POST", f"payment-requests/{_id(request_id)}/counter",
+                                   body=body)
+
     async def get_reconciliation(self, request_id: str) -> dict:
         return await self._request("GET", f"payment-requests/{_id(request_id)}/reconciliation")
 

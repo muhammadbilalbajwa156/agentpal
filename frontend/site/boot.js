@@ -1,5 +1,5 @@
 (()=>{
- const release='20261108-shb-1';
+ const release='20261111-ov-1';
  const files=['ag-grid-community.min.noStyle.js','ag-charts-community.min.js','live-visuals.js','icons.js','agents-screen.js','wallets-screen.js','finance-screens.js','lab-screen.js','workspace-services.js','insights-screens.js','admin-screens.js','core.js'];
  let loaded=0,running=false;
  let setup=null,offerServices=false;

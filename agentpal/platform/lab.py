@@ -78,6 +78,70 @@ class TestLab:
         self.p.payments.execute(ctx, request_id)
         return self.view(owner, request_id)
 
+    def scenario(self, owner, name):
+        from .workspace_models import LabPaymentCreate
+
+        if name not in {"over_limit", "split_purchase", "changed_terms", "payee_swap"}:
+            raise not_found()
+        self.integrations.admission("lab:" + owner.owner_id)
+        # Share Lab admission/errand ceilings when the workspace uses operator keys.
+        # No model, catalogue or payment-provider calls are needed by these examples.
+        resources = self.integrations.resources
+        for provider in ("channel3", "groq", "openrouter", "paypal_sandbox"):
+            if resources.uses_server(owner.owner_id, provider):
+                resources.consume(owner.owner_id, provider, "errands", server_provided=True)
+                break
+        # A fresh merchant separates repeat demonstrations from earlier reservations;
+        # every part within one split demonstration still shares the same merchant.
+        domain = "demo-" + uuid.uuid4().hex + ".example"
+        body = {"currency": "USD", "merchant_name": "Test Lab supplies",
+                "merchant_domain": domain, "purpose": "Test Lab policy demonstration"}
+
+        def create(amount, **changes):
+            return self.create(owner, LabPaymentCreate.model_validate(
+                {**body, "amount": amount, **changes}))
+
+        if name == "over_limit":
+            views = [create("30.00")]
+            expected = "AMOUNT_ABOVE_HARD_LIMIT"
+        elif name == "split_purchase":
+            views = [create("15.00", purpose="Supplies part one"),
+                     create("15.00", purpose="Supplies part two")]
+            expected = "SPLIT_TRANSACTION_EXCEEDS_HARD_LIMIT"
+        else:
+            if name == "changed_terms":
+                views = [create("1.00"), create("2.00")]
+                reason = "Approval refused: the terms changed after the fingerprint was taken"
+            else:
+                views = [create("1.00", merchant_paypal_email="original@" + domain),
+                         create("1.00", merchant_paypal_email="swapped@" + domain)]
+                reason = "Approval refused: merchant data replaced the PayPal payee; the original fingerprint does not authorize the replacement request."
+            # Exercise the ordinary owner approval path with ONLY the stale digest.
+            # Neither request is ever approved with its matching digest.
+            try:
+                self.p.payments.approve(owner, views[-1]["request_id"], views[0]["terms_sha256"])
+            except PlatformError as exc:
+                if exc.code != "terms_mismatch" or exc.status != 409:
+                    raise
+                self.p.risk().store.record_rejection("v1_terms_mismatch", views[-1]["request_id"],
+                    views[-1]["agent_id"], [{"loc": ["request"], "type": "terms_mismatch"}])
+            else:
+                raise PlatformError(409, "scenario_not_refused")
+            return self._scenario_result(name, "refused", ["terms_mismatch"], reason, views)
+
+        signals = [s for s in views[-1].get("risk_signals", []) if s["kind"] == "hard_violation"]
+        codes = [s["code"] for s in signals]
+        if views[-1]["recommendation"] != "block" or expected not in codes:
+            raise PlatformError(409, "scenario_not_blocked")
+        reason = next(s["message"] for s in signals if s["code"] == expected)
+        return self._scenario_result(name, "blocked", codes, reason, views)
+
+    @staticmethod
+    def _scenario_result(name, outcome, codes, reason, views):
+        return {"scenario": name, "outcome": outcome, "rule_codes": codes,
+                "plain_reason": reason, "request_ids": [v["request_id"] for v in views],
+                "timeline_url_hint": "/v1/payment-requests/" + views[-1]["request_id"] + "/timeline"}
+
     def errand(self, owner, task, budget):
         from ..agents.shopper.core import Shopper, ShopperError
         from .models import PaymentCreate
@@ -108,7 +172,11 @@ class TestLab:
 
         def emit(event):
             # Shopper's Redactor cleans known workspace keys and upstream data first.
-            events.append({"at": datetime.now(timezone.utc).isoformat(), "message": event["message"]})
+            if event.get("kind") == "candidate" and sum(e.get("kind") == "candidate" for e in events) >= 3:
+                return
+            fields = {k: event[k] for k in ("message", "kind", "query", "max_price", "title",
+                      "amount", "currency", "merchant", "in_stock", "justification") if k in event}
+            events.append({"at": datetime.now(timezone.utc).isoformat(), **fields})
 
         def admission(request):
             provider = {"api.trychannel3.com": "channel3", "api.groq.com": "groq",
@@ -120,14 +188,16 @@ class TestLab:
         shopper = None
         try:
             shopper = Shopper(env=keys, emit=emit, client=client)
+            emit({"kind": "boundary", "message": "AI proposes · Rules decide · You approve"})
             # Only planning/search is delegated to the bundled core. Submit its proposal
             # through the same authenticated agent PaymentDesk as every external agent.
             body = PaymentCreate.model_validate(shopper.plan(task, str(budget)))
             view = self.create(owner, body)
-            return {"status": view["status"], "request_id": view["request_id"], "events": events}
+            return {"task": shopper.redact(task), "status": view["status"], "request_id": view["request_id"], "events": events}
         except (ShopperError, ValueError):
             emit({"message": "Errand could not produce a payment proposal. No payment was executed."})
-            return {"status": "failed", "request_id": None, "events": events}
+            return {"task": shopper.redact(task) if shopper else task,
+                    "status": "failed", "request_id": None, "events": events}
         finally:
             if shopper:
                 shopper.close()

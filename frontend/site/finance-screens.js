@@ -50,7 +50,64 @@ if(window.AgentPalAPI?.live){
   }
   function termsHTML(value,kind){
     const r=row(value,kind),terms=value.terms||{};
-    return `<div class="f-dialog-amount">${displayMoney(r)}</div>${sandbox}${badge(r.status)}<dl class="f-detail-list">${pair('Payee',payeeLabel(value,kind))}${pair('Purpose',r.purpose)}${kind==='payment'?pair('Catalogue merchant',terms.merchant_name):pair('Note',value.note)}${value.policy_block?pair('Blocked by rule',value.policy_block.rule+' · '+value.policy_block.label):''}</dl>${kind==='payment'?'<p class="f-sandbox-note">This sandbox payment does not order the item from the retailer.</p>':''}${verificationHTML(value.verification)}`;
+    return `<div class="f-dialog-amount">${displayMoney(r)}</div>${sandbox}${badge(r.status)}<dl class="f-detail-list">${pair('Payee',payeeLabel(value,kind))}${pair('Purpose',r.purpose)}${kind==='payment'?pair('Catalogue merchant',terms.merchant_name):pair('Note',value.note)}${value.policy_block?pair('Blocked by rule',value.policy_block.rule+' · '+value.policy_block.label):''}</dl>${kind==='payment'?'<p class="f-sandbox-note">This sandbox payment does not order the item from the retailer.</p>':''}${kind==='payment'?counterLinkHTML(value):''}${verificationHTML(value.verification)}`;
+  }
+  // Owner counter-offer ("Buy this instead"). The difference is between two recorded amounts
+  // in one currency. It is called a saving only when the server reports that PayPal verified
+  // the replacement's capture; nothing here is estimated in the browser.
+  function savingHTML(value){
+    const text=String(value.counter_saving??'');
+    if(!/^-?\d+(\.\d{1,8})?$/.test(text))return '';
+    const amount=displayMoney({amount:text.replace(/^-/,''),currency:value.terms?.currency});
+    if(!/[1-9]/.test(text))return `<p class="f-counter-saving">Same amount as the agent's request.</p>`;
+    if(text.startsWith('-'))return `<p class="f-counter-saving">${amount} more than the agent's request.</p>`;
+    return value.counter_saving_verified===true
+      ?`<p class="f-counter-saving" data-saving="verified"><strong>Saved ${amount}</strong> against the agent's request <span class="ap-pill good">verified by PayPal</span></p>`
+      :`<p class="f-counter-saving" data-saving="unverified">${amount} below the agent's request <span class="ap-pill waiting">not a saving until PayPal verifies the payment</span></p>`;
+  }
+  function counterLinkHTML(value){
+    const link=id=>`<button type="button" class="link" data-counter-open="${escape(id)}">${escape(id)}</button>`;
+    if(value.countered_by)return `<p class="f-counter-link"><span class="ap-pill waiting">Countered by owner</span> Declined and replaced by ${link(value.countered_by)}. The replacement needs its own approval.</p>`;
+    if(value.counter_of)return `<p class="f-counter-link"><span class="ap-pill">Owner counter-offer</span> Replaces ${link(value.counter_of)}. You wrote these terms; the agent can only execute them unchanged.</p>${savingHTML(value)}`;
+    return '';
+  }
+  function counterHTML(value){
+    const terms=value.terms||{};
+    const deals=(value.market_check?.better_deals||[]).map((deal,index)=>({...deal,index}))
+      .filter(d=>d.currency===terms.currency&&/^\d+(\.\d{1,8})?$/.test(String(d.price))&&d.retailer);
+    const field=(name,label,v,extra='')=>`<label>${label}<input name="${name}" type="text" autocomplete="off" value="${escape(v??'')}" ${extra}></label>`;
+    return `<section class="f-counter" aria-label="Counter-offer"><h3>Not this? Buy this instead</h3><p class="f-counter-note">A counter approves nothing. It declines this request and creates a replacement for the same agent, checked by the same spending rules. You then approve the replacement's own fingerprint; the agent can only execute it unchanged.</p>${deals.length?`<ul class="f-counter-deals">${deals.map(d=>`<li><div><strong>${escape(d.retailer)}</strong><span>${displayMoney({amount:d.price,currency:d.currency})}${/^\d+(\.\d{1,8})?$/.test(String(d.you_save))?` · ${displayMoney({amount:d.you_save,currency:d.currency})} less`:''} · Channel3 offer, advisory</span></div><button type="button" class="f-secondary" data-counter-deal="${d.index}">Counter with this deal</button></li>`).join('')}</ul>`:''}<form id="f-live-counter-form" hidden novalidate>${field('amount','Amount ('+escape(terms.currency)+')',terms.amount,'inputmode="decimal" required')}${field('merchant_name','Merchant name',terms.merchant_name,'maxlength="200" required')}${field('merchant_domain','Merchant domain (optional)',terms.merchant_domain,'maxlength="253"')}${field('merchant_paypal_email','PayPal payee email (optional)',terms.merchant_paypal_email,'maxlength="127"')}<p class="f-counter-note">Currency and purpose stay as the agent asked: ${escape(terms.currency)} · ${escape(terms.purpose)}</p><button class="f-secondary" type="submit">Counter with these terms</button></form><p id="f-live-counter-error" role="alert"></p></section>`;
+  }
+  const counterMessage=err=>({not_awaiting_decision:'This request is no longer awaiting your decision. Nothing was countered.',already_countered:'This request already has a counter-offer. Open its replacement instead.',counter_same_terms:'These are the terms the agent asked for. Change the amount, merchant or payee, or approve the request as it is.',invalid_deal:'That offer is not in the stored market check any more. Use the Counter form instead.',counter_recurring_unsupported:'A recurring request cannot be countered. Reject it and ask the agent for a new request.',invalid_request:'Check the amount, merchant name, domain and PayPal email.'}[err.code]||api.message(err));
+  let revealCounter=false;
+  function bindCounterLinks(){document.querySelectorAll('#modal [data-counter-open]').forEach(b=>{b.onclick=()=>openRequest(b.dataset.counterOpen,'payment');});}
+  async function sendCounter(id,body,button){
+    const error=document.querySelector('#f-live-counter-error');if(error)error.textContent='';
+    let result=null,failure=null;
+    const done=await write(button,'counter:'+id,async()=>{try{result=await api.counterRequest(id,body);}catch(err){failure=err;}});
+    if(done===false&&!failure&&!result)return;
+    if(failure){const text=counterMessage(failure);if(error?.isConnected)error.textContent=text;else App.toast(text);return;}
+    const next=result?.replacement;if(!next?.request_id)return;
+    const blocked=!!next.policy_block;
+    App.toast(blocked?'Counter recorded, but a spending rule blocked the replacement.':'Counter recorded. Nothing is approved yet.');
+    await openRequest(next.request_id,'payment',!blocked&&next.status==='awaiting_approval',blocked?'A spending rule blocked your counter-offer. The original request was declined; nothing was approved.':'You countered: the original request was declined. Review the replacement and approve its own fingerprint.');
+  }
+  function bindCounter(id){
+    const form=document.querySelector('#f-live-counter-form'),toggle=document.querySelector('#f-live-counter'),error=document.querySelector('#f-live-counter-error');
+    if(!form||!toggle)return;
+    const show=open=>{form.hidden=!open;toggle.setAttribute('aria-expanded',String(open));if(open)form.querySelector('[name=amount]').focus();};
+    toggle.onclick=()=>show(form.hidden);
+    document.querySelectorAll('#modal [data-counter-deal]').forEach(b=>{b.onclick=()=>sendCounter(id,{deal_index:Number(b.dataset.counterDeal)},b);});
+    form.onsubmit=e=>{
+      e.preventDefault();
+      const fields=new FormData(form),text=name=>String(fields.get(name)||'').trim(),amount=text('amount'),name=text('merchant_name');
+      if(!/^\d{1,10}(\.\d{1,2})?$/.test(amount)||!/[1-9]/.test(amount)){error.textContent='Enter a positive amount with up to two decimal places.';return;}
+      if(!name){error.textContent='Enter the merchant name.';return;}
+      const body={amount,merchant_name:name};
+      for(const key of ['merchant_domain','merchant_paypal_email']){if(text(key))body[key]=text(key);}
+      sendCounter(id,body,form.querySelector('button[type=submit]'));
+    };
+    if(revealCounter){revealCounter=false;show(true);}
   }
   function provenanceHTML(value,kind){
     const r=row(value,kind),terms=value.terms||{};
@@ -91,7 +148,7 @@ if(window.AgentPalAPI?.live){
     const agentSaid=kind==='payment'&&said?`<section class="f-evidence f-agent-said"><h3>What the agent said · unverified</h3><dl class="f-detail-list">${pair('Justification',said.business_justification||'None given')}${said.product_query?pair('Product',said.product_query):''}${said.product_url?pair('Product page (text only)',said.product_url):''}</dl></section>`:'';
     return termsHTML(value,kind)+decisionHTML+(kind==='payment'?marketSummary(value.market_check):'')+`<details class="f-advisory"><summary>Evidence (advisory) <span class="ap-pill">${escape(kind==='payment'?(value.market_check?'Market data recorded':'Market not checked')+' · '+(value.page_check?'Page checked':'Page not checked'):'Provider provenance')}</span></summary>${provenanceHTML(value,kind)}${agentSaid}${kind==='payment'?`<section class="f-evidence"><h3>Risk signals</h3><ul>${signals||'<li>No risk signals reported.</li>'}</ul></section>`+evidenceHTML('Market check',value.market_check)+evidenceHTML('Page check',value.page_check):''}</details>`+timelineHTML(events);
   }
-  function pendingCards(){const pending=pendingRows();return `${pending.map(r=>`<article class="f-request"><div class="f-request-main"><div class="f-symbol blue">${App.icon('bot')}</div><div><div class="f-request-title"><h3>${escape(r.agent)}</h3>${badge(r.status)}</div><p>${escape(r.purpose)} · ${escape(r.description)}</p><small>${escape(r.id)} · ${escape(r.kind)} · ${escape(visual.date(r.created_at))}</small><p>Payee: ${escape(payeeLabel(r.raw,r.kind))}</p></div><div class="f-request-value"><strong>${displayMoney(r)}</strong></div></div><div class="f-request-bottom"><button class="link" data-live-details="${escape(r.id)}" data-kind="${escape(r.kind)}">View request details →</button><div><button class="f-reject" data-live-reject="${escape(r.id)}" data-kind="${escape(r.kind)}">Reject</button><button class="f-primary" data-live-approve="${escape(r.id)}" data-kind="${escape(r.kind)}">Approve →</button></div></div></article>`).join('')||'<div class="f-empty">No requests are awaiting your approval.</div>'}`;}
+  function pendingCards(){const pending=pendingRows();return `${pending.map(r=>`<article class="f-request"><div class="f-request-main"><div class="f-symbol blue">${App.icon('bot')}</div><div><div class="f-request-title"><h3>${escape(r.agent)}</h3>${badge(r.status)}${r.raw.counter_of?'<span class="ap-pill">Owner counter-offer</span>':''}</div><p>${escape(r.purpose)} · ${escape(r.description)}</p><small>${escape(r.id)} · ${escape(r.kind)} · ${escape(visual.date(r.created_at))}</small><p>Payee: ${escape(payeeLabel(r.raw,r.kind))}</p></div><div class="f-request-value"><strong>${displayMoney(r)}</strong></div></div><div class="f-request-bottom"><button class="link" data-live-details="${escape(r.id)}" data-kind="${escape(r.kind)}">View request details →</button><div><button class="f-reject" data-live-reject="${escape(r.id)}" data-kind="${escape(r.kind)}">Reject</button>${r.kind==='payment'?`<button class="f-secondary" data-live-counter="${escape(r.id)}" data-kind="payment">Counter</button>`:''}<button class="f-primary" data-live-approve="${escape(r.id)}" data-kind="${escape(r.kind)}">Approve →</button></div></div></article>`).join('')||'<div class="f-empty">No requests are awaiting your approval.</div>'}`;}
   let kindFilter='all',statusFilter='all',companyFilter='all';
   const filteredRows=()=>rows().filter(r=>(kindFilter==='all'||r.kind===kindFilter)&&(statusFilter==='all'||r.status===statusFilter)&&(companyFilter==='all'||r.company===companyFilter));
   const spendPanel=()=>`<div class="f-chart-grid"><section class="panel f-chart-panel"><div class="panel-title"><h3><span class="heading-icon">${App.icon('chart')}</span> Confirmed Spend Overview</h3><span class="f-badge">Last 30 Days</span></div><div class="f-chart-legend"><span>🔵 Confirmed payments and payouts · before refunds</span></div>${visual.live.areaSvg()}</section><section class="panel f-insight"><div class="f-insight-icon">${App.icon('shield')}</div><h3>Every payment. Full visibility.</h3><p>Only verified provider outcomes count as confirmed spending.</p><div><span>Awaiting owner review</span><strong>${pendingRows().length}</strong></div><button class="link" data-route="approvals">Review pending approvals →</button></section></div>`;
@@ -146,9 +203,11 @@ if(window.AgentPalAPI?.live){
   }
   function renderRequest(id,kind,value,confirm,notice,events=null){
     const canDecide=value.status==='awaiting_approval';
-    const decision=canDecide?`<p class="f-approval-binding">Approval binds to these exact terms. Terms fingerprint: <code>${escape(String(value.terms_sha256||'').slice(0,12))}</code>. Any change to amount, payee or purpose voids this approval.</p><div class="dialog-actions"><button class="f-reject" id="f-live-reject">Reject</button><button class="f-primary" id="f-live-confirm">${confirm?'Confirm Approval':'Review approval →'}</button></div>`:'';
+    const decision=canDecide?`<p class="f-approval-binding">Approval binds to these exact terms. Terms fingerprint: <code>${escape(String(value.terms_sha256||'').slice(0,12))}</code>. Any change to amount, payee or purpose voids this approval.</p><div class="dialog-actions"><button class="f-reject" id="f-live-reject">Reject</button>${kind==='payment'?'<button class="f-secondary" id="f-live-counter" type="button" aria-expanded="false" aria-controls="f-live-counter-form">Counter</button>':''}<button class="f-primary" id="f-live-confirm">${confirm?'Confirm Approval':'Review approval →'}</button></div>${kind==='payment'?counterHTML(value):''}`:'';
     App.modal(confirm?'Confirm sandbox approval':'Request details',`<div class="finance-dialog f-live">${notice?`<p role="alert" class="f-live-warning">${escape(notice)}</p>`:''}${requestHTML(value,kind,events,decision)}</div>`);
-    if(!canDecide)return;
+    bindCounterLinks();
+    if(!canDecide){revealCounter=false;return;}
+    if(kind==='payment')bindCounter(id);
     document.querySelector('#f-live-reject').onclick=e=>reject(id,kind,e.currentTarget);
     document.querySelector('#f-live-confirm').onclick=async e=>{
       if(!confirm){await openRequest(id,kind,true);return;}
@@ -192,6 +251,7 @@ if(window.AgentPalAPI?.live){
       if(version!==detailVersion)return;
       const needs=value.status==='reconciliation_required'||reconciliation?.reconciliation_required;
       App.modal('Transaction details',`<div class="finance-dialog f-live">${requestHTML(value,kind,events)}${needs?'<p class="f-live-warning">Needs reconciliation: no money assumed.</p><button class="f-primary" id="f-live-reconcile">Reconcile sandbox status</button>':''}${kind==='payment'?`<section class="f-evidence"><h3>PayPal order references</h3>${referenceError?`<p role="alert">${escape(referenceError)}</p>`:(reconciliation?.provider_references||[]).map(r=>`<p>${escape(r.provider)} · ${escape(r.provider_order_id)} · ${escape(statusText(r.status))}</p>`).join('')||'<p>No provider order recorded.</p>'}</section><section class="f-evidence"><h3>Refunds</h3>${refundError?`<p role="alert">${escape(refundError)}</p>`:refunds.map(r=>`<article class="f-refund"><strong>${displayMoney(r)}</strong> · ${escape(statusText(r.status))}<p>${escape(r.refund_id)}${r.failure_reason?' · '+escape(refundFailure(r.failure_reason)):''}</p></article>`).join('')||'<p>No refunds recorded.</p>'}</section>${['submitted_to_provider','provider_pending'].includes(value.status)?`<section class="f-evidence"><h3>Waiting for the buyer on PayPal</h3><p>The buyer approves on PayPal's sandbox checkout page. AgentPal captures only after an authenticated PayPal read confirms that exact approval.</p>${(reconciliation?.provider_references||[]).filter(r=>r.payer_action_url).map(r=>`<p>Buyer approval link (sandbox): <code class="f-reference">${escape(r.payer_action_url)}</code></p>`).join('')}<button class="f-primary" id="f-live-capture">Capture after buyer approval</button></section>`:''}${value.status==='provider_confirmed'?'<form id="f-live-refund"><label>Refund amount (optional; blank refunds the remaining amount)<input name="amount" type="text" inputmode="decimal" autocomplete="off" placeholder="0.00" pattern="[0-9]{1,7}(\\.[0-9]{1,2})?"></label><p id="f-live-refund-error" role="alert"></p><button class="f-primary" type="submit">Request sandbox refund</button></form>':''}`:`<dl class="f-detail-list">${pair('PayPal batch ID',value.provider_batch_id)}${pair('Provider item status',value.provider_item_status)}${pair('Warning',value.warning)}${pair('Unclaimed',value.unclaimed)}</dl>`}</div>`);
+      bindCounterLinks();
       if(needs)document.querySelector('#f-live-reconcile').onclick=async e=>{
         if(await write(e.currentTarget,endpoint(kind,id),()=>api.post(endpoint(kind,id)+'/reconciliation',{}))){App.toast('Reconciliation completed. Review the current status.');await openTransaction(id,kind);}
       };
@@ -222,7 +282,7 @@ if(window.AgentPalAPI?.live){
     visual.amountColumn(),{field:'currency',headerName:'Currency',minWidth:105,hide:true},
     {field:'status',headerName:'Status',minWidth:180,cellRenderer:visual.status,valueFormatter:p=>statusText(p.value)},
     {field:'kind',headerName:'Type',minWidth:100,maxWidth:130},
-    {field:'owner_decision',headerName:'Owner decision',hide:!history,minWidth:230,valueGetter:p=>p.data.raw.owner_decision?human(p.data.raw.owner_decision.decision)+' · '+visual.date(p.data.raw.owner_decision.at):'No owner decision'},
+    {field:'owner_decision',headerName:'Owner decision',hide:!history,minWidth:230,valueGetter:p=>p.data.raw.owner_decision?(p.data.raw.countered_by?'countered by owner':human(p.data.raw.owner_decision.decision))+' · '+visual.date(p.data.raw.owner_decision.at):'No owner decision'},
     {field:'rule',headerName:'Rule',hide:!history,minWidth:200,valueGetter:p=>p.data.raw.policy_block?.rule||''},
     {field:'id',headerName:'Reference',hide:true},
     {colId:'actions',headerName:'',pinned:'right',lockPinned:true,flex:0,width:135,minWidth:135,sortable:false,filter:false,
@@ -249,6 +309,7 @@ if(window.AgentPalAPI?.live){
       try{
         if(d.liveDetails)await openRequest(d.liveDetails,d.kind);
         else if(d.liveApprove)await openRequest(d.liveApprove,d.kind,true);
+        else if(d.liveCounter){revealCounter=true;await openRequest(d.liveCounter,'payment');}
         else if(d.liveReject)await reject(d.liveReject,d.kind,b);
         else if(d.liveTransaction)await openTransaction(d.liveTransaction,d.kind);
       }finally{b.disabled=false;}
@@ -257,6 +318,9 @@ if(window.AgentPalAPI?.live){
   window.addEventListener('agentpal-live',event=>{if(event.detail?.type==='refreshed')rerender();});
   window.FinanceScreens = {transactions,approvals,mount,pendingCount:()=>pendingRows().length,
     recent:()=>rows().slice(0,4),summary:()=>({pending:pendingRows().length,transactions:rows(),requests:pendingRows(),confirmedSpend:sum(rows().filter(r=>r.status==='provider_confirmed'))}),
+    // Only replacements the server marks PayPal-verified; negative differences never match sum().
+    verifiedSavings:()=>sum(api.data.payments.filter(p=>p.counter_saving_verified===true&&p.status==='provider_confirmed'&&p.counter_of),p=>p.counter_saving,p=>p.terms?.currency),
+    verifiedSavingRows:()=>api.data.payments.filter(p=>p.counter_saving_verified===true&&p.status==='provider_confirmed'&&p.counter_of),
     allowance,totalsText:totalText,openRequest,timelineHTML};
   return;
 }
